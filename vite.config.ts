@@ -1,5 +1,5 @@
 import { sveltekit } from '@sveltejs/kit/vite';
-import { defineConfig } from 'vite';
+import { defineConfig } from 'vitest/config';
 import { resolve } from 'path'
 
 export default defineConfig({
@@ -10,5 +10,8 @@ export default defineConfig({
 			$components: resolve(__dirname, 'src/components'),
 			$routes: resolve(__dirname, 'src/routes'),
 		},
+	},
+	test: {
+		include: ['src/**/*.test.ts']
 	}
 });
