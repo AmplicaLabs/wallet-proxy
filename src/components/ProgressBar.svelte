@@ -26,7 +26,7 @@
   }
 
 </script>
-<div class="px-16 p-12">
+<div class="px-16 md:p-12">
   <div class="progress-container sm:hidden md:flex justify-between relative mb-30 max-w-800" bind:this={circles}>
     <div class="progress" bind:this={progress}></div>
       {#each steps as step, i}
