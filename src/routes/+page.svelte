@@ -1,8 +1,54 @@
 <script lang="ts">
-  import Hello from "$components/Hello.svelte";
+  import RadialStepper from '$components/RadialStepper.svelte';
+  import ProgressBar from '$components/ProgressBar.svelte';
+
+  let currentActive = 0;
+  let steps = ['Choose Wallet', 'Connect', 'Something Else', 'Register'];
+  let progressBar;
+
+  const handleProgress = (stepIncrement) => {
+    const newValue = currentActive + stepIncrement
+    if ((newValue < 0) ||
+      (newValue > steps.length - 1)
+    ) {
+      return;
+    }
+    currentActive += stepIncrement;
+    progressBar.handleProgress(stepIncrement)
+  }
+
+  const previousStepTitle = (): string => {
+    if (currentActive > 1) {
+      console.log("here")
+      return steps[currentActive - 1];
+    }
+    return 'Start';
+  }
+  const nextStepTitle = (): string => {
+    if (currentActive < steps.length - 1) {
+      return steps[currentActive + 1];
+    }
+    return 'Done'
+  }
+
+  const stepFinished = (): boolean => {
+    if (currentActive < steps.length - 1) {
+      return false;
+    }
+    return true;
+  }
 </script>
-<h1>Welcome to SvelteKit</h1>
-<p>Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation</p>
-
-<Hello />
-
+<main>
+  <ProgressBar {steps} bind:this={progressBar}/>
+  <RadialStepper bind:currentStep={currentActive} stepCount={steps.length} stepTitle={steps[currentActive]}/>
+  <div class="step-button flex sm:justify-between md:justify-around max-w-800 ">
+    <button class="{currentActive === 0 ? 'btn-disabled' : 'btn-primary'}"
+            on:click|preventDefault={() => handleProgress(-1)}>
+      Back
+    </button>
+    <button class={currentActive === steps.length-1 ? 'btn-disabled' : 'btn-primary'}
+            on:click|preventDefault={() => handleProgress(+1)}>
+      Next
+    </button>
+  </div>
+</main>
