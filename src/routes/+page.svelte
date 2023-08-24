@@ -39,6 +39,7 @@
   }
 </script>
 <main>
+  <h1 class="text-xl text-green-500 text-center">Login</h1>
   <ProgressBar {steps} bind:this={progressBar}/>
   <RadialStepper bind:currentStep={currentActive} stepCount={steps.length} stepTitle={steps[currentActive]}/>
   <div class="step-button flex sm:justify-between md:justify-around max-w-800 ">
