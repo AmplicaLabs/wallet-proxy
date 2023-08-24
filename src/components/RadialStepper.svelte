@@ -2,14 +2,14 @@
   export let stepCount = 0;
   export let currentStep = 0;
   export let stepTitle = ''
-  $: progressPercent =  ((currentStep+1) * 100 / stepCount)
+  $: progressPercent =  ((currentStep) * 100 / stepCount)
 
 </script>
 
 <div class="md:hidden flex align-middle">
   <div class="set-size charts-container">
     <div class={`pie-wrapper progress-${progressPercent} style-2`}>
-      <span class="label">{progressPercent}<span class="text-sm">%</span></span>
+      <span class="label">{progressPercent}<span class="smaller">%</span></span>
       <div class="pie">
         <div class="left-side half-circle"></div>
         <div class="right-side half-circle"></div>
@@ -25,8 +25,9 @@
   @use "sass:math";
   // -- vars
   $bg-color: #34495e;
-  $circle-size: 4em;
-  $label-font-size: math.div($circle-size,5);
+  $default-size: 1em;
+  $label-font-size: $default-size / 3;
+  $label-font-size-redo: $default-size * 3;
 
   // -- mixins
   @mixin size($width, $height) {
@@ -40,7 +41,6 @@
         border-color: $color;
       }
 
-      // change to right side
       .left-side {
         transform: rotate($progress * 3.6deg);
       }
@@ -65,7 +65,10 @@
   *:after {
     box-sizing: border-box;
   }
-  
+  .set-size {
+    font-size: 6em;
+  }
+
   .charts-container {
     &:after {
       clear: both;
@@ -75,7 +78,9 @@
   }
 
   .pie-wrapper {
-    @include size($circle-size, $circle-size);
+    @include size($default-size, $default-size);
+    float: left;
+    margin: 15px;
     position: relative;
 
     &:nth-child(3n + 1) {
@@ -83,20 +88,19 @@
     }
 
     .pie {
-      height: 100%;
-      width: 100%;
-      clip: rect(0, $circle-size, $circle-size, math.div($circle-size, 2));
+      @include size(100%, 100%);
+      clip: rect(0, $default-size, $default-size, $default-size / 2);
       left: 0;
       position: absolute;
       top: 0;
 
       .half-circle {
-        height: 100%;
-        width: 100%;
-        border: math.div($circle-size, 10) solid #3498db;
+        @include size(100%, 100%);
+        border: ($default-size / 10) solid #3498db;
         border-radius: 50%;
-        clip: rect(0,  math.div($circle-size, 2), $circle-size, 0);
+        clip: rect(0, $default-size / 2, $default-size, 0);
         left: 0;
+        position: absolute;
         top: 0;
       }
     }
@@ -104,17 +108,28 @@
     .label {
       background: $bg-color;
       border-radius: 50%;
+      bottom: $label-font-size-redo / 10;
       color: #ecf0f1;
       cursor: default;
       display: block;
+      font-size: $label-font-size;
+      left: $label-font-size-redo / 10;
+      line-height: $label-font-size-redo * .70;
       position: absolute;
-      top: math.div($circle-size - $label-font-size, 2.5);
-      left: math.div($circle-size - $label-font-size, 3);
+      right: $label-font-size-redo / 10;
+      text-align: center;
+      top: $label-font-size-redo / 10;
+
+      .smaller {
+        color: #bdc3c7;
+        font-size: .5em;
+        vertical-align: super;
+      }
     }
 
     .shadow {
       @include size(100%, 100%);
-      border: math.div($circle-size , 10) solid #bdc3c7;
+      border: $default-size / 10 solid #bdc3c7;
       border-radius: 50%;
     }
 
@@ -122,14 +137,21 @@
       .label {
         background: none;
         color: #7f8c8d;
+
+        .smaller {
+          color: #bdc3c7;
+        }
       }
     }
 
+    &.progress-0 {
+      @include draw-progress(0, #bdc3c7);
+    }
     &.progress-20 {
       @include draw-progress(20, #3498db);
     }
     &.progress-25 {
-      @include draw-progress(25, #3498db);
+      @include draw-progress(25, #009900);
     }
     &.progress-40 {
       @include draw-progress(40, #3498db);
