@@ -2,16 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
-/* these are just examples */
-@layer components {
+@layer base {
     .btn-primary {
-        @apply mt-6 px-8 p-3 h-14 rounded-full text-white text-lg bg-cobalt border-black shadow-md;
+        @apply mt-6 px-8 p-3 h-14 rounded-full text-white text-lg bg-blue-400 border-black shadow-md;
     }
-    .btn-cancel {
-        @apply mt-6 px-8 p-3 rounded-full text-white text-lg bg-silver border-black shadow-md;
+    .btn-disabled {
+        @apply mt-6 px-8 p-3 h-14 rounded-full text-gray-400 text-lg bg-gray-50 border-black shadow-md;
     }
 }
-
 
 body {
     min-height: 100vh;
