@@ -1,14 +1,7 @@
 <script>
-	export let size = "5em";
+	export let size = '5em';
 </script>
-<style>
-    .bg0 {
-        fill: #ff8c00;
-    }
-    .st0 {
-        fill: #ffffff;
-    }
-</style>
+
 <svg
 	xmlns="http://www.w3.org/2000/svg"
 	xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -29,3 +22,12 @@
 		></g
 	></svg
 >
+
+<style>
+	.bg0 {
+		fill: #ff8c00;
+	}
+	.st0 {
+		fill: #ffffff;
+	}
+</style>
