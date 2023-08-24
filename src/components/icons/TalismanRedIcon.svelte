@@ -1,6 +1,5 @@
 <script>
 	export let size = "5em";
-
 </script>
 <svg fill="none" height={size} viewBox="0 0 64 64" width={size} xmlns="http://www.w3.org/2000/svg"
 	><path

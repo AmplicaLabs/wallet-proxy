@@ -1,6 +1,6 @@
 <script>
-	import TalismanIcon from '$components/TalismanRedIcon.svelte';
-	import PolkadotIcon from '$components/Polkadot.svelte';
+	import TalismanIcon from '$components/icons/TalismanRedIcon.svelte';
+	import PolkadotIcon from '$components/icons/Polkadot.svelte';
 </script>
 
 
