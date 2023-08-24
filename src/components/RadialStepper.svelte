@@ -6,7 +6,7 @@
 
 </script>
 
-<div class="md:hidden flex align-middle">
+<div class="md:hidden flex items-center">
   <div class="set-size charts-container">
     <div class={`pie-wrapper progress-${progressPercent} style-2`}>
       <span class="label">{progressPercent}<span class="smaller">%</span></span>
@@ -17,7 +17,7 @@
       <div class="shadow"></div>
     </div>
   </div>
-  <p class="pl-8 pt-4 text-3xl text-blue-400">{stepTitle}</p>
+  <p class="pl-8 text-3xl text-blue-400">{stepTitle}</p>
 </div>
 
 
@@ -26,7 +26,7 @@
   // -- vars
   $bg-color: #34495e;
   $default-size: 1em;
-  $label-font-size: $default-size / 3;
+  $label-font-size: math.div($default-size ,3);
   $label-font-size-redo: $default-size * 3;
 
   // -- mixins
@@ -87,38 +87,41 @@
       clear: both;
     }
 
+    $half-default-size: math.div($default-size, 2);
     .pie {
       @include size(100%, 100%);
-      clip: rect(0, $default-size, $default-size, $default-size / 2);
+      clip: rect(0, $default-size, $default-size, $half-default-size);
       left: 0;
       position: absolute;
       top: 0;
 
       .half-circle {
         @include size(100%, 100%);
-        border: ($default-size / 10) solid #3498db;
+        border: math.div($default-size, 10) solid #3498db;
         border-radius: 50%;
-        clip: rect(0, $default-size / 2, $default-size, 0);
+        clip: rect(0, $half-default-size, $default-size, 0);
         left: 0;
         position: absolute;
         top: 0;
       }
     }
 
+    $redo-10: math.div($label-font-size-redo, 10);
+
     .label {
       background: $bg-color;
       border-radius: 50%;
-      bottom: $label-font-size-redo / 10;
+      bottom: $redo-10;
       color: #ecf0f1;
       cursor: default;
       display: block;
       font-size: $label-font-size;
-      left: $label-font-size-redo / 10;
+      left: $redo-10;
       line-height: $label-font-size-redo * .70;
       position: absolute;
-      right: $label-font-size-redo / 10;
+      right: $redo-10;
       text-align: center;
-      top: $label-font-size-redo / 10;
+      top: $redo-10;
 
       .smaller {
         color: #bdc3c7;
@@ -129,7 +132,7 @@
 
     .shadow {
       @include size(100%, 100%);
-      border: $default-size / 10 solid #bdc3c7;
+      border: math.div($default-size , 10) solid #bdc3c7;
       border-radius: 50%;
     }
 
