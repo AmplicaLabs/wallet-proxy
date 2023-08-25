@@ -2,6 +2,10 @@
 	import SelectWallet from '$components/SelectWallet.svelte';
 </script>
 
-<div class="mt-3">
+<div class="text-center mt-7">
+	<h1 class="text-2xl">Sign in</h1>
+    <p>Choose a wallet to connect and sign in.</p>
+</div>
+<div class="mt-8">
 	<SelectWallet />
 </div>
