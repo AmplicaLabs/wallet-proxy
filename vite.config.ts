@@ -1,6 +1,7 @@
+// import { svelte } from '@sveltejs/vite-plugin-svelte';
 import { sveltekit } from '@sveltejs/kit/vite';
-import { defineConfig } from 'vitest/config';
-import { resolve } from 'path'
+import { defineConfig } from 'vitest/config'
+import { resolve } from 'path';
 
 export default defineConfig({
 	plugins: [sveltekit()],
@@ -12,6 +13,10 @@ export default defineConfig({
 		},
 	},
 	test: {
-		include: ['src/**/*.test.ts']
+		environment: 'jsdom',
+		globals: true,
+		reporters: "basic",
+		include: ['src/**/*.test.ts'],
+		exclude: ['playwright/**/*'],
 	}
 });

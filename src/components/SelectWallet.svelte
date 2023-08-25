@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
   import TalismanIcon from '$components/icons/TalismanRedIcon.svelte';
   import PolkadotIcon from '$components/icons/Polkadot.svelte';
 </script>
