@@ -26,6 +26,11 @@ export default {
         'black': '#222222',
         'white-transparent': 'rgb(254,255,255,.1)',
       },
+      width: {
+        '500': '500px',
+        '600': '600px',
+        '720': '720px',
+      }
     },
   },
   plugins: [require('@tailwindcss/forms'),],

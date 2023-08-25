@@ -1,1 +1,0 @@
-<p class="text-2xl text-center">Step two!</p>
