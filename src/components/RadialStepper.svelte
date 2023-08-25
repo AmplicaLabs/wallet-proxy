@@ -1,9 +1,8 @@
 <script>
   export let stepCount = 0;
   export let currentStep = 0;
-  export let stepTitle = ''
-  $: progressPercent =  ((currentStep) * 100 / stepCount)
-
+  export let stepTitle = '';
+  $: progressPercent = (currentStep * 100) / stepCount;
 </script>
 
 <div class="md:hidden flex items-center">
@@ -11,22 +10,21 @@
     <div class={`pie-wrapper progress-${progressPercent} style-2`}>
       <span class="label">{progressPercent}<span class="smaller">%</span></span>
       <div class="pie">
-        <div class="left-side half-circle"></div>
-        <div class="right-side half-circle"></div>
+        <div class="left-side half-circle" />
+        <div class="right-side half-circle" />
       </div>
-      <div class="shadow"></div>
+      <div class="shadow" />
     </div>
   </div>
   <p class="pl-8 text-3xl text-blue-400">{stepTitle}</p>
 </div>
 
-
 <style lang="scss">
-  @use "sass:math";
+  @use 'sass:math';
   // -- vars
   $bg-color: #34495e;
   $default-size: 1em;
-  $label-font-size: math.div($default-size ,3);
+  $label-font-size: math.div($default-size, 3);
   $label-font-size-redo: $default-size * 3;
 
   // -- mixins
@@ -117,7 +115,7 @@
       display: block;
       font-size: $label-font-size;
       left: $redo-10;
-      line-height: $label-font-size-redo * .70;
+      line-height: $label-font-size-redo * 0.7;
       position: absolute;
       right: $redo-10;
       text-align: center;
@@ -125,14 +123,14 @@
 
       .smaller {
         color: #bdc3c7;
-        font-size: .5em;
+        font-size: 0.5em;
         vertical-align: super;
       }
     }
 
     .shadow {
       @include size(100%, 100%);
-      border: math.div($default-size , 10) solid #bdc3c7;
+      border: math.div($default-size, 10) solid #bdc3c7;
       border-radius: 50%;
     }
 
