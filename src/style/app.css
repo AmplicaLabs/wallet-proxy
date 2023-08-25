@@ -3,15 +3,15 @@
 @tailwind utilities;
 
 @layer base {
-	.btn-primary {
-		@apply mt-6 px-8 p-3 h-14 rounded-full text-white text-lg bg-blue-400 border-black shadow-md;
-	}
-	.btn-disabled {
-		@apply mt-6 px-8 p-3 h-14 rounded-full text-gray-400 text-lg bg-gray-50 border-black shadow-md;
-	}
+  .btn-primary {
+    @apply mt-6 px-8 p-3 h-14 rounded-full text-white text-lg bg-blue-400 border-black shadow-md;
+  }
+  .btn-disabled {
+    @apply mt-6 px-8 p-3 h-14 rounded-full text-gray-400 text-lg bg-gray-50 border-black shadow-md;
+  }
 }
 
 body {
-	min-height: 100vh;
-	padding: 2em 1em;
+  min-height: 100vh;
+  padding: 2em 1em;
 }
