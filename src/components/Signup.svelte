@@ -11,21 +11,31 @@
   let progressBar;
   let components = [One, Handle, Three, Last];
 
-  const handleProgress = (stepIncrement) => {
-    const newValue = currentActive + stepIncrement;
-    if (newValue < 0 || newValue > steps.length - 1) {
-      return;
+  // when the form is complete, valid, and/or changes submitted successfully, the form
+  // should set this to true so the Next button is enabled.
+  let formFinished;
+  $: enableNext =  (currentActive < steps.length - 1) && formFinished;
+  $: enablePrevious = currentActive > 0;
+
+  const handlePrevious = () => {
+    handleProgress(-1)
+  }
+
+  const handleNext = () => {
+    if (formFinished) {
+      handleProgress(1);
     }
-    currentActive += stepIncrement;
-    progressBar.handleProgress(stepIncrement);
+  }
+  const handleProgress = (stepIncrement) => {
+      const newValue = currentActive + stepIncrement;
+      if (newValue < 0 || newValue > steps.length - 1) {
+        return;
+      }
+      currentActive += stepIncrement;
+      progressBar.handleProgress(stepIncrement);
+      formFinished = undefined;
   };
 
-  const stepFinished = (): boolean => {
-    if (currentActive < steps.length - 1) {
-      return false;
-    }
-    return true;
-  };
 </script>
 
 <main>
@@ -36,19 +46,21 @@
     stepTitle={steps[currentActive]}
   />
 <!--  <div id="forms-container" class="flex flex-col md:w-500px md:mx-auto xl:px-120">-->
-  <div id="forms-container" class="flex flex-col md:w-600 items-center items-stretch mx-auto my-12px">
-    <svelte:component this={components[currentActive]} />
+  <div id="forms-container" class="flex flex-col px-8 md:w-600 items-center items-stretch mx-auto my-12px">
+    <svelte:component this={components[currentActive]} bind:formFinished={formFinished}/>
   </div>
   <div class="step-button flex sm:justify-between md:justify-around max-w-800">
     <button
       class={currentActive === 0 ? 'btn-disabled' : 'btn-primary'}
-      on:click|preventDefault={() => handleProgress(-1)}
+      on:click|preventDefault={handlePrevious}
+      disabled={!enablePrevious}
     >
       Back
     </button>
     <button
-      class={currentActive === steps.length - 1 ? 'btn-disabled' : 'btn-primary'}
-      on:click|preventDefault={() => handleProgress(+1)}
+      class={enableNext ? 'btn-primary': 'btn-disabled' }
+      disabled={!enableNext}
+      on:click|preventDefault={handleNext}
     >
       Next
     </button>
