@@ -1,6 +1,9 @@
 <script lang="ts">
   import TalismanIcon from '$components/icons/TalismanRedIcon.svelte';
   import PolkadotIcon from '$components/icons/Polkadot.svelte';
+
+  // TODO: change to false and then set to true when wallet selection is complete
+  export let formFinished = true;
 </script>
 
 <div class="flex flex-col">

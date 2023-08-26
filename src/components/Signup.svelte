@@ -1,7 +1,7 @@
 <script lang="ts">
   import RadialStepper from '$components/RadialStepper.svelte';
   import ProgressBar from '$components/ProgressBar.svelte';
-  import One from '$components/One.svelte';
+  import SelectWallet from '$components/SelectWallet.svelte';
   import Handle from '$components/Handle.svelte';
   import Three from '$components/Three.svelte';
   import Last from '$components/Last.svelte';
@@ -9,7 +9,7 @@
   let currentActive = 0;
   let steps = ['Choose Wallet', 'Choose Handle', 'Something Else', 'Register'];
   let progressBar;
-  let components = [One, Handle, Three, Last];
+  let components = [SelectWallet, Handle, Three, Last];
 
   // when the form is complete, valid, and/or changes submitted successfully, the form
   // should set this to true so the Next button is enabled.

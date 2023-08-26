@@ -1,13 +1,12 @@
 import '@testing-library/jest-dom';
-import {render } from '@testing-library/svelte'
+import {render} from '@testing-library/svelte'
+import {waitFor} from "@testing-library/svelte";
+import userEvent from "@testing-library/user-event";
 import Handle from "$components/Handle.svelte";
 
 describe('Handle component', () => {
   it('renders', async () => {
     const {getByText, getByRole} = render(Handle);
-    expect(getByText('Choose your handle')).toBeInTheDocument();
-    expect(getByText('Choose your handle')).toBeInTheDocument();
-
     const handleInput = getByRole('textbox') as HTMLInputElement;
     expect(handleInput).toBeInTheDocument();
     expect(handleInput.placeholder).toBe('enter your desired handle');
@@ -17,10 +16,21 @@ describe('Handle component', () => {
   })
 
   it('validates a handle', async () => {
-    let handleFormFinished;
-    const validHandle = 'Bobbay';
-    const invalidHandle = 'Bo';
+    let user = userEvent.setup();
 
-    const { getByRole } = render(Handle, {formFinished: handleFormFinished})
+    const { component, getByRole } = render(Handle)
+    const handleInput = getByRole('textbox') as HTMLInputElement;
+    const claimBtn = getByRole('button', {name: 'Claim this handle'});
+
+    await user.type(handleInput, 'Bobbay');
+    expect(handleInput.value).toEqual('Bobbay');
+
+    await waitFor(() => {
+      expect(claimBtn).toBeEnabled();
+    }, { timeout: 1100});
+
+    await user.click(claimBtn);
+    let cmp = component.$$;
+    expect(cmp.ctx[cmp.props["formFinished"]]).toBe(true)
   })
 })
