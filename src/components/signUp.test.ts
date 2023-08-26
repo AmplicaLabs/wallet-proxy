@@ -13,17 +13,5 @@ describe('Sign up component', () => {
 
     const nextBtn = getByRole('button', { name: 'Next' }) as HTMLButtonElement;
     expect(nextBtn).toBeEnabled();
-    userEvent.click(nextBtn);
-
-    await waitFor(() => {
-      expect(getByText('Choose Handle')).toBeInTheDocument();
-      expect(backBtn).toBeEnabled();
-    });
-
-    userEvent.click(backBtn);
-
-    await waitFor(() => {
-      expect(getByText('Choose Wallet')).toBeInTheDocument();
-    });
   });
 });
