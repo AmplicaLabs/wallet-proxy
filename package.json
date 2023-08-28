@@ -14,7 +14,7 @@
 		"format": "prettier --plugin prettier-plugin-svelte  --plugin-search-dir . --write .",
 		"test:integration": "playwright test",
 		"test:unit": "vitest",
-		"coverage": "vitest run --coverage"
+		"test:coverage": "vitest run --coverage"
 	},
 	"dependencies": {
 		"@polkadot/api": "^10.9.1",
