@@ -3,36 +3,35 @@ export default {
   content: ['./src/**/*.{html,js,svelte,ts}'],
   theme: {
     screens: {
-      'sm': { 'max': '767px'},
-      'md': { 'min': '768px'},
-      'lg': { 'min': '1023px'},
-      'xl': { 'min': '1280px'},
+      sm: { max: '767px' },
+      md: { min: '768px' },
+      lg: { min: '1023px' },
+      xl: { min: '1280px' }
     },
     extend: {
       borderRadius: {
         'rounded-3xl': '20px',
-        'rounded-md': '5px',
+        'rounded-md': '5px'
       },
       boxShadow: {
-        'md': '0px 4px 7px rgba(0,0,0,.25)',
+        md: '0px 4px 7px rgba(0,0,0,.25)'
       },
       backgroundImage: {
-        'topRight': 'url(/assets/top-right-bars.png)'
+        topRight: 'url(/assets/top-right-bars.png)'
       },
       colors: {
         transparent: 'transparent',
         current: 'currentColor',
-        'white': '#ffffff',
-        'black': '#222222',
-        'white-transparent': 'rgb(254,255,255,.1)',
+        white: '#ffffff',
+        black: '#222222',
+        'white-transparent': 'rgb(254,255,255,.1)'
       },
       width: {
-        '500': '500px',
-        '600': '600px',
-        '720': '720px',
+        500: '500px',
+        600: '600px',
+        720: '720px'
       }
-    },
+    }
   },
-  plugins: [require('@tailwindcss/forms'),],
-}
-
+  plugins: [require('@tailwindcss/forms')]
+};

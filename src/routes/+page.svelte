@@ -8,6 +8,7 @@
 {#if data.error}
   <div class="rounded-lg border-2 mt-8 p-8">
     <p class="text-2xl text-blue-700">Error getting WebSocket endpoint</p>
+    <!-- eslint-disable-next-line svelte/no-at-html-tags -->
     <p class="text-xl mt-8 text-red-600">{@html data.error}</p>
   </div>
 {:else}

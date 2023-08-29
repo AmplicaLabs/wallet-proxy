@@ -16,7 +16,7 @@ describe('Handle component', () => {
   });
 
   it('validates a handle', async () => {
-    let user = userEvent.setup();
+    const user = userEvent.setup();
 
     const { component, getByRole } = render(Handle);
     const handleInput = getByRole('textbox') as HTMLInputElement;
@@ -33,7 +33,7 @@ describe('Handle component', () => {
     );
 
     await user.click(claimBtn);
-    let cmp = component.$$;
+    const cmp = component.$$;
     expect(cmp.ctx[cmp.props['formFinished']]).toBe(true);
   });
 });
