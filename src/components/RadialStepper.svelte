@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
   export let stepCount = 0;
   export let currentStep = 0;
   export let stepTitle = '';

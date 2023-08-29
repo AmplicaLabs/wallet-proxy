@@ -1,16 +1,35 @@
 <script lang="ts">
+  import { onMount } from 'svelte';
+
+  export let endpoint;
+
   import RadialStepper from '$components/RadialStepper.svelte';
   import ProgressBar from '$components/ProgressBar.svelte';
-  import One from '$components/One.svelte';
-  import Two from '$components/Two.svelte';
+  import SelectWallet from '$components/SelectWallet.svelte';
+  import Handle from '$components/Handle.svelte';
   import Three from '$components/Three.svelte';
   import Last from '$components/Last.svelte';
 
   let currentActive = 0;
-  let steps = ['Choose Wallet', 'Connect', 'Something Else', 'Register'];
+  let steps = ['Choose Wallet', 'Choose Handle', 'Something Else', 'Register'];
   let progressBar;
-  let components = [One, Two, Three, Last];
+  let components = [SelectWallet, Handle, Three, Last];
 
+  // when the form is complete, valid, and/or changes submitted successfully, the form
+  // should set this to true so the Next button is enabled.
+  let formFinished;
+  $: enableNext = currentActive < steps.length - 1 && formFinished;
+  $: enablePrevious = currentActive > 0;
+
+  const handlePrevious = () => {
+    handleProgress(-1);
+  };
+
+  const handleNext = () => {
+    if (formFinished) {
+      handleProgress(1);
+    }
+  };
   const handleProgress = (stepIncrement) => {
     const newValue = currentActive + stepIncrement;
     if (newValue < 0 || newValue > steps.length - 1) {
@@ -18,13 +37,7 @@
     }
     currentActive += stepIncrement;
     progressBar.handleProgress(stepIncrement);
-  };
-
-  const stepFinished = (): boolean => {
-    if (currentActive < steps.length - 1) {
-      return false;
-    }
-    return true;
+    formFinished = undefined;
   };
 </script>
 
@@ -35,17 +48,24 @@
     stepCount={steps.length}
     stepTitle={steps[currentActive]}
   />
-  <svelte:component this={components[currentActive]} />
+  <div
+    id="forms-container"
+    class="flex flex-col px-8 md:w-600 items-center items-stretch mx-auto my-12px"
+  >
+    <svelte:component this={components[currentActive]} bind:formFinished {endpoint} />
+  </div>
   <div class="step-button flex sm:justify-between md:justify-around max-w-800">
     <button
       class={currentActive === 0 ? 'btn-disabled' : 'btn-primary'}
-      on:click|preventDefault={() => handleProgress(-1)}
+      on:click|preventDefault={handlePrevious}
+      disabled={!enablePrevious}
     >
       Back
     </button>
     <button
-      class={currentActive === steps.length - 1 ? 'btn-disabled' : 'btn-primary'}
-      on:click|preventDefault={() => handleProgress(+1)}
+      class={enableNext ? 'btn-primary' : 'btn-disabled'}
+      disabled={!enableNext}
+      on:click|preventDefault={handleNext}
     >
       Next
     </button>
