@@ -1,7 +1,4 @@
 <script lang="ts">
-  import {Bytes} from "@polkadot/types";
-  import {ExtrinsicHelper} from "$lib/chain/extrinsicHelpers";
-
   let maybeHandle: string='';
   let handleIsValid: boolean = false;
   let debounceTimer;
@@ -23,11 +20,12 @@
   const handleCharsMin = 3;
 
   const checkHandle = () => {
-    let handleBytes = new Bytes(ExtrinsicHelper.api.registry, maybeHandle);
+    let utf8Encode = new TextEncoder();
+
     handleIsValid =  (
       maybeHandle.length >= handleCharsMin &&
       maybeHandle.length <= handleCharsMax &&
-      handleBytes.length <= handleBytesMax
+      utf8Encode.encode(maybeHandle).length <= handleBytesMax
     )
   }
   const doClaimHandle = (_evt: Event) => {

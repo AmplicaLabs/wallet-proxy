@@ -17,9 +17,3 @@ export const getEndpointFromURL = (url: any):
     }
   }
 }
-
-export function log(...args: any[]) {
-  // if (process.env.verbose) {
-    console.debug(...args);
-  // }
-}

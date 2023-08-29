@@ -9,7 +9,6 @@
   import Handle from '$components/Handle.svelte';
   import Three from '$components/Three.svelte';
   import Last from '$components/Last.svelte';
-  import {ExtrinsicHelper} from "$lib/chain/extrinsicHelpers";
 
   let currentActive = 0;
   let steps = ['Choose Wallet', 'Choose Handle', 'Something Else', 'Register'];
@@ -40,17 +39,6 @@
       progressBar.handleProgress(stepIncrement);
       formFinished = undefined;
   };
-
-  onMount (() => {
-    try {
-      if (ExtrinsicHelper.api) {
-        ExtrinsicHelper.disconnect();
-      }
-      ExtrinsicHelper.initialize(endpoint);
-    } catch(e: any) {
-      console.error(e.toString())
-    }
-  })
 </script>
 
 <main>
