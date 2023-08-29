@@ -24,3 +24,6 @@ coverage
 
 # Optional eslint cache
 .eslintcache
+
+# coverage and playwright UI results
+test-results
