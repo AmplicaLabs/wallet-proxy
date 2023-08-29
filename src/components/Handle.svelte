@@ -1,6 +1,10 @@
 <script lang="ts">
   import { HandleStore } from '../lib/store';
 
+  import {Bytes} from "@polkadot/types";
+  import {ExtrinsicHelper} from "$lib/chain/extrinsicHelpers";
+
+  let maybeHandle: string = '';
   let handleIsValid: boolean = false;
   let debounceTimer;
 
@@ -37,7 +41,9 @@
 </script>
 
 <div class="pt-4">Your handle is a named connection to your DSNP Identity.</div>
-<div class="pt-4">Choose a unique handle to associate it with your DSNP account.</div>
+<div class="pt-4">
+  Choose a unique handle and provide your signature to associate it with your DSNP account.
+</div>
 <form class="pt-4">
   <input
     id="handle"
@@ -54,4 +60,3 @@
     Claim this handle
   </button>
 </form>
-<div class="hidden">{endpoint}</div>
