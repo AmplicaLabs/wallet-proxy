@@ -1,11 +1,11 @@
 <script lang="ts">
+  import {Bytes} from "@polkadot/types";
+  import {ExtrinsicHelper} from "$lib/chain/extrinsicHelpers";
+
   let maybeHandle: string = '';
   let handleIsValid: boolean = false;
   let debounceTimer;
-
   export let formFinished = false;
-  export let endpoint;
-
   const debounceCheck = (_evt: Event) => {
     if (debounceTimer) {
       clearTimeout(debounceTimer);
@@ -55,4 +55,3 @@
     Claim this handle
   </button>
 </form>
-<div class="hidden">{endpoint}</div>
