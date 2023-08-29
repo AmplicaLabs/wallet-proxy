@@ -1,5 +1,5 @@
 <script lang="ts">
-  let maybeHandle: string='';
+  let maybeHandle: string = '';
   let handleIsValid: boolean = false;
   let debounceTimer;
 
@@ -11,9 +11,9 @@
       clearTimeout(debounceTimer);
     }
     debounceTimer = setTimeout(() => {
-      checkHandle()
+      checkHandle();
     }, 400);
-  }
+  };
 
   const handleBytesMax = 32;
   const handleCharsMax = 20;
@@ -22,25 +22,36 @@
   const checkHandle = () => {
     let utf8Encode = new TextEncoder();
 
-    handleIsValid =  (
+    handleIsValid =
       maybeHandle.length >= handleCharsMin &&
       maybeHandle.length <= handleCharsMax &&
-      utf8Encode.encode(maybeHandle).length <= handleBytesMax
-    )
-  }
+      utf8Encode.encode(maybeHandle).length <= handleBytesMax;
+  };
   const doClaimHandle = (_evt: Event) => {
-    if (debounceTimer) { clearTimeout(debounceTimer); }
+    if (debounceTimer) {
+      clearTimeout(debounceTimer);
+    }
     formFinished = true;
-  }
-
+  };
 </script>
+
 <div class="pt-4">Your handle is a named connection to your DSNP Identity.</div>
-<div class="pt-4">Choose a unique handle and provide your signature to associate it with your DSNP account.</div>
+<div class="pt-4">
+  Choose a unique handle and provide your signature to associate it with your DSNP account.
+</div>
 <form class="pt-4">
-  <input id="handle" class="w-80 mr-8"
-         placeholder="enter your desired handle" bind:value={maybeHandle} on:keyup={debounceCheck}>
-  <button class={handleIsValid ? 'btn-primary' : 'btn-disabled'}
-          on:click|preventDefault={doClaimHandle} disabled={!handleIsValid}>
+  <input
+    id="handle"
+    class="w-80 mr-8"
+    placeholder="enter your desired handle"
+    bind:value={maybeHandle}
+    on:keyup={debounceCheck}
+  />
+  <button
+    class={handleIsValid ? 'btn-primary' : 'btn-disabled'}
+    on:click|preventDefault={doClaimHandle}
+    disabled={!handleIsValid}
+  >
     Claim this handle
   </button>
 </form>

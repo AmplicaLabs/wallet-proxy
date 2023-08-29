@@ -1,10 +1,10 @@
 <script>
   /** @type {import('./$types').PageData} */
-    // we can access `data.posts` because it's returned from
-    // the parent layout `load` function
+  // we can access `data.posts` because it's returned from
+  // the parent layout `load` function
   export let data;
-
 </script>
+
 {#if data.error}
   <div class="rounded-lg border-2 mt-8 p-8">
     <p class="text-2xl text-blue-700">Error getting WebSocket endpoint</p>

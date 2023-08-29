@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { onMount } from "svelte";
+  import { onMount } from 'svelte';
 
   export let endpoint;
 
@@ -18,26 +18,26 @@
   // when the form is complete, valid, and/or changes submitted successfully, the form
   // should set this to true so the Next button is enabled.
   let formFinished;
-  $: enableNext =  (currentActive < steps.length - 1) && formFinished;
+  $: enableNext = currentActive < steps.length - 1 && formFinished;
   $: enablePrevious = currentActive > 0;
 
   const handlePrevious = () => {
-    handleProgress(-1)
-  }
+    handleProgress(-1);
+  };
 
   const handleNext = () => {
     if (formFinished) {
       handleProgress(1);
     }
-  }
+  };
   const handleProgress = (stepIncrement) => {
-      const newValue = currentActive + stepIncrement;
-      if (newValue < 0 || newValue > steps.length - 1) {
-        return;
-      }
-      currentActive += stepIncrement;
-      progressBar.handleProgress(stepIncrement);
-      formFinished = undefined;
+    const newValue = currentActive + stepIncrement;
+    if (newValue < 0 || newValue > steps.length - 1) {
+      return;
+    }
+    currentActive += stepIncrement;
+    progressBar.handleProgress(stepIncrement);
+    formFinished = undefined;
   };
 </script>
 
@@ -48,9 +48,11 @@
     stepCount={steps.length}
     stepTitle={steps[currentActive]}
   />
-<!--  <div id="forms-container" class="flex flex-col md:w-500px md:mx-auto xl:px-120">-->
-  <div id="forms-container" class="flex flex-col px-8 md:w-600 items-center items-stretch mx-auto my-12px">
-    <svelte:component this={components[currentActive]} bind:formFinished={formFinished} endpoint={endpoint}/>
+  <div
+    id="forms-container"
+    class="flex flex-col px-8 md:w-600 items-center items-stretch mx-auto my-12px"
+  >
+    <svelte:component this={components[currentActive]} bind:formFinished {endpoint} />
   </div>
   <div class="step-button flex sm:justify-between md:justify-around max-w-800">
     <button
@@ -61,7 +63,7 @@
       Back
     </button>
     <button
-      class={enableNext ? 'btn-primary': 'btn-disabled' }
+      class={enableNext ? 'btn-primary' : 'btn-disabled'}
       disabled={!enableNext}
       on:click|preventDefault={handleNext}
     >

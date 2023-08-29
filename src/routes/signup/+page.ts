@@ -1,4 +1,4 @@
-import {getEndpointFromURL} from "$lib/util";
+import { getEndpointFromURL } from '$lib/util';
 
 /** @type {import('./$types').PageLoad} */
 
