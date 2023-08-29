@@ -12,7 +12,7 @@
     }
     debounceTimer = setTimeout(() => {
       checkHandle()
-    }, 1000);
+    }, 400);
   }
 
   const handleBytesMax = 32;

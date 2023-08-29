@@ -1,5 +1,6 @@
-// Generic helper functions that do not depend on any polkadot or other specialized libraries
-// Please keep imports as low as reasonably achievable
+// Generic helper functions that do not depend on any Polkadot or other specialized libraries
+// Please keep imports As Low As Reasonably Achievable
+
 export const getEndpointFromURL = (url: any):
   {endpoint?: string, error?: string}  => {
   try {
