@@ -1,8 +1,22 @@
-<ul>
-  <li>
-    <a href="/signup">Sign up</a>
-  </li>
-  <li>
-    <a href="/signin">Sign in</a>
-  </li>
-</ul>
+<script>
+  /** @type {import('./$types').PageData} */
+    // we can access `data.posts` because it's returned from
+    // the parent layout `load` function
+  export let data;
+
+</script>
+{#if data.error}
+  <div class="rounded-lg border-2 mt-8 p-8">
+    <p class="text-2xl text-blue-700">Error getting WebSocket endpoint</p>
+    <p class="text-xl mt-8 text-red-600">{@html data.error}</p>
+  </div>
+{:else}
+  <ul>
+    <li>
+      <a href="/signin?endpoint={data.endpoint}">Sign in</a>
+    </li>
+    <li>
+      <a href="/signup?endpoint={data.endpoint}">Sign up</a>
+    </li>
+  </ul>
+{/if}

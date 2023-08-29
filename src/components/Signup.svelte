@@ -1,10 +1,15 @@
 <script lang="ts">
+  import { onMount } from "svelte";
+
+  export let endpoint;
+
   import RadialStepper from '$components/RadialStepper.svelte';
   import ProgressBar from '$components/ProgressBar.svelte';
   import SelectWallet from '$components/SelectWallet.svelte';
   import Handle from '$components/Handle.svelte';
   import Three from '$components/Three.svelte';
   import Last from '$components/Last.svelte';
+  import {ExtrinsicHelper} from "$lib/chain/extrinsicHelpers";
 
   let currentActive = 0;
   let steps = ['Choose Wallet', 'Choose Handle', 'Something Else', 'Register'];
@@ -36,6 +41,16 @@
       formFinished = undefined;
   };
 
+  onMount (() => {
+    try {
+      if (ExtrinsicHelper.api) {
+        ExtrinsicHelper.disconnect();
+      }
+      ExtrinsicHelper.initialize(endpoint);
+    } catch(e: any) {
+      console.error(e.toString())
+    }
+  })
 </script>
 
 <main>
@@ -47,7 +62,7 @@
   />
 <!--  <div id="forms-container" class="flex flex-col md:w-500px md:mx-auto xl:px-120">-->
   <div id="forms-container" class="flex flex-col px-8 md:w-600 items-center items-stretch mx-auto my-12px">
-    <svelte:component this={components[currentActive]} bind:formFinished={formFinished}/>
+    <svelte:component this={components[currentActive]} bind:formFinished={formFinished} endpoint={endpoint}/>
   </div>
   <div class="step-button flex sm:justify-between md:justify-around max-w-800">
     <button

@@ -4,6 +4,7 @@
 
   // TODO: change to false and then set to true when wallet selection is complete
   export let formFinished = true;
+  export let endpoint;
 </script>
 
 <div class="flex flex-col">
@@ -32,3 +33,4 @@
     </div>
   </button>
 </div>
+<div class="hidden">{endpoint}</div>

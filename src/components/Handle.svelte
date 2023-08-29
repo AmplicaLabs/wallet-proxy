@@ -1,9 +1,14 @@
 <script lang="ts">
+  import {Bytes} from "@polkadot/types";
+  import {ExtrinsicHelper} from "$lib/chain/extrinsicHelpers";
 
   let maybeHandle: string='';
   let handleIsValid: boolean = false;
   let debounceTimer;
+
   export let formFinished = false;
+  export let endpoint;
+
   const debounceCheck = (_evt: Event) => {
     if (debounceTimer) {
       clearTimeout(debounceTimer);
@@ -12,15 +17,20 @@
       checkHandle()
     }, 1000);
   }
+
+  const handleBytesMax = 32;
+  const handleCharsMax = 20;
+  const handleCharsMin = 3;
+
   const checkHandle = () => {
-    if (maybeHandle === 'Charlie' || maybeHandle.length < 3) {
-      handleIsValid = false;
-    }  else if (maybeHandle.length >= 3) {
-      handleIsValid = true;
-    }
+    let handleBytes = new Bytes(ExtrinsicHelper.api.registry, maybeHandle);
+    handleIsValid =  (
+      maybeHandle.length >= handleCharsMin &&
+      maybeHandle.length <= handleCharsMax &&
+      handleBytes.length <= handleBytesMax
+    )
   }
   const doClaimHandle = (_evt: Event) => {
-    console.log("doClaimHandle");
     if (debounceTimer) { clearTimeout(debounceTimer); }
     formFinished = true;
   }
@@ -36,3 +46,4 @@
     Claim this handle
   </button>
 </form>
+<div class="hidden">{endpoint}</div>
