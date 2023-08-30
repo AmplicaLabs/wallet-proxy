@@ -1,5 +1,5 @@
 <script lang="ts">
-  import FrequencyIcon from '$lib/assets/frqcy-circle-grad.png';
+  import FrequencyIcon from '$lib/assets/frequency/frqcy-circle-grad.png';
   import Signup from '$components/Signup.svelte';
 </script>
 

@@ -1,7 +1,3 @@
-<script lang="ts">
-  export let size = '5em';
-</script>
-
 <svg
   width="461.117"
   height="68.256"
