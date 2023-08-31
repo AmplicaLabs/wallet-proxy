@@ -2,7 +2,7 @@
   export let stepCount = 0;
   export let currentStep = 0;
   export let stepTitle = '';
-  $: progressPercent = (currentStep * 100) / stepCount;
+  $: progressPercent = Math.floor(Math.fround((currentStep * 100) / stepCount));
 </script>
 
 <div class="md:hidden flex items-center">
