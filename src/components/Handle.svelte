@@ -1,10 +1,9 @@
 <script lang="ts">
-  import { ExtrinsicHelper } from '$lib/chain/extrinsicHelpers';
   import { HandleStore } from '$lib/store';
 
   let maybeHandle: string = '';
   let debounceTimer;
-  const signingKeyName = ExtrinsicHelper.signingKeys?.name;
+  const signingKeyName = '';
   export let formFinished = false;
   const debounceCheck = (_evt: Event) => {
     if (debounceTimer) {
