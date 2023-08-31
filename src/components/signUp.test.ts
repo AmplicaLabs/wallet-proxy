@@ -11,6 +11,6 @@ describe('Sign up component', () => {
     expect(backBtn).toBeDisabled();
 
     const nextBtn = getByRole('button', { name: 'Next' }) as HTMLButtonElement;
-    expect(nextBtn).toBeEnabled();
+    expect(nextBtn).not.toBeEnabled();
   });
 });
