@@ -3,7 +3,7 @@ import { render } from '@testing-library/svelte';
 import { waitFor } from '@testing-library/svelte';
 import userEvent from '@testing-library/user-event';
 import Handle from '$components/Handle.svelte';
-import {HandleStore} from "$lib/store";
+import { HandleStore } from '$lib/store';
 import { get } from 'svelte/store';
 
 describe('Handle component', () => {

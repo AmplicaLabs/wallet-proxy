@@ -19,7 +19,7 @@ const walletConnector = async function (
   }
 
   if (wallet.enable) {
-    let res = await wallet.enable(originName);
+    const res = await wallet.enable(originName);
 
     return {
       ...res,

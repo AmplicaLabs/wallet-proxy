@@ -42,28 +42,23 @@
     try {
       extension = await walletConnector(injectedName, 'Acme App');
       let accounts = await extension.accounts.get();
-
       $SelectedWalletAccountsStore = accounts.map((account) => account.address);
-
-      isLoading = false;
-
       goto(`/signup?${$page.url.searchParams}`);
     } catch (error) {
-      isLoading = false;
       console.log('Extension not installed - close window and redirect');
-      return;
+    } finally {
+      isLoading = false;
     }
   }
 
 
   const extensionClasses = [
-    "font-medium text-gray-900 border border-gray-300",
-    "rounded-lg px-3 py-2.5 ",
-    "focus:ring-4 focus:outline-none focus:ring-gray-100",
-    "dark:focus:ring-gray-600 dark:bg-gray-800 dark:border-gray-700 " +
-    "dark:text-white dark:hover:bg-gray-700"
-  ].join(' ')
-
+    'font-medium text-gray-900 border border-gray-300',
+    'rounded-lg px-3 py-2.5 ',
+    'focus:ring-4 focus:outline-none focus:ring-gray-100',
+    'dark:focus:ring-gray-600 dark:bg-gray-800 dark:border-gray-700 ' +
+      'dark:text-white dark:hover:bg-gray-700'
+  ].join(' ');
 </script>
 
 <div class="flex flex-col gap-2">

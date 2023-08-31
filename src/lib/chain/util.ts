@@ -1,6 +1,6 @@
-import type {KeyringPair} from "@polkadot/keyring/types";
-import {Keyring} from "@polkadot/api";
-import {getKeyring, setKeyring} from "$lib/chain/apiConnection";
+import type { KeyringPair } from '@polkadot/keyring/types';
+import { Keyring } from '@polkadot/api';
+import { getKeyring, setKeyring } from '$lib/chain/apiConnection';
 
 // Basic utilities
 // For use w/ localhost testing

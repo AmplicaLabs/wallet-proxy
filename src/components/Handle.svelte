@@ -29,7 +29,9 @@
   };
 </script>
 
-<div class="pt-4">Your handle will be linked to your {signingKeyName} account and your new DSNP Identity.</div>
+<div class="pt-4">
+  Your handle will be linked to your {signingKeyName} account and your new DSNP Identity.
+</div>
 <div class="pt-4">
   Enter a handle and click 'Claim this Handle'. You will be asked to sign with your wallet.
 </div>

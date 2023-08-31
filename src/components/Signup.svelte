@@ -9,8 +9,8 @@
   import Handle from '$components/Handle.svelte';
   import ReviewSign from '$components/ReviewSign.svelte';
   import Last from '$components/Last.svelte';
-  import {ExtrinsicHelper} from "$lib/chain/extrinsicHelpers";
-  import SelectAddress from "./SelectAddress.svelte";
+  import { ExtrinsicHelper } from '$lib/chain/extrinsicHelpers';
+  import SelectAddress from './SelectAddress.svelte';
 
   let currentActive = 0;
   let steps = ['Choose Wallet', 'Select Address', 'Choose Handle', 'Register'];
@@ -42,14 +42,13 @@
     formFinished = undefined;
   };
 
-  onMount (async () => {
+  onMount(async () => {
     try {
-      console.log("signup onmount")
       await ExtrinsicHelper.initialize(endpoint);
-    } catch(e: any) {
-      console.error(e.toString())
+    } catch (e: any) {
+      console.error(e.toString());
     }
-  })
+  });
 </script>
 
 <main>
