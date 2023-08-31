@@ -5,7 +5,6 @@
   import {ExtrinsicHelper} from "$lib/chain/extrinsicHelpers";
 
   let maybeHandle: string = '';
-  let handleIsValid: boolean = false;
   let debounceTimer;
   const signingKeyName = ExtrinsicHelper.signingKeys?.name;
   export let formFinished = false;
@@ -27,16 +26,10 @@
   const checkHandle = () => {
     let utf8Encode = new TextEncoder();
 
-    handleIsValid =
+    formFinished =
       $HandleStore.length >= handleCharsMin &&
       $HandleStore.length <= handleCharsMax &&
       utf8Encode.encode($HandleStore).length <= handleBytesMax;
-  };
-  const doClaimHandle = (_evt: Event) => {
-    if (debounceTimer) {
-      clearTimeout(debounceTimer);
-    }
-    formFinished = true;
   };
 </script>
 
@@ -52,11 +45,4 @@
     bind:value={$HandleStore}
     on:keyup={debounceCheck}
   />
-  <button
-    class={handleIsValid ? 'btn-primary' : 'btn-disabled'}
-    on:click|preventDefault={doClaimHandle}
-    disabled={!handleIsValid}
-  >
-    Claim this handle
-  </button>
 </form>
