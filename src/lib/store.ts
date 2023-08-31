@@ -6,3 +6,5 @@ export const SelectedWalletAccountsStore = writable<string[]>([]);
 export const InjectedWeb3Store = writable();
 
 export const storeWalletInfo = writable({})
+
+export const storeHandle = writable('');
