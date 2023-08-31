@@ -53,13 +53,23 @@
       return;
     }
   }
+
+
+  const extensionClasses = [
+    "font-medium text-gray-900 border border-gray-300",
+    "rounded-lg px-3 py-2.5 ",
+    "focus:ring-4 focus:outline-none focus:ring-gray-100",
+    "dark:focus:ring-gray-600 dark:bg-gray-800 dark:border-gray-700 " +
+    "dark:text-white dark:hover:bg-gray-700"
+  ].join(' ')
+
 </script>
 
 <div class="flex flex-col gap-2">
   {#each extensions as extension, index}
     <button
       type="button"
-      class="text-gray-900 border border-gray-300 focus:ring-4 focus:outline-none focus:ring-gray-100 font-medium rounded-lg px-3 py-2.5 dark:focus:ring-gray-600 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700"
+      class={extensionClasses}
       on:click={() => handleSelectedWallet(extension.injectedName)}
     >
       <div class="flex items-center justify-center gap-3">
