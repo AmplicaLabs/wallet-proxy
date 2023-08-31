@@ -15,10 +15,10 @@
 {:else}
   <ul>
     <li>
-      <a href="/signin?endpoint={data.endpoint}">Sign in</a>
+      <a href="/signin?rpc={data.endpoint}">Sign in</a>
     </li>
     <li>
-      <a href="/signup?endpoint={data.endpoint}">Sign up</a>
+      <a href="/signup?rpc={data.endpoint}">Sign up</a>
     </li>
   </ul>
 {/if}

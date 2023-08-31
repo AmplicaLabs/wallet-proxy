@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { onMount } from 'svelte';
+
   export let endpoint;
 
   import RadialStepper from '$components/RadialStepper.svelte';
@@ -8,15 +10,17 @@
   import ReviewSign from '$components/ReviewSign.svelte';
   import Last from '$components/Last.svelte';
   import {ExtrinsicHelper} from "$lib/chain/extrinsicHelpers";
+  import SelectAddress from "./SelectAddress.svelte";
 
   let currentActive = 0;
-  let steps = ['Choose Wallet', 'Choose Handle', 'Review & Sign'];
+  let steps = ['Choose Wallet', 'Select Address', 'Choose Handle', 'Register'];
   let progressBar;
-  let components = [SelectWallet, Handle, ReviewSign, Last];
+  let components = [SelectWallet, SelectAddress, Handle, ReviewSign];
 
   // when the form is complete, valid, and/or changes submitted successfully, the form
   // should set this to true so the Next button is enabled.
   let formFinished;
+  $: enableNext = currentActive < steps.length - 1 && formFinished;
   $: enablePrevious = currentActive > 0;
 
   const handlePrevious = () => {
@@ -38,12 +42,10 @@
     formFinished = undefined;
   };
 
-  onMount (() => {
+  onMount (async () => {
     try {
-      if (ExtrinsicHelper.api) {
-        ExtrinsicHelper.disconnect();
-      }
-      ExtrinsicHelper.initialize(endpoint);
+      console.log("signup onmount")
+      await ExtrinsicHelper.initialize(endpoint);
     } catch(e: any) {
       console.error(e.toString())
     }
@@ -60,8 +62,13 @@
 
   <div class="flex flex-col px-8 md:w-200 items-center mx-auto">
     <svelte:component this={components[currentActive]} bind:formFinished {endpoint} />
+  <div
+    id="forms-container"
+    class="flex flex-col px-8 md:w-720 items-center items-stretch mx-auto my-12px"
+  >
+    <svelte:component this={components[currentActive]} bind:formFinished />
   </div>
-  <div class="flex sm:justify-between md:justify-around">
+  <div class="step-button flex sm:justify-between md:justify-around max-w-800">
     <button
       class={currentActive === 0 ? 'btn-disabled' : 'btn-primary'}
       on:click|preventDefault={handlePrevious}
@@ -70,11 +77,11 @@
       Back
     </button>
     <button
-      class={formFinished ? 'btn-primary' : 'btn-disabled'}
-      disabled={!formFinished}
+      class={enableNext ? 'btn-primary' : 'btn-disabled'}
+      disabled={!enableNext}
       on:click|preventDefault={handleNext}
     >
-      {currentActive < steps.length - 1 ? 'Next' : 'Finish'}
+      Next
     </button>
   </div>
 </main>
