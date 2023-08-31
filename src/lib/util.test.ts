@@ -1,6 +1,5 @@
 import { getRpcEndpointFromURL } from '$lib/util';
 
-const colonSlashSlash = '%3A%2F%2F';
 describe('getEndpointFromURL', () => {
   [
     {
@@ -15,7 +14,7 @@ describe('getEndpointFromURL', () => {
     },
     {
       name: 'when there is no endpoint searchParam',
-      url: new URL(`http://foo.bar/?rpc=http${colonSlashSlash}bar.pt`),
+      url: new URL(`http://foo.bar/?rpc=http%3A%2F%2Fbar.pt`),
       expectMatch: 'http://bar.pt must be a WebSocket URL'
     }
   ].forEach((testCase) => {
