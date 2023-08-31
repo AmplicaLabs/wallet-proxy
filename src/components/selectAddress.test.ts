@@ -1,14 +1,14 @@
 import '@testing-library/jest-dom';
 import {getByRole, getByText, render, waitFor} from "@testing-library/svelte";
 import SelectAddress from "./SelectAddress.svelte";
-import {storeWalletInfo} from "$lib/store";
+import {WalletInfoStore} from "$lib/store";
 
 describe('SelectAddress component', () => {
   beforeEach(() => {
-    storeWalletInfo.update(info => info = {});
+    WalletInfoStore.update(info => info = {});
   })
   it('renders', async () => {
-    storeWalletInfo.update(info => info = {
+    WalletInfoStore.update(info => info = {
       injectedExtension: {
         accounts: [
           {address: '0xabcd1234', name: 'Foo'},

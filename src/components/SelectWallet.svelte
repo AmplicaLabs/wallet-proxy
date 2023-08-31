@@ -6,7 +6,7 @@
   import { extensionsConfig } from '$lib/extensionsConfig';
   import type { Extension } from '$lib/extensionsConfig';
   import { onReady, isWalletInstalled, walletConnector } from '$lib/wallet';
-  import {storeWalletInfo} from "$lib/store";
+  import {WalletInfoStore} from "$lib/store";
 
   // TODO: change to false and then set to true when wallet selection is complete
   // eslint-disable-next-line @typescript-eslint/no-unused-var
@@ -27,7 +27,7 @@
     selectedWallet = injectedName;``
     try {
       const injectedExtension = await walletConnector(injectedName);
-      storeWalletInfo.update((info) => info = {injectedExtension});
+      WalletInfoStore.update((info) => info = {injectedExtension});
       formFinished=true;
     } catch (error) {
       console.log('Extension not installed - close window and redirect');

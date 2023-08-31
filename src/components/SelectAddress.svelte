@@ -2,7 +2,7 @@
   import {onMount} from "svelte";
   import {ExtrinsicHelper} from "$lib/chain/extrinsicHelpers";
   import type {InjectedAccount} from "@polkadot/extension-inject/types";
-  import {storeWalletInfo} from "$lib/store";
+  import {WalletInfoStore} from "$lib/store";
 
   let validAccounts: Record<string, InjectedAccount> = {};
   let validAccountsArray: Array<InjectedAccount> = [];
@@ -10,7 +10,7 @@
   let errorMessage = '';
   let injectedExtension;
 
-  storeWalletInfo.subscribe((info) => injectedExtension = info.injectedExtension);
+  WalletInfoStore.subscribe((info) => injectedExtension = info.injectedExtension);
 
   export let formFinished = false;
 
@@ -21,7 +21,7 @@
 
   const updateSigningKeys = (address: string) => {
     const signingKeys: InjectedAccount = validAccounts[address];
-    storeWalletInfo.update((info) => info = {...info, signingKeys})
+    WalletInfoStore.update((info) => info = {...info, signingKeys})
     formFinished = true;
   }
 
