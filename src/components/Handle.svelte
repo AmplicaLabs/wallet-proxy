@@ -1,15 +1,10 @@
 <script lang="ts">
   import { HandleStore } from '../lib/store';
-
-  import {Bytes} from "@polkadot/types";
   import {ExtrinsicHelper} from "$lib/chain/extrinsicHelpers";
-  import {storeHandle} from "$lib/store";
 
-  let maybeHandle: string = '';
   let debounceTimer;
   const signingKeyName = ExtrinsicHelper.signingKeys?.name;
   export let formFinished = false;
-  export let endpoint;
 
   const debounceCheck = (_evt: Event) => {
     if (debounceTimer) {
@@ -31,11 +26,6 @@
       $HandleStore.length >= handleCharsMin &&
       $HandleStore.length <= handleCharsMax &&
       utf8Encode.encode($HandleStore).length <= handleBytesMax;
-
-    // TODO: resolve
-    if (formFinished) {
-      storeHandle.update((handle) => handle = $HandleStore);
-    }
   };
 </script>
 

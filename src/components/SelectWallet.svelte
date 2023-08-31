@@ -12,7 +12,8 @@
   import {
     SelectedWalletStore,
     SelectedWalletAccountsStore,
-    InjectedWeb3Store
+    InjectedWeb3Store,
+    WalletInfoStore,
   } from '../lib/store';
 
   // TODO: change to false and then set to true when wallet selection is complete
