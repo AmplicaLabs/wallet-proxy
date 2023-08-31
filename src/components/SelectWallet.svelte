@@ -1,17 +1,21 @@
 <script lang="ts">
-  import DownloadBox from 'virtual:icons/ic/baseline-download';
+  import Icon from '@iconify/svelte';
+  import baselineDownload from '@iconify/icons-ic/baseline-download';
+  import threeDotsLoading from '@iconify/icons-eos-icons/three-dots-loading';
   import { onMount } from 'svelte';
-  import type { InjectedExtension } from '@polkadot/extension-inject/types';
   import { extensionsConfig } from '$lib/extensionsConfig';
   import type { Extension } from '$lib/extensionsConfig';
   import { onReady, isWalletInstalled, walletConnector } from '$lib/wallet';
+  import type { InjectedExtension } from '@polkadot/extension-inject/types';
 
   // TODO: change to false and then set to true when wallet selection is complete
   // eslint-disable-next-line @typescript-eslint/no-unused-var
   export let formFinished = true;
   export let endpoint;
+  let isLoading = false;
+  let selectedWallet: string;
 
-  let extensions: Array<Extension> = [];
+  export let extensions: Array<Extension> = [];
   let injectedWeb3: any;
 
   onMount(async () => {
@@ -21,9 +25,13 @@
 
   async function handleSelectedWallet(injectedName: string) {
     let extension: InjectedExtension;
+    isLoading = true;
+    selectedWallet = injectedName;
     try {
       extension = await walletConnector(injectedName);
+      isLoading = false;
     } catch (error) {
+      isLoading = false;
       console.log('Extension not installed - close window and redirect');
       return;
     }
@@ -46,9 +54,12 @@
           <span class="text-xs italic antialiased">Sign-in with {extension.displayName} wallet</span
           >
         </div>
-        <div class="basis-1/12">
+        <div class="basis-1/12 w-4">
           {#if !isWalletInstalled(extension.injectedName)}
-            <DownloadBox style="font-size: 1.5em; color: light-grey" />
+            <Icon icon={baselineDownload} width="30" height="30" />
+          {/if}
+          {#if isLoading && selectedWallet == extension.injectedName}
+            <Icon icon={threeDotsLoading} width="55" height="55" />
           {/if}
         </div>
       </div>
