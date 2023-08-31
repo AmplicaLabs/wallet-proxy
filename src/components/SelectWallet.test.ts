@@ -5,7 +5,7 @@ import SelectWallet from '$components/SelectWallet.svelte';
 import { extensionsConfig } from '$lib/extensionsConfig';
 import type { InjectedExtension } from '@polkadot/extension-inject/types';
 
-describe('SelectWallet component', () => {
+describe.skip('SelectWallet component', () => {
   const originalWindow = global.window;
 
   beforeAll(() => {

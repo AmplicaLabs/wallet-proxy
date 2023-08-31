@@ -1,4 +1,5 @@
 <script>
+  import { page } from '$app/stores';
   /** @type {import('./$types').PageData} */
   // we can access `data.posts` because it's returned from
   // the parent layout `load` function

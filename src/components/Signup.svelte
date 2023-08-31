@@ -1,19 +1,17 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
-
   export let endpoint;
 
   import RadialStepper from '$components/RadialStepper.svelte';
   import ProgressBar from '$components/ProgressBar.svelte';
   import SelectWallet from '$components/SelectWallet.svelte';
   import Handle from '$components/Handle.svelte';
-  import Three from '$components/Three.svelte';
+  import ReviewSign from '$components/ReviewSign.svelte';
   import Last from '$components/Last.svelte';
 
   let currentActive = 0;
-  let steps = ['Choose Wallet', 'Choose Handle', 'Something Else', 'Register'];
+  let steps = ['Choose Wallet', 'Choose Handle', 'Review & Sign'];
   let progressBar;
-  let components = [SelectWallet, Handle, Three, Last];
+  let components = [SelectWallet, Handle, ReviewSign, Last];
 
   // when the form is complete, valid, and/or changes submitted successfully, the form
   // should set this to true so the Next button is enabled.
@@ -48,13 +46,11 @@
     stepCount={steps.length}
     stepTitle={steps[currentActive]}
   />
-  <div
-    id="forms-container"
-    class="flex flex-col px-8 md:w-600 items-center items-stretch mx-auto my-12px"
-  >
+
+  <div class="flex flex-col px-8 md:w-200 items-center mx-auto">
     <svelte:component this={components[currentActive]} bind:formFinished {endpoint} />
   </div>
-  <div class="step-button flex sm:justify-between md:justify-around max-w-800">
+  <div class="flex sm:justify-between md:justify-around">
     <button
       class={currentActive === 0 ? 'btn-disabled' : 'btn-primary'}
       on:click|preventDefault={handlePrevious}

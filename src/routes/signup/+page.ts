@@ -1,5 +1,4 @@
 import { getEndpointFromURL } from '$lib/util';
-
 /** @type {import('./$types').PageLoad} */
 
 // wss%3A%2F%2F0.rpc.frequency.xyz

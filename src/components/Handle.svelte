@@ -1,5 +1,6 @@
 <script lang="ts">
-  let maybeHandle: string = '';
+  import { HandleStore } from '../lib/store';
+
   let handleIsValid: boolean = false;
   let debounceTimer;
 
@@ -23,9 +24,9 @@
     let utf8Encode = new TextEncoder();
 
     handleIsValid =
-      maybeHandle.length >= handleCharsMin &&
-      maybeHandle.length <= handleCharsMax &&
-      utf8Encode.encode(maybeHandle).length <= handleBytesMax;
+      $HandleStore.length >= handleCharsMin &&
+      $HandleStore.length <= handleCharsMax &&
+      utf8Encode.encode($HandleStore).length <= handleBytesMax;
   };
   const doClaimHandle = (_evt: Event) => {
     if (debounceTimer) {
@@ -36,15 +37,13 @@
 </script>
 
 <div class="pt-4">Your handle is a named connection to your DSNP Identity.</div>
-<div class="pt-4">
-  Choose a unique handle and provide your signature to associate it with your DSNP account.
-</div>
+<div class="pt-4">Choose a unique handle to associate it with your DSNP account.</div>
 <form class="pt-4">
   <input
     id="handle"
     class="w-80 mr-8"
     placeholder="enter your desired handle"
-    bind:value={maybeHandle}
+    bind:value={$HandleStore}
     on:keyup={debounceCheck}
   />
   <button
