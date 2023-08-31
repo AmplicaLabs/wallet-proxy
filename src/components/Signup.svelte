@@ -18,7 +18,6 @@
   // when the form is complete, valid, and/or changes submitted successfully, the form
   // should set this to true so the Next button is enabled.
   let formFinished;
-  $: enableNext = currentActive < steps.length - 1 && formFinished;
   $: enablePrevious = currentActive > 0;
 
   const handlePrevious = () => {
@@ -63,11 +62,11 @@
       Back
     </button>
     <button
-      class={enableNext ? 'btn-primary' : 'btn-disabled'}
-      disabled={!enableNext}
+      class={formFinished ? 'btn-primary' : 'btn-disabled'}
+      disabled={!formFinished}
       on:click|preventDefault={handleNext}
     >
-      Next
+      {currentActive < steps.length - 1 ? 'Next' : 'Finish'}
     </button>
   </div>
 </main>
