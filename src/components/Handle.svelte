@@ -1,9 +1,8 @@
 <script lang="ts">
   import { HandleStore } from '../lib/store';
-  import {ExtrinsicHelper} from "$lib/chain/extrinsicHelpers";
 
   let debounceTimer;
-  const signingKeyName = ExtrinsicHelper.signingKeys?.name;
+  const signingKeyName = '';
   export let formFinished = false;
 
   const debounceCheck = (_evt: Event) => {
