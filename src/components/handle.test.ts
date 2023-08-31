@@ -3,6 +3,8 @@ import { render } from '@testing-library/svelte';
 import { waitFor } from '@testing-library/svelte';
 import userEvent from '@testing-library/user-event';
 import Handle from '$components/Handle.svelte';
+import {storeHandle} from "$lib/store";
+import { get } from 'svelte/store';
 
 describe('Handle component', () => {
   it('renders', async () => {
@@ -28,6 +30,6 @@ describe('Handle component', () => {
       },
       { timeout: 1100 }
     );
-
+    expect(get(storeHandle)).toEqual('Bobbay');
   });
 });

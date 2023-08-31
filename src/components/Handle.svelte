@@ -1,6 +1,7 @@
 <script lang="ts">
   import {Bytes} from "@polkadot/types";
   import {ExtrinsicHelper} from "$lib/chain/extrinsicHelpers";
+  import {storeHandle} from "$lib/store";
 
   let maybeHandle: string = '';
   let debounceTimer;
@@ -26,6 +27,9 @@
       maybeHandle.length >= handleCharsMin &&
       maybeHandle.length <= handleCharsMax &&
       utf8Encode.encode(maybeHandle).length <= handleBytesMax;
+    if (formFinished) {
+      storeHandle.update((handle) => handle = maybeHandle);
+    }
   };
 </script>
 
