@@ -6,12 +6,11 @@
   import { extensionsConfig } from '$lib/extensionsConfig';
   import type { Extension } from '$lib/extensionsConfig';
   import { onReady, isWalletInstalled, walletConnector } from '$lib/wallet';
-  import type { InjectedExtension } from '@polkadot/extension-inject/types';
+  import {storeWalletInfo} from "$lib/store";
 
   // TODO: change to false and then set to true when wallet selection is complete
   // eslint-disable-next-line @typescript-eslint/no-unused-var
-  export let formFinished = true;
-  export let endpoint;
+  export let formFinished = false;
   let isLoading = false;
   let selectedWallet: string;
 
@@ -24,25 +23,34 @@
   });
 
   async function handleSelectedWallet(injectedName: string) {
-    let extension: InjectedExtension;
     isLoading = true;
-    selectedWallet = injectedName;
+    selectedWallet = injectedName;``
     try {
-      extension = await walletConnector(injectedName);
-      isLoading = false;
+      const injectedExtension = await walletConnector(injectedName);
+      storeWalletInfo.update((info) => info = {injectedExtension});
+      formFinished=true;
     } catch (error) {
-      isLoading = false;
       console.log('Extension not installed - close window and redirect');
       return;
+    } finally {
+      isLoading = false;
     }
   }
+
+  const extensionClasses = [
+    "font-medium text-gray-900 border border-gray-300",
+    "rounded-lg px-3 py-2.5 ",
+    "focus:ring-4 focus:outline-none focus:ring-gray-100",
+    "dark:focus:ring-gray-600 dark:bg-gray-800 dark:border-gray-700 " +
+    "dark:text-white dark:hover:bg-gray-700"
+    ].join(' ')
 </script>
 
 <div class="flex flex-col gap-2">
   {#each extensions as extension, index}
     <button
       type="button"
-      class="text-gray-900 border border-gray-300 focus:ring-4 focus:outline-none focus:ring-gray-100 font-medium rounded-lg px-3 py-2.5 dark:focus:ring-gray-600 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700"
+      class={extensionClasses}
       on:click={() => handleSelectedWallet(extension.injectedName)}
     >
       <div class="flex items-center justify-center gap-3">
