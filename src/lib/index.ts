@@ -2,3 +2,4 @@
 import './chain/extrinsicHelpers'
 import './chain/helpers';
 import './chain/apiConnection';
+import './chain/util';

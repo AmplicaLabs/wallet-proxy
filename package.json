@@ -6,7 +6,7 @@
     "dev": "vite dev",
     "build": "vite build",
     "preview": "vite preview",
-    "prettier": "npx prettier --write  --plugin prettier-plugin-svelte integration src",
+    "prettier": "npx prettier --write  --plugin prettier-plugin-svelte e2e src",
     "test": "npm run test:integration && npm run test:unit",
     "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
     "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
@@ -17,6 +17,7 @@
     "test:coverage": "vitest run --coverage"
   },
   "dependencies": {
+    "@frequency-chain/api-augment": "^1.7.4",
     "@polkadot/api": "^10.9.1",
     "@polkadot/extension-inject": "^0.46.5",
     "@polkadot/keyring": "^12.3.2",

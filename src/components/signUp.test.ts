@@ -5,8 +5,7 @@ import userEvent from '@testing-library/user-event';
 
 describe('Sign up component', () => {
   it('renders correctly and can click next and previous buttons', async () => {
-    const user = userEvent.setup();
-    const { container, getByText, getByRole } = render(Signup);
+    const { getByText, getByRole} = render(Signup);
     expect(getByText('Choose Wallet')).toBeInTheDocument();
     const backBtn = getByRole('button', { name: 'Back' }) as HTMLButtonElement;
     expect(backBtn).toBeDisabled();

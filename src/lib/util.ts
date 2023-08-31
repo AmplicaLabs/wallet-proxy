@@ -1,13 +1,20 @@
 // Generic helper functions that do not depend on any Polkadot or other specialized libraries
 // Please keep imports As Low As Reasonably Achievable
 
-export const getEndpointFromURL = (url: any): { endpoint?: string; error?: string } => {
+// Parses the URL, looks for an rpc searchParam, parses the value as a URL
+// and verifies that it at least uses a WebSocket protocol
+export const getRpcEndpointFromURL = (url: any): { endpoint?: string; error?: string } => {
+  let endpoint = '';
   try {
-    const endpoint = url?.searchParams.get('endpoint');
+    let parsedURL = new URL(url);
+    endpoint = parsedURL?.searchParams.get('rpc') || '';
     if (!endpoint) {
-      return { error: 'An `endpoint` URL parameter is required.<br>' };
+      throw new Error('An `rpc` searchParam is required.');
     }
-    new URL(endpoint);
+    let parsedEndpoint = new URL(endpoint);
+    if (parsedEndpoint.protocol !== 'ws:' && parsedEndpoint.protocol !== 'wss:') {
+      throw new Error(`${endpoint} must be a WebSocket URL`)
+    }
     return { endpoint };
   } catch (e: any) {
     const error = [

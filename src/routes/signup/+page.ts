@@ -1,4 +1,4 @@
-import { getEndpointFromURL } from '$lib/util';
+import { getRpcEndpointFromURL } from '$lib/util';
 
 /** @type {import('./$types').PageLoad} */
 
@@ -6,5 +6,5 @@ import { getEndpointFromURL } from '$lib/util';
 // wss%3A%2F%2Frpc.rococo.frequency.xyz
 
 export function load({ url }: any) {
-  return getEndpointFromURL(url);
+  return getRpcEndpointFromURL(url);
 }

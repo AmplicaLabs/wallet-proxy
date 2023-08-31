@@ -7,14 +7,14 @@
   import ProgressBar from '$components/ProgressBar.svelte';
   import SelectWallet from '$components/SelectWallet.svelte';
   import Handle from '$components/Handle.svelte';
-  import Three from '$components/Three.svelte';
   import Last from '$components/Last.svelte';
   import {ExtrinsicHelper} from "$lib/chain/extrinsicHelpers";
+  import SelectAddress from "./SelectAddress.svelte";
 
   let currentActive = 0;
-  let steps = ['Choose Wallet', 'Choose Handle', 'Something Else', 'Register'];
+  let steps = ['Choose Wallet', 'Select Address', 'Choose Handle', 'Register'];
   let progressBar;
-  let components = [SelectWallet, Handle, Three, Last];
+  let components = [SelectWallet, SelectAddress, Handle, Last];
 
   // when the form is complete, valid, and/or changes submitted successfully, the form
   // should set this to true so the Next button is enabled.
@@ -41,12 +41,10 @@
     formFinished = undefined;
   };
 
-  onMount (() => {
+  onMount (async () => {
     try {
-      if (ExtrinsicHelper.api) {
-        ExtrinsicHelper.disconnect();
-      }
-      ExtrinsicHelper.initialize(endpoint);
+      console.log("signup onmount")
+      await ExtrinsicHelper.initialize(endpoint);
     } catch(e: any) {
       console.error(e.toString())
     }
@@ -62,9 +60,9 @@
   />
   <div
     id="forms-container"
-    class="flex flex-col px-8 md:w-600 items-center items-stretch mx-auto my-12px"
+    class="flex flex-col px-8 md:w-720 items-center items-stretch mx-auto my-12px"
   >
-    <svelte:component this={components[currentActive]} bind:formFinished {endpoint} />
+    <svelte:component this={components[currentActive]} bind:formFinished />
   </div>
   <div class="step-button flex sm:justify-between md:justify-around max-w-800">
     <button

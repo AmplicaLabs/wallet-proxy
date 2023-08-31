@@ -5,6 +5,7 @@
   let maybeHandle: string = '';
   let handleIsValid: boolean = false;
   let debounceTimer;
+  const signingKeyName = ExtrinsicHelper.signingKeys?.name;
   export let formFinished = false;
   const debounceCheck = (_evt: Event) => {
     if (debounceTimer) {
@@ -35,9 +36,9 @@
   };
 </script>
 
-<div class="pt-4">Your handle is a named connection to your DSNP Identity.</div>
+<div class="pt-4">Your handle will be linked to your {signingKeyName} account and your new DSNP Identity.</div>
 <div class="pt-4">
-  Choose a unique handle and provide your signature to associate it with your DSNP account.
+  Enter a handle and click 'Claim this Handle'. You will be asked to sign with your wallet.
 </div>
 <form class="pt-4">
   <input
