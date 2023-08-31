@@ -5,10 +5,7 @@ import type { InjectedAccount, InjectedExtension } from '@polkadot/extension-inj
 import type { Option } from '@polkadot/types';
 import { firstValueFrom } from 'rxjs';
 import type { SignedBlock } from '@polkadot/types/interfaces';
-import type {
-  HandleResponse,
-  MessageSourceId,
-} from '@frequency-chain/api-augment/interfaces';
+import type { HandleResponse, MessageSourceId } from '@frequency-chain/api-augment/interfaces';
 import { connect, connectPromise } from './apiConnection';
 
 export async function getBlockNumber(): Promise<number> {
@@ -42,7 +39,9 @@ export class ExtrinsicHelper {
 
   /** Queries */
   public static async getNonce(publicKey: string): Promise<number> {
-    const nonce = await firstValueFrom(ExtrinsicHelper.api.call.accountNonceApi.accountNonce(publicKey));
+    const nonce = await firstValueFrom(
+      ExtrinsicHelper.api.call.accountNonceApi.accountNonce(publicKey)
+    );
     return nonce.toNumber();
   }
 

@@ -1,7 +1,6 @@
 <script lang="ts">
-  import {Bytes} from "@polkadot/types";
-  import {ExtrinsicHelper} from "$lib/chain/extrinsicHelpers";
-  import {HandleStore} from "$lib/store";
+  import { ExtrinsicHelper } from '$lib/chain/extrinsicHelpers';
+  import { HandleStore } from '$lib/store';
 
   let maybeHandle: string = '';
   let debounceTimer;
@@ -28,12 +27,14 @@
       maybeHandle.length <= handleCharsMax &&
       utf8Encode.encode(maybeHandle).length <= handleBytesMax;
     if (formFinished) {
-      HandleStore.update((handle) => handle = maybeHandle);
+      HandleStore.update((handle) => (handle = maybeHandle));
     }
   };
 </script>
 
-<div class="pt-4">Your handle will be linked to your {signingKeyName} account and your new DSNP Identity.</div>
+<div class="pt-4">
+  Your handle will be linked to your {signingKeyName} account and your new DSNP Identity.
+</div>
 <div class="pt-4">
   Enter a handle and click 'Claim this Handle'. You will be asked to sign with your wallet.
 </div>

@@ -1,6 +1,5 @@
 <script lang="ts">
   import FrequencyIcon from '$lib/assets/frequency/frqcy-circle-grad.png';
-  import Signup from '$components/Signup.svelte';
 </script>
 
 <header class="py-2">

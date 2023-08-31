@@ -16,7 +16,7 @@ const walletConnector = async function (injectedName: string): Promise<InjectedE
   }
 
   if (wallet.enable) {
-    let res = await wallet.enable(injectedName);
+    const res = await wallet.enable(injectedName);
 
     return {
       ...res,

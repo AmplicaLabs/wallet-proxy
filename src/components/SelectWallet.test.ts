@@ -27,7 +27,7 @@ describe('SelectWallet component', () => {
     });
 
     const talismanWalletButton = screen.getByRole('button', {
-      name: /talisman sign\-in with talisman wallet/i
+      name: /talisman sign-in with talisman wallet/i
     });
 
     expect(polkadotWalletButton).toBeEnabled();
@@ -40,7 +40,7 @@ describe('SelectWallet component', () => {
     });
 
     const talismanWalletButton = screen.getByRole('button', {
-      name: /talisman sign\-in with talisman wallet/i
+      name: /talisman sign-in with talisman wallet/i
     });
 
     await fireEvent.click(talismanWalletButton);
@@ -58,7 +58,7 @@ describe('SelectWallet component', () => {
     });
 
     const talismanWalletButton = screen.getByRole('button', {
-      name: /talisman sign\-in with talisman wallet/i
+      name: /talisman sign-in with talisman wallet/i
     });
 
     await fireEvent.click(talismanWalletButton);
