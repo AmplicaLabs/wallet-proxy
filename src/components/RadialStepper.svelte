@@ -22,6 +22,24 @@
 <style lang="scss">
   @use 'sass:math';
   // -- vars
+  $silver: #D3D3D3;
+  $aqua: #69B9CD;
+  $lilac: rgb(243,206,255, 0.4);
+  $teal-dark: #3498db;
+  $teal-light-trans: rgb(175,235,244, 0.4);
+  $teal-dark-trans: rgb(84,158,170,0.4);
+  $lilac: rgb(243,206,255, 0.4);
+  $periwinkle: rgb(120,159,243,0.4);
+  $cobalt: #4B64FF;
+  $white-transparent: rgb(254,255,255,.1);
+  $teal-dark-3: #007DA1;
+  $teal-black: #293B59;
+  $bg-gradient: linear-gradient(to bottom right, $teal-black, $teal-dark);
+  $bg: $silver;
+  $text: white;
+  $border: $silver;
+  $circle-active: $aqua;
+
   $bg-color: white;
   $default-size: 1em;
   $label-font-size: math.div($default-size, 3);
@@ -95,7 +113,7 @@
 
       .half-circle {
         @include size(100%, 100%);
-        border: math.div($default-size, 10) solid #3498db;
+        border: math.div($default-size, 10) solid $circle-active;
         border-radius: 50%;
         clip: rect(0, $half-default-size, $default-size, 0);
         left: 0;
@@ -145,22 +163,20 @@
       }
     }
 
-    $aqua: #69B9CD;
-    $lilac: rgb(243,206,255, 0.4);
     &.progress-0 {
       @include draw-progress(0, black);
     }
     &.progress-25 {
-      @include draw-progress(25, $aqua);
+      @include draw-progress(25, $circle-active);
     }
     &.progress-50 {
-      @include draw-progress(50, $lilac);
+      @include draw-progress(50, $circle-active);
     }
     &.progress-75 {
-      @include draw-progress(75, $aqua);
+      @include draw-progress(75, $circle-active);
     }
     &.progress-100 {
-      @include draw-progress(100, $aqua);
+      @include draw-progress(100, $circle-active);
     }
   }
 </style>

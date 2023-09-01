@@ -12,7 +12,7 @@
   <title>Amplica Wallet Connect</title>
 </head>
 <header class="py-2 relative">
-  <div class="w-12 fixed">
+  <div class="w-12 fixed left-60 top-35">
     <img src={FrequencyIcon} alt="Amplica Logo" width="100%" />
   </div>
   <div class="text-4xl text-center">Amplica Wallet Connect</div>

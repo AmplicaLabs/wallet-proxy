@@ -73,6 +73,3 @@
     </button>
   {/each}
 </div>
-
-<div>Debug</div>
-Injected Web3: {JSON.stringify(window.injectedWeb3)}

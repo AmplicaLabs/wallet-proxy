@@ -27,6 +27,10 @@
       $HandleStore.length <= handleCharsMax &&
       utf8Encode.encode($HandleStore).length <= handleBytesMax;
   };
+
+  const inputClasses="w-full mr-8 border-silver rounded bg-white-transparent " +
+    "text-white text-3xl " +
+    "placeholder-aqua focus:border-aqua";
 </script>
 
 <div class="pt-4">
@@ -38,7 +42,7 @@
 <form class="pt-4">
   <input
     id="handle"
-    class="w-full mr-8 border-silver rounded text-white bg-white-transparent placeholder-aqua focus:border-aqua"
+    class={inputClasses}
     placeholder="enter your desired handle"
     bind:value={$HandleStore}
     on:keyup={debounceCheck}

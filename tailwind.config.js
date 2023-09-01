@@ -38,6 +38,9 @@ export default {
         'teal-dark': 'rgb(84,158,170,0.4)',
         'white-transparent': 'rgb(254,255,255,.1)',
       },
+      top: {
+        '35': '35px',
+      },
       width: {
         500: '500px',
         600: '600px',
