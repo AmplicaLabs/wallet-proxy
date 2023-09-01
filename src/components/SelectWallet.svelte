@@ -49,16 +49,16 @@
   {#each extensions as extension}
     <button
       type="button"
-      class='text-3xl font-bold btn-banner'
+      class='font-bold btn-banner'
       on:click={() => handleSelectedWallet(extension.injectedName)}
     >
       <div class="flex items-center justify-center gap-3">
         <div class="basis-3/12">
           <svelte:component this={extension.logo.component} size={extension.logo.size} />
         </div>
-        <div class="text-left basis-6/12">
-          <div class="text-md">{extension.displayName}</div>
-          <span class="text-sm italic antialiased">Sign-in with {extension.displayName} wallet</span
+        <div class="ml-8 text-left basis-5/8">
+          <div class="text-3xl">{extension.displayName}</div>
+          <span class="text-sm italic antialiased">Sign in with {extension.displayName} wallet</span
           >
         </div>
         <div class="basis-1/12 w-4">

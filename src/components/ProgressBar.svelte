@@ -23,11 +23,11 @@
   };
 
   const circleClass = (i: number): string => {
-    return 'circle m-auto ' + (i === 0 ? 'active' : '');
+    return 'circle m-auto text-xl  ' + (i === 0 ? 'active' : '');
   };
 </script>
 
-<div class="px-16 md:p-12">
+<div class="px-16 md:p-12 mt-12">
   <div
     class="progress-container sm:hidden md:flex justify-between relative mb-30 max-w-800"
     bind:this={circles}
@@ -50,6 +50,9 @@
   $periwinkle: rgb(120,159,243,0.4);
   $cobalt: #4B64FF;
   $white-transparent: rgb(254,255,255,.1);
+  $teal-dark-3: #007DA1;
+  $teal-black: #293B59;
+  $bg-gradient: linear-gradient(to bottom right, $teal-black, $teal-dark);
   $bg: $silver;
   $text: white;
   $border: $silver;
@@ -57,7 +60,7 @@
 
   .progress-container::before {
     content: '';
-    background-color: #e0e0e0;
+    background-color: $teal-dark-3;
     position: absolute;
     top: 50%;
     left: 0;
@@ -77,19 +80,18 @@
     height: 6px;
     width: 0;
     z-index: -1;
-    clip-path: border-box;
   }
 
   .circle {
-    background-color: $bg;
+    background-color: $teal-black;
     color: $text;
     border-radius: 50%;
-    height: 42px;
-    width: 42px;
+    height: 60px;
+    width: 60px;
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 4px solid $border;
+    border: 6px solid $border;
     transition: 0.4s ease;
     cursor: pointer;
   }
@@ -97,8 +99,8 @@
   .circle::after {
     content: attr(data-title) ' ';
     position: absolute;
-    bottom: 50px;
-    color: $text;
+    bottom: 75px;
+    color: $text !important;
     transition: 0.4s ease;
   }
 
@@ -108,5 +110,7 @@
 
   .circle.active {
     border-color: $circle-active;
+    box-shadow: 0 4px 12px rgba(50,75,150,1);
+    transition: 0.4s ease;
   }
 </style>
