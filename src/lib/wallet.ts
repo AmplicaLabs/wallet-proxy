@@ -8,7 +8,10 @@ const isWalletInstalled = function (injectedName: string): boolean {
   return false;
 };
 
-const walletConnector = async function (injectedName: string): Promise<InjectedExtension> {
+const walletConnector = async function (
+  injectedName: string,
+  originName: string
+): Promise<InjectedExtension> {
   const wallet = window?.injectedWeb3?.[injectedName];
 
   if (!wallet) {
@@ -16,7 +19,7 @@ const walletConnector = async function (injectedName: string): Promise<InjectedE
   }
 
   if (wallet.enable) {
-    let res = await wallet.enable(injectedName);
+    let res = await wallet.enable(originName);
 
     return {
       ...res,
@@ -26,7 +29,7 @@ const walletConnector = async function (injectedName: string): Promise<InjectedE
   }
 
   if (wallet.connect) {
-    return await wallet.connect(injectedName);
+    return await wallet.connect(originName);
   }
 
   throw new Error('No connect(..) or enable(...) hook found');

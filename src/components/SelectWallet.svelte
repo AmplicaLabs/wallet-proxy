@@ -7,29 +7,46 @@
   import type { Extension } from '$lib/extensionsConfig';
   import { onReady, isWalletInstalled, walletConnector } from '$lib/wallet';
   import type { InjectedExtension } from '@polkadot/extension-inject/types';
+  import { goto } from '$app/navigation';
+  import { page } from '$app/stores';
+  import {
+    SelectedWalletStore,
+    SelectedWalletAccountsStore,
+    InjectedWeb3Store
+  } from '../lib/store';
 
   // TODO: change to false and then set to true when wallet selection is complete
   // eslint-disable-next-line @typescript-eslint/no-unused-var
   export let formFinished = true;
   export let endpoint;
+
   let isLoading = false;
-  let selectedWallet: string;
+  let selectedWalletAccounts: Array<string>;
 
   export let extensions: Array<Extension> = [];
   let injectedWeb3: any;
 
   onMount(async () => {
     injectedWeb3 = await onReady();
+    $InjectedWeb3Store = injectedWeb3;
     extensions = extensionsConfig;
   });
 
   async function handleSelectedWallet(injectedName: string) {
     let extension: InjectedExtension;
     isLoading = true;
-    selectedWallet = injectedName;
+
+    $SelectedWalletStore = injectedName;
+
     try {
-      extension = await walletConnector(injectedName);
+      extension = await walletConnector(injectedName, 'Acme App');
+      let accounts = await extension.accounts.get();
+
+      $SelectedWalletAccountsStore = accounts.map((account) => account.address);
+
       isLoading = false;
+
+      goto(`/signup?${$page.url.searchParams}`);
     } catch (error) {
       isLoading = false;
       console.log('Extension not installed - close window and redirect');
@@ -58,7 +75,7 @@
           {#if !isWalletInstalled(extension.injectedName)}
             <Icon icon={baselineDownload} width="30" height="30" />
           {/if}
-          {#if isLoading && selectedWallet == extension.injectedName}
+          {#if isLoading && $SelectedWalletStore == extension.injectedName}
             <Icon icon={threeDotsLoading} width="55" height="55" />
           {/if}
         </div>
@@ -68,7 +85,4 @@
 </div>
 
 <div>Debug</div>
-Injected: {JSON.stringify(window.injectedWeb3)}
-<p>
-  Injected web 3: {JSON.stringify(injectedWeb3)}
-</p>
+Injected Web3: {JSON.stringify(window.injectedWeb3)}
