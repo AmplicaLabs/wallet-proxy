@@ -38,7 +38,7 @@
 <form class="pt-4">
   <input
     id="handle"
-    class="w-80 mr-8"
+    class="w-full mr-8 border-silver rounded text-white bg-white-transparent placeholder-aqua focus:border-aqua"
     placeholder="enter your desired handle"
     bind:value={$HandleStore}
     on:keyup={debounceCheck}

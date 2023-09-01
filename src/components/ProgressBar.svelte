@@ -42,10 +42,18 @@
 </div>
 
 <style lang="scss">
-  $bg: #fff;
-  $text: #999;
-  $border: #e0e0e0;
-  $circle-active: #3498db;
+  $silver: #D3D3D3;
+  $aqua: #69B9CD;
+  $teal-light: rgb(175,235,244, 0.4);
+  $teal-dark: rgb(84,158,170,0.4);
+  $lilac: rgb(243,206,255, 0.4);
+  $periwinkle: rgb(120,159,243,0.4);
+  $cobalt: #4B64FF;
+  $white-transparent: rgb(254,255,255,.1);
+  $bg: $silver;
+  $text: white;
+  $border: $silver;
+  $circle-active: $aqua;
 
   .progress-container::before {
     content: '';
@@ -54,33 +62,34 @@
     top: 50%;
     left: 0;
     transform: translateY(-50%);
-    height: 4px;
+    height: 6px;
     width: 100%;
     z-index: -1;
   }
 
   .progress {
-    background-color: #3498db;
+    background-color: $aqua;
     transform: translateY(-50%);
     transition: 0.4s ease;
     position: absolute;
     top: 50%;
     left: 0;
-    height: 4px;
-    width: 0%;
+    height: 6px;
+    width: 0;
     z-index: -1;
+    clip-path: border-box;
   }
 
   .circle {
     background-color: $bg;
     color: $text;
     border-radius: 50%;
-    height: 30px;
-    width: 30px;
+    height: 42px;
+    width: 42px;
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 3px solid $border;
+    border: 4px solid $border;
     transition: 0.4s ease;
     cursor: pointer;
   }
@@ -88,7 +97,7 @@
   .circle::after {
     content: attr(data-title) ' ';
     position: absolute;
-    bottom: 35px;
+    bottom: 50px;
     color: $text;
     transition: 0.4s ease;
   }

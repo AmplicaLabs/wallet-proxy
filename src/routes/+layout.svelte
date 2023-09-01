@@ -8,11 +8,14 @@
   } from '../lib/store';
   import { page } from '$app/stores';
 </script>
-
-<header class="py-2">
-  <div class="max-w-sm">
-    <img src={FrequencyIcon} alt="Amplica Logo" width="10%" />
+<head>
+  <title>Amplica Wallet Connect</title>
+</head>
+<header class="py-2 relative">
+  <div class="w-12 fixed">
+    <img src={FrequencyIcon} alt="Amplica Logo" width="100%" />
   </div>
+  <div class="text-4xl text-center">Amplica Wallet Connect</div>
 </header>
 
 <slot />

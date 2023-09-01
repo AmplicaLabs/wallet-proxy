@@ -22,7 +22,7 @@
 <style lang="scss">
   @use 'sass:math';
   // -- vars
-  $bg-color: #34495e;
+  $bg-color: white;
   $default-size: 1em;
   $label-font-size: math.div($default-size, 3);
   $label-font-size-redo: $default-size * 3;
@@ -110,7 +110,7 @@
       background: $bg-color;
       border-radius: 50%;
       bottom: $redo-10;
-      color: #ecf0f1;
+      color: transparent;
       cursor: default;
       display: block;
       font-size: $label-font-size;
@@ -122,7 +122,7 @@
       top: $redo-10;
 
       .smaller {
-        color: #bdc3c7;
+        color: white;
         font-size: 0.5em;
         vertical-align: super;
       }
@@ -137,40 +137,30 @@
     &.style-2 {
       .label {
         background: none;
-        color: #7f8c8d;
+        color: white;
 
         .smaller {
-          color: #bdc3c7;
+          color: #white;
         }
       }
     }
 
+    $aqua: #69B9CD;
+    $lilac: rgb(243,206,255, 0.4);
     &.progress-0 {
-      @include draw-progress(0, #bdc3c7);
-    }
-    &.progress-20 {
-      @include draw-progress(20, #3498db);
+      @include draw-progress(0, black);
     }
     &.progress-25 {
-      @include draw-progress(25, #009900);
-    }
-    &.progress-40 {
-      @include draw-progress(40, #3498db);
+      @include draw-progress(25, $aqua);
     }
     &.progress-50 {
-      @include draw-progress(50, #dd5900);
-    }
-    &.progress-60 {
-      @include draw-progress(60, #dd5900);
+      @include draw-progress(50, $lilac);
     }
     &.progress-75 {
-      @include draw-progress(75, #8e44ad);
-    }
-    &.progress-80 {
-      @include draw-progress(80, #8e44ad);
+      @include draw-progress(75, $aqua);
     }
     &.progress-100 {
-      @include draw-progress(100, #aa00cc);
+      @include draw-progress(100, $aqua);
     }
   }
 </style>

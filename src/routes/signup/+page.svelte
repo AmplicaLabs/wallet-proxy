@@ -4,6 +4,6 @@
   export let data;
 </script>
 
-<h1 class="text-xl text-green-500 text-center">Sign up</h1>
+<h1 class="mt-8 text-xl text-center">Sign up</h1>
 
 <Signup endpoint={data.endpoint} />

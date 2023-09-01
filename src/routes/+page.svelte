@@ -16,9 +16,8 @@
     },
     schemas: 'tombstone%2Cbroadcast%2Creplay%2Creaction%2Cprofile%2Cupdate%2CpublicKey%2CpublicFollows%2CprivateFollows%2CprivateConnections'
   }
-
 </script>
-<div class="p-12">
+<div class="pt-8 w-80 flex flex-col mx-auto">
   <p class="font-bold text-xl">Using Websocket endpoints:</p>
   <ul class="text-2xl">
     <li class="list-disc">
