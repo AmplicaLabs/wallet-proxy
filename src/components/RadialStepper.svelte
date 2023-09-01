@@ -169,8 +169,14 @@
     &.progress-25 {
       @include draw-progress(25, $circle-active);
     }
+    &.progress-33 {
+      @include draw-progress(33, $circle-active);
+    }
     &.progress-50 {
       @include draw-progress(50, $circle-active);
+    }
+    &.progress-66 {
+      @include draw-progress(66, $circle-active);
     }
     &.progress-75 {
       @include draw-progress(75, $circle-active);
