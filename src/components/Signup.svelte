@@ -50,7 +50,8 @@
   });
 </script>
 
-<main>
+<main class="grow-1">
+  <h1 class="mt-4 text-2xl text-aqua text-center">Sign up</h1>
   <ProgressBar {steps} bind:this={progressBar} />
   <RadialStepper
     bind:currentStep={currentActive}
