@@ -4,7 +4,7 @@
 
 @layer base {
   .btn-banner {
-    @apply mt-8 p-8 rounded-3xl border-silver border-2 text-center
+    @apply mt-8 p-8 rounded-3xl border-silver border-2 text-center;
   }
   .btn-primary {
     @apply mt-6 px-8 p-3 h-14 rounded-full text-white text-lg bg-blue-400 border-black shadow-md;
@@ -18,5 +18,5 @@ body {
   color: white;
   min-height: 100vh;
   padding: 2em 1em;
-  background: linear-gradient(to bottom right, #293B59, #007DA1);
+  background: linear-gradient(to bottom right, #293b59, #007da1);
 }

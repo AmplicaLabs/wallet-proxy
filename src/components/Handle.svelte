@@ -28,9 +28,10 @@
       utf8Encode.encode($HandleStore).length <= handleBytesMax;
   };
 
-  const inputClasses="w-full mr-8 border-silver rounded bg-white-transparent " +
-    "text-white text-3xl " +
-    "placeholder-aqua focus:border-aqua";
+  const inputClasses =
+    'w-full mr-8 border-silver rounded bg-white-transparent ' +
+    'text-white xs:text-xl sm:text-2xl md:text-3xl ' +
+    'placeholder-aqua focus:border-aqua';
 </script>
 
 <div class="pt-4">

@@ -29,7 +29,7 @@
 
 <div class="px-16 md:p-12 mt-12">
   <div
-    class="progress-container sm:hidden md:flex justify-between relative mb-30 max-w-800"
+    class="progress-container xs:hidden sm:hidden md:flex justify-between relative mb-30 max-w-800"
     bind:this={circles}
   >
     <div class="progress" bind:this={progress} />
@@ -42,16 +42,16 @@
 </div>
 
 <style lang="scss">
-  $silver: #D3D3D3;
-  $aqua: #69B9CD;
-  $teal-light: rgb(175,235,244, 0.4);
-  $teal-dark: rgb(84,158,170,0.4);
-  $lilac: rgb(243,206,255, 0.4);
-  $periwinkle: rgb(120,159,243,0.4);
-  $cobalt: #4B64FF;
-  $white-transparent: rgb(254,255,255,.1);
-  $teal-dark-3: #007DA1;
-  $teal-black: #293B59;
+  $silver: #d3d3d3;
+  $aqua: #69b9cd;
+  $teal-light: rgb(175, 235, 244, 0.4);
+  $teal-dark: rgb(84, 158, 170, 0.4);
+  $lilac: rgb(243, 206, 255, 0.4);
+  $periwinkle: rgb(120, 159, 243, 0.4);
+  $cobalt: #4b64ff;
+  $white-transparent: rgb(254, 255, 255, 0.1);
+  $teal-dark-3: #007da1;
+  $teal-black: #293b59;
   $bg-gradient: linear-gradient(to bottom right, $teal-black, $teal-dark);
   $bg: $silver;
   $text: white;
@@ -110,7 +110,7 @@
 
   .circle.active {
     border-color: $circle-active;
-    box-shadow: 0 4px 12px rgba(50,75,150,1);
+    box-shadow: 0 4px 12px rgba(50, 75, 150, 1);
     transition: 0.4s ease;
   }
 </style>

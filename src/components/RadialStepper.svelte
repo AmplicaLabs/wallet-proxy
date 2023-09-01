@@ -22,18 +22,18 @@
 <style lang="scss">
   @use 'sass:math';
   // -- vars
-  $silver: #D3D3D3;
-  $aqua: #69B9CD;
-  $lilac: rgb(243,206,255, 0.4);
+  $silver: #d3d3d3;
+  $aqua: #69b9cd;
+  $lilac: rgb(243, 206, 255, 0.4);
   $teal-dark: #3498db;
-  $teal-light-trans: rgb(175,235,244, 0.4);
-  $teal-dark-trans: rgb(84,158,170,0.4);
-  $lilac: rgb(243,206,255, 0.4);
-  $periwinkle: rgb(120,159,243,0.4);
-  $cobalt: #4B64FF;
-  $white-transparent: rgb(254,255,255,.1);
-  $teal-dark-3: #007DA1;
-  $teal-black: #293B59;
+  $teal-light-trans: rgb(175, 235, 244, 0.4);
+  $teal-dark-trans: rgb(84, 158, 170, 0.4);
+  $lilac: rgb(243, 206, 255, 0.4);
+  $periwinkle: rgb(120, 159, 243, 0.4);
+  $cobalt: #4b64ff;
+  $white-transparent: rgb(254, 255, 255, 0.1);
+  $teal-dark-3: #007da1;
+  $teal-black: #293b59;
   $bg-gradient: linear-gradient(to bottom right, $teal-black, $teal-dark);
   $bg: $silver;
   $text: white;

@@ -1,6 +1,7 @@
 <script lang="ts">
   import FrequencyIcon from '$lib/assets/frequency/frqcy-circle-grad.png';
-  import Signup from '$components/Signup.svelte';
+  import AmplicaWhite from '$lib/assets/amplica/amplica_white.svg';
+
   import {
     HandleStore,
     SelectedWalletStore,
@@ -8,19 +9,20 @@
   } from '../lib/store';
   import { page } from '$app/stores';
 </script>
+
 <head>
-  <title>Amplica Wallet Connect</title>
+  <title>Amplica: Wallet Connect</title>
 </head>
-<header class="py-2 relative">
-  <div class="w-12 fixed left-60 top-35">
-    <img src={FrequencyIcon} alt="Amplica Logo" width="100%" />
+<header class="py-2 relative mt-0">
+  <div class="xs:w-24 sm:w-32 md:w-52 absolute md:left-8 top-0">
+    <img src={AmplicaWhite} alt="Amplica Logo" width="100%" />
   </div>
-  <div class="text-4xl text-center">Amplica Wallet Connect</div>
+  <div class="xs:text-xl sm:text-2xl md:text-3xl text-center md:mt-8">Wallet Connect</div>
 </header>
 
 <slot />
 
-<ul>
+<ul class="mt-8">
   <li>
     HandleStore: {$HandleStore}
   </li>
@@ -42,7 +44,7 @@
 </ul>
 
 <footer class="mt-20 fixed bottom-4 left-8 -z-40">
-  <!-- <div class="max-w-sm">
-    <img src={FrequencyIcon} alt="Amplica Logo" width="10%" />
-  </div> -->
+  <div class="w-60 absolute left-8 top-0">
+    <img src={AmplicaWhite} alt="Amplica Logo" width="100%" />
+  </div>
 </footer>

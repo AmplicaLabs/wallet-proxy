@@ -63,7 +63,7 @@
   >
     <svelte:component this={components[currentActive]} bind:formFinished />
   </div>
-  <div class="step-button flex sm:justify-between md:justify-around max-w-800">
+  <div class="flex xs:justify-between sm:justify-between md:justify-around">
     <button
       class={currentActive === 0 ? 'btn-disabled' : 'btn-primary'}
       on:click|preventDefault={handlePrevious}

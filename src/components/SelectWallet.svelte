@@ -49,7 +49,7 @@
   {#each extensions as extension}
     <button
       type="button"
-      class='font-bold btn-banner'
+      class="font-bold btn-banner"
       on:click={() => handleSelectedWallet(extension.injectedName)}
     >
       <div class="flex items-center justify-center gap-3">

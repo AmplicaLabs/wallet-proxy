@@ -3,12 +3,13 @@ export default {
   content: ['./src/**/*.{html,js,svelte,ts}'],
   theme: {
     fontFamily: {
-      sans: ['Poppins', 'sans-serif'],
+      sans: ['Poppins', 'sans-serif']
     },
     screens: {
-      sm: { max: '767px' },
+      xs: { max: '511px' },
+      sm: { min: '512px' },
       md: { min: '768px' },
-      lg: { min: '1023px' },
+      lg: { min: '1024px' },
       xl: { min: '1280px' }
     },
 
@@ -36,16 +37,16 @@ export default {
         periwinkle: 'rgb(120,159,243,0.4)',
         'teal-light': 'rgb(175,235,244,0.4)',
         'teal-dark': 'rgb(84,158,170,0.4)',
-        'white-transparent': 'rgb(254,255,255,.1)',
+        'white-transparent': 'rgb(254,255,255,.1)'
       },
       top: {
-        '35': '35px',
+        35: '35px'
       },
       width: {
         500: '500px',
         600: '600px',
         720: '720px',
-        800: '820px',
+        800: '820px'
       }
     }
   },
