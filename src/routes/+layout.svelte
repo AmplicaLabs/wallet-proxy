@@ -1,5 +1,5 @@
 <script lang="ts">
-  import AmplicaWhite from '$lib/assets/amplica/amplica_white.svg';
+  import AmplicaWhite from '$lib/assets/amplica/Amplica_White.svg';
   import BottomLeftBars from '$lib/assets/frequency/bottom-left-bars.png'
   import TopRightBars from '$lib/assets/frequency/top-right-bars.png'
 
