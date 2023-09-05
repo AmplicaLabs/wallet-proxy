@@ -2,17 +2,17 @@
   import { page } from '$app/stores';
   import { DSNPSchemas } from '$lib/dsnpSchemas';
   import type { SchemaData } from '$lib/dsnpSchemas';
-  import { HandleStore, SelectedWalletStore, SelectedWalletAccountsStore } from '../lib/store';
+  import { HandleStore, SelectedWalletStore, SelectedSigningKey } from '../lib/store';
   import { getHandleSignature, getDelegationAndPermissionSignature } from '$lib/signing';
   import { onMount } from 'svelte';
 
-  export let endpoint;
-
   // eslint-disable-next-line @typescript-eslint/no-unused-var
-  export const formFinished = true;
 
   let polkadotHandleSignature: string;
-  let polkadotDelgationAndPermissionSignature: string;
+  let polkadotDelegationAndPermissionSignature: string;
+  export let formFinished = polkadotDelegationAndPermissionSignature !== '' &&
+    polkadotHandleSignature !== '';
+
   let schemas: [string, SchemaData][] = [];
 
   onMount(() => {
@@ -24,19 +24,20 @@
   });
 
   async function signDelegationAndPermissions() {
-    polkadotDelgationAndPermissionSignature = await getDelegationAndPermissionSignature(
+    polkadotDelegationAndPermissionSignature = await getDelegationAndPermissionSignature(
       $SelectedWalletStore,
-      $SelectedWalletAccountsStore[0],
+      $SelectedSigningKey,
       $page.data.endpoint,
       '1',
       schemas.map((schema) => schema[1].id.mainnet)
     );
+    formFinished = true;
   }
 
   async function handleHandle(event) {
     polkadotHandleSignature = await getHandleSignature(
       $SelectedWalletStore,
-      $SelectedWalletAccountsStore[0],
+      $SelectedSigningKey,
       $page.data.endpoint,
       $HandleStore
     );
@@ -47,7 +48,7 @@
 <div class="flex flex-col space-between">
   <div>
     <p class="text-2xl">Account-key</p>
-    {$SelectedWalletAccountsStore[0]}
+    {$SelectedSigningKey}
   </div>
   <div>
     <p class="text-2xl">Handle</p>
@@ -61,7 +62,7 @@
   </div>
   <div>
     <div>
-      <p class="text-2xl">Delgation Grant</p>
+      <p class="text-2xl">Delegation Grant</p>
       <p>Authorize Acme App with MSA 1 to be your delegate</p>
     </div>
     <div>
@@ -83,7 +84,6 @@
     >
   </div>
 </div>
-<!-- http://localhost:5174/signup?endpoint=http%3A%2F%2F127.0.0.1%3A56998&schemas=tombstone%2Cbroadcast%2Creplay%2Creaction%2Cprofile%2Cupdate%2CpublicKey%2CpublicFollows%2CprivateFollows%2CprivateConnections -->
 <ul>
   Debug
   <li>
@@ -94,6 +94,6 @@
   </li>
 
   <li>
-    polkadotDelgationAndPermissionSignature: {polkadotDelgationAndPermissionSignature}
+    polkadotDelgationAndPermissionSignature: {polkadotDelegationAndPermissionSignature}
   </li>
 </ul>

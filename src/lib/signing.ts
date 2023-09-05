@@ -2,7 +2,7 @@ import { isFunction, u8aWrapBytes, u8aToHex } from '@polkadot/util';
 import type { U8aLike } from '@polkadot/util/types';
 import { TypeRegistry, Bytes } from '@polkadot/types';
 import { walletConnector } from './wallet';
-import { getBlockNumber } from './util';
+import { getBlockNumber } from "$lib/chain/util";
 
 const Registry = new TypeRegistry();
 Registry.register({

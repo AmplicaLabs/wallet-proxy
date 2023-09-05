@@ -1,11 +1,10 @@
 <script lang="ts">
   import { HandleStore } from '../lib/store';
 
-  let handleIsValid: boolean = false;
   let debounceTimer;
-
+  // TODO: set to address name
+  const signingKeyName = '';
   export let formFinished = false;
-  export let endpoint;
 
   const debounceCheck = (_evt: Event) => {
     if (debounceTimer) {
@@ -23,21 +22,19 @@
   const checkHandle = () => {
     let utf8Encode = new TextEncoder();
 
-    handleIsValid =
+    formFinished =
       $HandleStore.length >= handleCharsMin &&
       $HandleStore.length <= handleCharsMax &&
       utf8Encode.encode($HandleStore).length <= handleBytesMax;
   };
-  const doClaimHandle = (_evt: Event) => {
-    if (debounceTimer) {
-      clearTimeout(debounceTimer);
-    }
-    formFinished = true;
-  };
 </script>
 
-<div class="pt-4">Your handle is a named connection to your DSNP Identity.</div>
-<div class="pt-4">Choose a unique handle to associate it with your DSNP account.</div>
+<div class="pt-4">
+  Your handle will be linked to your wallet account and your new DSNP Identity.
+</div>
+<div class="pt-4">
+  Enter a handle and click 'Claim this Handle'. You will be asked to sign with your wallet.
+</div>
 <form class="pt-4">
   <input
     id="handle"
@@ -46,12 +43,4 @@
     bind:value={$HandleStore}
     on:keyup={debounceCheck}
   />
-  <button
-    class={handleIsValid ? 'btn-primary' : 'btn-disabled'}
-    on:click|preventDefault={doClaimHandle}
-    disabled={!handleIsValid}
-  >
-    Claim this handle
-  </button>
 </form>
-<div class="hidden">{endpoint}</div>

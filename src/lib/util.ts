@@ -1,14 +1,16 @@
 // Generic helper functions that do not depend on any Polkadot or other specialized libraries
 // Please keep imports As Low As Reasonably Achievable
 
-export const getEndpointFromURL = (url: any): { endpoint?: string; error?: string } => {
+// Parses the URL, looks for an rpc searchParam, parses the value as a URL
+// and verifies that it at least uses a WebSocket protocol
+export const getRpcEndpointFromURL = (url: URL): { endpoint?: string; error?: string } => {
+  let rpcEndpoint = '';
   try {
-    const endpoint = url?.searchParams.get('endpoint');
-    if (!endpoint) {
-      return { error: 'An `endpoint` URL parameter is required.<br>' };
+    rpcEndpoint = url?.searchParams.get('rpc') || '';
+    if (!rpcEndpoint) {
+      throw new Error('An `rpc` searchParam is required.');
     }
-    new URL(endpoint);
-    return { endpoint };
+    return { endpoint: rpcEndpoint };
   } catch (e: any) {
     const error = [
       e?.message ? e.message : 'Unknown error with',
@@ -20,38 +22,8 @@ export const getEndpointFromURL = (url: any): { endpoint?: string; error?: strin
   }
 };
 
-export const getBlockNumber = async (url: string): Promise<number> => {
-  try {
-    const response = await fetch(url, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        jsonrpc: '2.0',
-        id: 1,
-        method: 'chain_getHeader',
-        params: []
-      })
-    });
+export const isWebSocket = (url: string): boolean => {
+  let parsed = new URL(url);
+  return (parsed.protocol === 'wss:' || parsed.protocol === 'ws:');
+}
 
-    if (!response.ok) {
-      throw new Error('Failed to fetch block number');
-    }
-
-    const data = await response.json();
-
-    if (data.error) {
-      throw new Error(data.error.message);
-    }
-
-    if (data.result) {
-      return Number(data.result.number);
-    }
-
-    throw new Error('Invalid response format');
-  } catch (error) {
-    console.error(error);
-    throw error;
-  }
-};
