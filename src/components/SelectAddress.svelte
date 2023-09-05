@@ -32,15 +32,15 @@
 {#if errorMessage !== ''}
   <div id="error" class="text-red-600 font-xl">{errorMessage}</div>
 {:else}
-  <p class="text-2xl"><label for="signing-address">Choose an account to use</label></p>
-  <p>SigningKey: {$SelectedSigningKey}</p>
+  <p class="text-2xl"><label for="signing-address">Choose an account for your new DSNP identity:</label></p>
   <div class="mt-8">
     <fieldset>
-      <legend>Select an account</legend>
       {#each validAccountsArray as account}
-        <div>
-          <input type="radio" bind:group={$SelectedSigningKey} value={account.address}/>
-          <label>{account.name}: {account.address}</label>
+        <div class="">
+          <input type="radio" bind:group={$SelectedSigningKey} value={account.address} id={account.address} class=""/>
+          <label for={account.address} class="w-full max-w-full cursor-pointer whitespace-nowrap ws-nowrap">
+            <span class="text-2xl ml-4">{account.name}</span>
+          </label>
         </div>
       {/each}
     </fieldset>

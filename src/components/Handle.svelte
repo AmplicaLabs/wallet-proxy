@@ -34,11 +34,8 @@
     'placeholder-aqua focus:border-aqua';
 </script>
 
-<div class="pt-4">
+<div class="pt-4 text-2xl">
   Your handle will be linked to your wallet account and your new DSNP Identity.
-</div>
-<div class="pt-4">
-  Enter a handle and click 'Claim this Handle'. You will be asked to sign with your wallet.
 </div>
 <form class="pt-4">
   <input
@@ -47,5 +44,6 @@
     placeholder="enter your desired handle"
     bind:value={$HandleStore}
     on:keyup={debounceCheck}
+    maxlength="20"
   />
 </form>

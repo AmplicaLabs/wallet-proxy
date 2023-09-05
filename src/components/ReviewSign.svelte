@@ -6,8 +6,6 @@
   import { getHandleSignature, getDelegationAndPermissionSignature } from '$lib/signing';
   import { onMount } from 'svelte';
 
-  export let endpoint;
-
   const dAppName = 'AcmeApp';
 
   // eslint-disable-next-line @typescript-eslint/no-unused-var
@@ -48,13 +46,13 @@
   }
 
   const buttonSectionClasses = 'flex flex justify-center mt-8';
-  const buttonClasses = 'btn-banner md:w-500 sm:text-2xl md:text-3xl mt-0 ml-4';
-  const labelClasses = 'text-teal-200 basis-1/4 align-center';
+  const buttonClasses = 'btn-banner md:w-500 sm:text-2xl md:text-3xl mt-0 ml-4 h-full';
+  const labelClasses = 'text-teal-200 basis-1/4 self-center';
 </script>
 
 <div class="xs:text-lg sm:text-xl md:text-2xl lg:text-3xl text-center font-thin">
   <p class="text-teal-200">Review & Sign with</p>
-  <p>{$SelectedWalletAccountsStore[0]}</p>
+  <p>{$SelectedSigningKey}</p>
 </div>
 <div class="mt-12">
   <div class={buttonSectionClasses}>
