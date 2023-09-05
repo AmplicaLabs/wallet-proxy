@@ -2,7 +2,7 @@ import { isFunction, u8aWrapBytes, u8aToHex } from '@polkadot/util';
 import type { U8aLike } from '@polkadot/util/types';
 import { TypeRegistry, Bytes } from '@polkadot/types';
 import { walletConnector } from './wallet';
-import { ExtrinsicHelper } from "$lib/chain/extrinsicHelpers";
+import { getBlockNumber } from "$lib/chain/util";
 
 const Registry = new TypeRegistry();
 Registry.register({
@@ -17,11 +17,6 @@ Registry.register({
   }
 });
 
-const isWebSocket = (url: string): boolean => {
-  let parsed = new URL(url);
-  return (parsed.protocol === 'wss:' || parsed.protocol === 'ws:');
-}
-
 export async function getDelegationAndPermissionSignature(
   walletName: string,
   account: string,
@@ -29,12 +24,7 @@ export async function getDelegationAndPermissionSignature(
   providerId: string,
   schemasIds: number[]
 ) {
-  let blockNumber: number;
-  if (isWebSocket(endpoint)) {
-    blockNumber = await ExtrinsicHelper.getBlockNumber();
-  } else {
-    blockNumber = await fetchBlockNumber(endpoint);
-  }
+  const blockNumber = await getBlockNumber(endpoint);
   const expiration = blockNumber + 50;
   const addProviderPayload = payloadAddProvider(expiration, providerId, schemasIds);
 
@@ -47,12 +37,7 @@ export async function getHandleSignature(
   endpoint: string,
   handleName: string
 ): Promise<string> {
-  let blockNumber: number;
-  if (isWebSocket(endpoint)) {
-    blockNumber = await ExtrinsicHelper.getBlockNumber();
-  } else {
-    blockNumber = await fetchBlockNumber(endpoint);
-  }
+  const blockNumber = await getBlockNumber(endpoint);
   const expiration = blockNumber + 50;
   const handlePayload = payloadHandle(expiration, handleName);
 
@@ -99,40 +84,4 @@ export const payloadAddProvider = (expiration: number, providerId: string, schem
   });
 
   return claimHandlePayload;
-};
-
-export const fetchBlockNumber = async (url: string): Promise<number> => {
-  try {
-    const response = await fetch(url, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        jsonrpc: '2.0',
-        id: 1,
-        method: 'chain_getHeader',
-        params: []
-      })
-    });
-
-    if (!response.ok) {
-      throw new Error('Failed to fetch block number');
-    }
-
-    const data = await response.json();
-
-    if (data.error) {
-      throw new Error(data.error.message);
-    }
-
-    if (data.result) {
-      return Number(data.result.number);
-    }
-
-    throw new Error('Invalid response format');
-  } catch (error) {
-    console.error(error);
-    throw error;
-  }
 };

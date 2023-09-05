@@ -15,7 +15,6 @@
   } from '../lib/store';
 
   export let formFinished = false;
-  // unused in this component
   let isLoading = false;
 
   export let extensions: Array<Extension> = [];

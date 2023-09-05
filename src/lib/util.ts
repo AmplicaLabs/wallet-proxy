@@ -10,10 +10,6 @@ export const getRpcEndpointFromURL = (url: URL): { endpoint?: string; error?: st
     if (!rpcEndpoint) {
       throw new Error('An `rpc` searchParam is required.');
     }
-    const parsedEndpoint = new URL(rpcEndpoint);
-    if (parsedEndpoint.protocol !== 'ws:' && parsedEndpoint.protocol !== 'wss:') {
-      throw new Error(`${rpcEndpoint} must be a WebSocket URL`);
-    }
     return { endpoint: rpcEndpoint };
   } catch (e: any) {
     const error = [
@@ -25,3 +21,9 @@ export const getRpcEndpointFromURL = (url: URL): { endpoint?: string; error?: st
     };
   }
 };
+
+export const isWebSocket = (url: string): boolean => {
+  let parsed = new URL(url);
+  return (parsed.protocol === 'wss:' || parsed.protocol === 'ws:');
+}
+

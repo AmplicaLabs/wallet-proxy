@@ -2,6 +2,7 @@
   import { HandleStore } from '../lib/store';
 
   let debounceTimer;
+  // TODO: set to address name
   const signingKeyName = '';
   export let formFinished = false;
 
@@ -29,7 +30,7 @@
 </script>
 
 <div class="pt-4">
-  Your handle will be linked to your {signingKeyName} account and your new DSNP Identity.
+  Your handle will be linked to your wallet account and your new DSNP Identity.
 </div>
 <div class="pt-4">
   Enter a handle and click 'Claim this Handle'. You will be asked to sign with your wallet.

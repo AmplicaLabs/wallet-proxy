@@ -3,6 +3,7 @@
   import type { InjectedAccount } from '@polkadot/extension-inject/types';
   import {SelectedWalletStore, SelectedSigningKey} from "$lib/store";
   import {getAccounts, onReady} from "$lib/wallet";
+  import { page } from "$app/stores";
 
   let validAccountsArray: Array<InjectedAccount> = [];
   let errorMessage = '';
@@ -15,7 +16,7 @@
   onMount(async () => {
     await onReady();
     try {
-      const accountsArray = await getAccounts($SelectedWalletStore);
+      const accountsArray = await getAccounts($SelectedWalletStore, $page.data.endpoint);
       if (accountsArray.length === 0) {
         errorMessage =
           'This wallet has no account keys associated with it. Please create at least one account key in your selected wallet.';
