@@ -1,5 +1,5 @@
 import { options } from '@frequency-chain/api-augment';
-import { ApiRx, WsProvider } from '@polkadot/api';
+import { ApiRx, ApiPromise, WsProvider } from '@polkadot/api';
 import { firstValueFrom } from 'rxjs';
 
 export async function connect(providerUrl: string | string[] | undefined): Promise<ApiRx> {

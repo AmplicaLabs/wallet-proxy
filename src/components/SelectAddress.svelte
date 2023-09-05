@@ -1,51 +1,27 @@
 <script lang="ts">
   import { onMount } from 'svelte';
-  import { ExtrinsicHelper } from '$lib/chain/extrinsicHelpers';
   import type { InjectedAccount } from '@polkadot/extension-inject/types';
-  import { WalletInfoStore } from '$lib/store';
+  import {SelectedWalletStore, SelectedSigningKey} from "$lib/store";
+  import {getAccounts, onReady} from "$lib/wallet";
 
-  let validAccounts: Record<string, InjectedAccount> = {};
   let validAccountsArray: Array<InjectedAccount> = [];
-  let selectedOption = '';
   let errorMessage = '';
-  let injectedExtension;
-
-  WalletInfoStore.subscribe((info) => (injectedExtension = info.injectedExtension));
-
   export let formFinished = false;
 
-  const handleAddressSelection = (evt: Event) => {
-    let address = (evt.target as HTMLInputElement).value;
-    updateSigningKeys(address);
-  };
-
-  const updateSigningKeys = (address: string) => {
-    const signingKeys: InjectedAccount = validAccounts[address];
-    WalletInfoStore.update((info) => (info = { ...info, signingKeys }));
-    formFinished = true;
-  };
+  SelectedSigningKey.subscribe((key) => {
+    if (key !== '' ) { formFinished = true;}
+  });
 
   onMount(async () => {
+    await onReady();
     try {
-      if (!injectedExtension) {
-        errorMessage = 'No supported extension found; please install it first.';
-        console.error(errorMessage);
-        return;
-      }
-
-      let chainGenesis = await ExtrinsicHelper.getGenesisHash();
-      let allAccounts = await injectedExtension.accounts.get();
-      if (allAccounts.length === 0) {
+      const accountsArray = await getAccounts($SelectedWalletStore);
+      if (accountsArray.length === 0) {
         errorMessage =
           'This wallet has no account keys associated with it. Please create at least one account key in your selected wallet.';
+      } else {
+        validAccountsArray = accountsArray;
       }
-      allAccounts.forEach((a: InjectedAccount) => {
-        // display only the accounts allowed for this chain
-        if (!a.genesisHash || chainGenesis === a.genesisHash) {
-          validAccounts[a.address] = a;
-          validAccountsArray.push(a);
-        }
-      });
     } catch (e: Error) {
       console.error('Error: ', e.message);
     }
@@ -56,20 +32,14 @@
   <div id="error" class="text-red-600 font-xl">{errorMessage}</div>
 {:else}
   <p class="text-2xl"><label for="signing-address">Choose an account to use</label></p>
+  <p>SigningKey: {$SelectedSigningKey}</p>
   <div class="mt-8">
     <fieldset>
       <legend>Select an account</legend>
-      {#each Object.keys(validAccounts) as address}
+      {#each validAccountsArray as account}
         <div>
-          <input
-            type="radio"
-            id={address}
-            name="selectedOption"
-            value={address}
-            checked={address === selectedOption ? 'checked' : ''}
-            on:click={handleAddressSelection}
-          />
-          <label for={address}>{validAccounts[address].name}: {address}</label>
+          <input type="radio" bind:group={$SelectedSigningKey} value={account.address}/>
+          <label>{account.name}: {account.address}</label>
         </div>
       {/each}
     </fieldset>

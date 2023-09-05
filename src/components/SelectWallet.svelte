@@ -12,24 +12,16 @@
   import {
     SelectedWalletStore,
     SelectedWalletAccountsStore,
-    InjectedWeb3Store,
-    WalletInfoStore,
   } from '../lib/store';
 
-  // TODO: change to false and then set to true when wallet selection is complete
-  // eslint-disable-next-line @typescript-eslint/no-unused-var
-  export let formFinished = true;
-  export let endpoint;
-
+  export let formFinished = false;
+  // unused in this component
   let isLoading = false;
-  let selectedWalletAccounts: Array<string>;
 
   export let extensions: Array<Extension> = [];
-  let injectedWeb3: any;
 
   onMount(async () => {
-    injectedWeb3 = await onReady();
-    $InjectedWeb3Store = injectedWeb3;
+    await onReady();
     extensions = extensionsConfig;
   });
 
@@ -43,9 +35,10 @@
       extension = await walletConnector(injectedName, 'Acme App');
       let accounts = await extension.accounts.get();
       $SelectedWalletAccountsStore = accounts.map((account) => account.address);
+      formFinished = true;
       goto(`/signup?${$page.url.searchParams}`);
     } catch (error) {
-      console.log('Extension not installed - close window and redirect');
+      console.error('Extension not installed - close window and redirect');
     } finally {
       isLoading = false;
     }
@@ -62,7 +55,7 @@
 </script>
 
 <div class="flex flex-col gap-2">
-  {#each extensions as extension, index}
+  {#each extensions as extension}
     <button
       type="button"
       class={extensionClasses}
@@ -81,7 +74,7 @@
           {#if !isWalletInstalled(extension.injectedName)}
             <Icon icon={baselineDownload} width="30" height="30" />
           {/if}
-          {#if isLoading && $SelectedWalletStore == extension.injectedName}
+          {#if isLoading && $SelectedWalletStore === extension.injectedName}
             <Icon icon={threeDotsLoading} width="55" height="55" />
           {/if}
         </div>

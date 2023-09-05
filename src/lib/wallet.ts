@@ -1,4 +1,5 @@
-import type { InjectedExtension, InjectedWindow } from '@polkadot/extension-inject/types';
+import type {InjectedAccount, InjectedExtension, InjectedWindow} from '@polkadot/extension-inject/types';
+import {ExtrinsicHelper} from "$lib/chain/extrinsicHelpers";
 
 const isWalletInstalled = function (injectedName: string): boolean {
   if (window.injectedWeb3) {
@@ -47,4 +48,11 @@ async function onReady<T = InjectedWindow>(): Promise<T | null> {
   return injectedWeb3 ? (injectedWeb3 as unknown as T) : null;
 }
 
-export { onReady, walletConnector, isWalletInstalled };
+const getAccounts = async (injectedName: string): Promise<Array<InjectedAccount>> => {
+  const extension = await walletConnector(injectedName, 'Acme App');
+  let chainGenesis = await ExtrinsicHelper.getGenesisHash();
+  const allAccounts = await extension.accounts.get();
+  return allAccounts.filter((a: InjectedAccount) => !a.genesisHash || (chainGenesis === a.genesisHash));
+}
+
+export { onReady, walletConnector, isWalletInstalled, getAccounts};

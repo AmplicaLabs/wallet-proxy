@@ -10,7 +10,11 @@ export class ExtrinsicHelper {
 
   public static apiPromise: ApiPromise;
 
-  public static async initialize(providerUrl: string | string[]) {
+  public static async initialize(providerUrl: string) {
+    if (providerUrl.length === 0) {
+      console.error("providerUrl cannot be empty: ")
+      return;
+    }
     ExtrinsicHelper.api = await connect(providerUrl);
     // For single state queries (api.query), ApiPromise is better
     ExtrinsicHelper.apiPromise = await connectPromise(providerUrl);
