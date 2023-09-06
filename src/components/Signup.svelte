@@ -50,7 +50,8 @@
   });
 </script>
 
-<main>
+<main class="grow-1">
+  <h1 class="mt-4 text-2xl text-aqua text-center">Sign up</h1>
   <ProgressBar {steps} bind:this={progressBar} />
   <RadialStepper
     bind:currentStep={currentActive}
@@ -63,7 +64,7 @@
   >
     <svelte:component this={components[currentActive]} bind:formFinished />
   </div>
-  <div class="step-button flex sm:justify-between md:justify-around max-w-800">
+  <div class="flex xs:justify-between sm:justify-between md:justify-around">
     <button
       class={currentActive === 0 ? 'btn-disabled' : 'btn-primary'}
       on:click|preventDefault={handlePrevious}

@@ -43,30 +43,22 @@
     }
   }
 
-
-  const extensionClasses = [
-    'font-medium text-gray-900 border border-gray-300',
-    'rounded-lg px-3 py-2.5 ',
-    'focus:ring-4 focus:outline-none focus:ring-gray-100',
-    'dark:focus:ring-gray-600 dark:bg-gray-800 dark:border-gray-700 ' +
-      'dark:text-white dark:hover:bg-gray-700'
-  ].join(' ');
 </script>
 
 <div class="flex flex-col gap-2">
   {#each extensions as extension}
     <button
       type="button"
-      class={extensionClasses}
+      class="font-bold btn-banner"
       on:click={() => handleSelectedWallet(extension.injectedName)}
     >
       <div class="flex items-center justify-center gap-3">
         <div class="basis-3/12">
           <svelte:component this={extension.logo.component} size={extension.logo.size} />
         </div>
-        <div class="text-left basis-6/12">
-          <div class="text-xl">{extension.displayName}</div>
-          <span class="text-xs italic antialiased">Sign-in with {extension.displayName} wallet</span
+        <div class="ml-8 text-left basis-5/8">
+          <div class="text-3xl">{extension.displayName}</div>
+          <span class="text-sm italic antialiased">Sign in with {extension.displayName} wallet</span
           >
         </div>
         <div class="basis-1/12 w-4">
@@ -81,6 +73,3 @@
     </button>
   {/each}
 </div>
-
-<div>Debug</div>
-Injected Web3: {JSON.stringify(window.injectedWeb3)}

@@ -27,20 +27,23 @@
       $HandleStore.length <= handleCharsMax &&
       utf8Encode.encode($HandleStore).length <= handleBytesMax;
   };
+
+  const inputClasses =
+    'w-full mr-8 border-silver rounded bg-white-transparent ' +
+    'text-white xs:text-xl sm:text-2xl md:text-3xl ' +
+    'placeholder-aqua focus:border-aqua';
 </script>
 
-<div class="pt-4">
+<div class="pt-4 text-2xl">
   Your handle will be linked to your wallet account and your new DSNP Identity.
-</div>
-<div class="pt-4">
-  Enter a handle and click 'Claim this Handle'. You will be asked to sign with your wallet.
 </div>
 <form class="pt-4">
   <input
     id="handle"
-    class="w-80 mr-8"
+    class={inputClasses}
     placeholder="enter your desired handle"
     bind:value={$HandleStore}
     on:keyup={debounceCheck}
+    maxlength="20"
   />
 </form>

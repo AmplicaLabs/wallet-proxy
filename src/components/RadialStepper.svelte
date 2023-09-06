@@ -22,7 +22,25 @@
 <style lang="scss">
   @use 'sass:math';
   // -- vars
-  $bg-color: #34495e;
+  $silver: #d3d3d3;
+  $aqua: #69b9cd;
+  $lilac: rgb(243, 206, 255, 0.4);
+  $teal-dark: #3498db;
+  $teal-light-trans: rgb(175, 235, 244, 0.4);
+  $teal-dark-trans: rgb(84, 158, 170, 0.4);
+  $lilac: rgb(243, 206, 255, 0.4);
+  $periwinkle: rgb(120, 159, 243, 0.4);
+  $cobalt: #4b64ff;
+  $white-transparent: rgb(254, 255, 255, 0.1);
+  $teal-dark-3: #007da1;
+  $teal-black: #293b59;
+  $bg-gradient: linear-gradient(to bottom right, $teal-black, $teal-dark);
+  $bg: $silver;
+  $text: white;
+  $border: $silver;
+  $circle-active: $aqua;
+
+  $bg-color: white;
   $default-size: 1em;
   $label-font-size: math.div($default-size, 3);
   $label-font-size-redo: $default-size * 3;
@@ -95,7 +113,7 @@
 
       .half-circle {
         @include size(100%, 100%);
-        border: math.div($default-size, 10) solid #3498db;
+        border: math.div($default-size, 10) solid $circle-active;
         border-radius: 50%;
         clip: rect(0, $half-default-size, $default-size, 0);
         left: 0;
@@ -110,7 +128,7 @@
       background: $bg-color;
       border-radius: 50%;
       bottom: $redo-10;
-      color: #ecf0f1;
+      color: transparent;
       cursor: default;
       display: block;
       font-size: $label-font-size;
@@ -122,7 +140,7 @@
       top: $redo-10;
 
       .smaller {
-        color: #bdc3c7;
+        color: white;
         font-size: 0.5em;
         vertical-align: super;
       }
@@ -137,40 +155,34 @@
     &.style-2 {
       .label {
         background: none;
-        color: #7f8c8d;
+        color: white;
 
         .smaller {
-          color: #bdc3c7;
+          color: #white;
         }
       }
     }
 
     &.progress-0 {
-      @include draw-progress(0, #bdc3c7);
-    }
-    &.progress-20 {
-      @include draw-progress(20, #3498db);
+      @include draw-progress(0, black);
     }
     &.progress-25 {
-      @include draw-progress(25, #009900);
+      @include draw-progress(25, $circle-active);
     }
-    &.progress-40 {
-      @include draw-progress(40, #3498db);
+    &.progress-33 {
+      @include draw-progress(33, $circle-active);
     }
     &.progress-50 {
-      @include draw-progress(50, #dd5900);
+      @include draw-progress(50, $circle-active);
     }
-    &.progress-60 {
-      @include draw-progress(60, #dd5900);
+    &.progress-66 {
+      @include draw-progress(66, $circle-active);
     }
     &.progress-75 {
-      @include draw-progress(75, #8e44ad);
-    }
-    &.progress-80 {
-      @include draw-progress(80, #8e44ad);
+      @include draw-progress(75, $circle-active);
     }
     &.progress-100 {
-      @include draw-progress(100, #aa00cc);
+      @include draw-progress(100, $circle-active);
     }
   }
 </style>

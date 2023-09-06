@@ -23,13 +23,13 @@
   };
 
   const circleClass = (i: number): string => {
-    return 'circle m-auto ' + (i === 0 ? 'active' : '');
+    return 'circle m-auto text-xl  ' + (i === 0 ? 'active' : '');
   };
 </script>
 
-<div class="px-16 md:p-12">
+<div class="px-16 md:p-12 mt-12">
   <div
-    class="progress-container sm:hidden md:flex justify-between relative mb-30 max-w-800"
+    class="progress-container xs:hidden sm:hidden md:flex justify-between relative mb-30 max-w-800"
     bind:this={circles}
   >
     <div class="progress" bind:this={progress} />
@@ -42,45 +42,56 @@
 </div>
 
 <style lang="scss">
-  $bg: #fff;
-  $text: #999;
-  $border: #e0e0e0;
-  $circle-active: #3498db;
+  $silver: #d3d3d3;
+  $aqua: #69b9cd;
+  $teal-light: rgb(175, 235, 244, 0.4);
+  $teal-dark: rgb(84, 158, 170, 0.4);
+  $lilac: rgb(243, 206, 255, 0.4);
+  $periwinkle: rgb(120, 159, 243, 0.4);
+  $cobalt: #4b64ff;
+  $white-transparent: rgb(254, 255, 255, 0.1);
+  $teal-dark-3: #007da1;
+  $teal-black: #293b59;
+  $bg-gradient: linear-gradient(to bottom right, $teal-black, $teal-dark);
+  $bg: $silver;
+  $text: white;
+  $border: $silver;
+  $circle-active: $aqua;
 
   .progress-container::before {
     content: '';
-    background-color: #e0e0e0;
+    background-color: $teal-dark-3;
     position: absolute;
     top: 50%;
     left: 0;
     transform: translateY(-50%);
-    height: 4px;
+    height: 6px;
     width: 100%;
     z-index: -1;
   }
 
   .progress {
-    background-color: #3498db;
+    background-color: $aqua;
     transform: translateY(-50%);
     transition: 0.4s ease;
     position: absolute;
     top: 50%;
     left: 0;
-    height: 4px;
-    width: 0%;
+    height: 6px;
+    width: 0;
     z-index: -1;
   }
 
   .circle {
-    background-color: $bg;
+    background-color: $teal-black;
     color: $text;
     border-radius: 50%;
-    height: 30px;
-    width: 30px;
+    height: 60px;
+    width: 60px;
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 3px solid $border;
+    border: 6px solid $border;
     transition: 0.4s ease;
     cursor: pointer;
   }
@@ -88,8 +99,8 @@
   .circle::after {
     content: attr(data-title) ' ';
     position: absolute;
-    bottom: 35px;
-    color: $text;
+    bottom: 75px;
+    color: $text !important;
     transition: 0.4s ease;
   }
 
@@ -99,5 +110,7 @@
 
   .circle.active {
     border-color: $circle-active;
+    box-shadow: 0 4px 12px rgba(50, 75, 150, 1);
+    transition: 0.4s ease;
   }
 </style>
