@@ -13,6 +13,7 @@
     SelectedWalletStore,
     SelectedWalletAccountsStore,
   } from '../lib/store';
+  import { base } from '$app/paths';
 
   export let formFinished = false;
   let isLoading = false;
@@ -35,7 +36,7 @@
       let accounts = await extension.accounts.get();
       $SelectedWalletAccountsStore = accounts.map((account) => account.address);
       formFinished = true;
-      goto(`/signup?${$page.url.searchParams}`);
+      goto(`${base}/signup?${$page.url.searchParams}`);
     } catch (error) {
       console.error('Extension not installed - close window and redirect');
     } finally {
