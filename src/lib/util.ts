@@ -24,6 +24,5 @@ export const getRpcEndpointFromURL = (url: URL): { endpoint?: string; error?: st
 
 export const isWebSocket = (url: string): boolean => {
   let parsed = new URL(url);
-  return (parsed.protocol === 'wss:' || parsed.protocol === 'ws:');
-}
-
+  return parsed.protocol === 'wss:' || parsed.protocol === 'ws:';
+};

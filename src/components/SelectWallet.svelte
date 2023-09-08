@@ -9,7 +9,7 @@
   import { goto } from '$app/navigation';
   import { page } from '$app/stores';
   import { base } from '$app/paths';
-  import{ SelectedWalletStore } from "$lib/store";
+  import { SelectedWalletStore } from '$lib/store';
 
   export let formFinished = false;
   let isLoading = false;
@@ -33,7 +33,6 @@
       isLoading = false;
     }
   }
-
 </script>
 
 <div class="flex flex-col gap-2">

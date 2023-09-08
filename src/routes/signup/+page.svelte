@@ -4,15 +4,15 @@
   import { walletConnector } from '$lib/wallet';
   import { onMount } from 'svelte';
   /** @type {import('./$types').PageData} */
-  import {page} from '$app/stores';
+  import { page } from '$app/stores';
 
-  import ProgressBar from "$components/ProgressBar.svelte";
-  import RadialStepper from "$components/RadialStepper.svelte";
+  import ProgressBar from '$components/ProgressBar.svelte';
+  import RadialStepper from '$components/RadialStepper.svelte';
   import Handle from '$components/Handle.svelte';
   import ReviewSign from '$components/ReviewSign.svelte';
   import { ExtrinsicHelper } from '$lib/chain/extrinsicHelpers';
   import SelectAddress from '$components/SelectAddress.svelte';
-  import {SelectedWalletAccountsStore, SelectedWalletStore} from "$lib/store";
+  import { SelectedWalletAccountsStore, SelectedWalletStore } from '$lib/store';
 
   let currentActive = 0;
   let steps = ['Select Address', 'Choose Handle', 'Register'];

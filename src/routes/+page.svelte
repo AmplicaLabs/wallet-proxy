@@ -3,7 +3,6 @@
   import SelectWallet from '$components/SelectWallet.svelte';
   import { page } from "$app/stores";
 
-  export let is_local = !!$page.data.is_local;
   export let schemas = $page.data.schemas;
   export let endpoint = $page.data.endpoint;
 
@@ -34,22 +33,15 @@
     <li class="">
       <a href="{base}/?rpc={testEndpointData.rococo.ws}&schemas={testEndpointData.schemas}" class="text-aqua underline">Sign in (rococo WebSocket)</a>
     </li>
-    {#if is_local}
       <li class="">
         <a href="{base}/?rpc={testEndpointData.localhost.ws}&schemas={testEndpointData.schemas}" class="text-aqua underline">Sign in (localhost
           WebSocket)</a>
       </li>
-    {/if}
     <li class="">
       <a href="{base}/?rpc={testEndpointData.rococo.http}&schemas={testEndpointData.schemas}" class="text-aqua underline">Sign in (rococo HTTP)</a>
     </li>
-    {#if is_local}
       <li class="">
         <a href="{base}/?rpc={testEndpointData.localhost.http}&schemas={testEndpointData.schemas}" class="text-aqua underline">Sign in (localhost HTTP)</a>
       </li>
-    {/if}
   </ul>
-  { is_local }
-  { endpoint }
-  { schemas }
 </div>
