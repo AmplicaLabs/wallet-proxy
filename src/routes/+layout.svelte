@@ -28,7 +28,6 @@
       src={TopRightBars}
       alt="Stylish Oscillation Top Bars"
     />
-    <div class="xs:text-xl sm:text-2xl md:text-3xl text-center md:mt-8">Wallet Connect</div>
   </header>
 
   <slot />

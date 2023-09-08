@@ -35,7 +35,7 @@
   }
 </script>
 
-<div class="flex flex-col gap-2">
+<div class="flex flex-col gap-2 xs:mx-12 sm:w-500 md:w-800 mx-auto">
   {#each extensions as extension}
     <button
       type="button"
