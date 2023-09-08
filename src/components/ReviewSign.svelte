@@ -12,8 +12,8 @@
 
   let polkadotHandleSignature: string;
   let polkadotDelegationAndPermissionSignature: string;
-  export let formFinished = polkadotDelegationAndPermissionSignature !== '' &&
-    polkadotHandleSignature !== '';
+  export let formFinished =
+    polkadotDelegationAndPermissionSignature !== '' && polkadotHandleSignature !== '';
 
   let schemas: [string, SchemaData][] = [];
 

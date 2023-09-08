@@ -1,6 +1,10 @@
-import type {InjectedAccount, InjectedExtension, InjectedWindow} from '@polkadot/extension-inject/types';
-import {ExtrinsicHelper} from "$lib/chain/extrinsicHelpers";
-import {getGenesisHash} from "$lib/chain/util";
+import type {
+  InjectedAccount,
+  InjectedExtension,
+  InjectedWindow
+} from '@polkadot/extension-inject/types';
+import { ExtrinsicHelper } from '$lib/chain/extrinsicHelpers';
+import { getGenesisHash } from '$lib/chain/util';
 
 const isWalletInstalled = function (injectedName: string): boolean {
   if (window.injectedWeb3) {
@@ -54,7 +58,9 @@ const getAccounts = async (injectedName: string, url: string): Promise<Array<Inj
   const chainGenesis = await getGenesisHash(url);
   console.log(chainGenesis);
   const allAccounts = await extension.accounts.get();
-  return allAccounts.filter((a: InjectedAccount) => !a.genesisHash || (chainGenesis === a.genesisHash));
-}
+  return allAccounts.filter(
+    (a: InjectedAccount) => !a.genesisHash || chainGenesis === a.genesisHash
+  );
+};
 
-export { onReady, walletConnector, isWalletInstalled, getAccounts};
+export { onReady, walletConnector, isWalletInstalled, getAccounts };

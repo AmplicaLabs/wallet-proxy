@@ -1,7 +1,7 @@
 import type { KeyringPair } from '@polkadot/keyring/types';
 import { Keyring } from '@polkadot/api';
-import { ExtrinsicHelper } from "$lib/chain/extrinsicHelpers";
-import { isWebSocket } from "$lib/util";
+import { ExtrinsicHelper } from '$lib/chain/extrinsicHelpers';
+import { isWebSocket } from '$lib/util';
 
 const fetchBlockNumber = async (url: string): Promise<number> => {
   try {
@@ -39,7 +39,6 @@ const fetchBlockNumber = async (url: string): Promise<number> => {
   }
 };
 
-
 const fetchGenesisHash = async (url: string) => {
   // @ts-ignore
   // @ts-ignore
@@ -58,7 +57,7 @@ const fetchGenesisHash = async (url: string) => {
     });
 
     if (!response.ok) {
-      console.error({response})
+      console.error({ response });
       throw new Error('Failed to fetch genesis hash');
     }
 
@@ -76,19 +75,14 @@ const fetchGenesisHash = async (url: string) => {
   } catch (e: Error) {
     console.error(e.message);
   }
-}
+};
 // Basic utilities
 // For use w/ localhost testing
 
 export const getBlockNumber = async (uri: string): Promise<number> => {
-  return isWebSocket(uri) ?
-    await ExtrinsicHelper.getBlockNumber() :
-    await fetchBlockNumber(uri);
-}
+  return isWebSocket(uri) ? await ExtrinsicHelper.getBlockNumber() : await fetchBlockNumber(uri);
+};
 
 export const getGenesisHash = async (uri: string): Promise<string> => {
-  return isWebSocket(uri) ?
-    await ExtrinsicHelper.getGenesisHash() :
-    await fetchGenesisHash(uri)
-}
-
+  return isWebSocket(uri) ? await ExtrinsicHelper.getGenesisHash() : await fetchGenesisHash(uri);
+};

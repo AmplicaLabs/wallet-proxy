@@ -4,7 +4,7 @@ import type { ApiPromise, ApiRx } from '@polkadot/api';
 import { firstValueFrom } from 'rxjs';
 import type { SignedBlock } from '@polkadot/types/interfaces';
 import { connect, connectPromise } from './apiConnection';
-import {isWebSocket} from "$lib/util";
+import { isWebSocket } from '$lib/util';
 
 export class ExtrinsicHelper {
   public static api: ApiRx;
@@ -14,14 +14,14 @@ export class ExtrinsicHelper {
   public static async initialize(providerUrl: string) {
     if (isWebSocket(providerUrl)) {
       if (providerUrl.length === 0) {
-        console.error("providerUrl cannot be empty: ")
+        console.error('providerUrl cannot be empty: ');
         return;
       }
       ExtrinsicHelper.api = await connect(providerUrl);
       // For single state queries (api.query), ApiPromise is better
       ExtrinsicHelper.apiPromise = await connectPromise(providerUrl);
     } else {
-      console.log('will not initialize: non-WebSocket endpoint')
+      console.log('will not initialize: non-WebSocket endpoint');
     }
   }
 
