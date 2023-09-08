@@ -5,15 +5,11 @@
   import { onMount } from 'svelte';
   import { extensionsConfig } from '$lib/extensionsConfig';
   import type { Extension } from '$lib/extensionsConfig';
-  import { onReady, isWalletInstalled, walletConnector } from '$lib/wallet';
-  import type { InjectedExtension } from '@polkadot/extension-inject/types';
+  import { onReady, isWalletInstalled } from '$lib/wallet';
   import { goto } from '$app/navigation';
   import { page } from '$app/stores';
-  import {
-    SelectedWalletStore,
-    SelectedWalletAccountsStore,
-  } from '../lib/store';
   import { base } from '$app/paths';
+  import{ SelectedWalletStore } from "$lib/store";
 
   export let formFinished = false;
   let isLoading = false;
@@ -26,17 +22,11 @@
   });
 
   async function handleSelectedWallet(injectedName: string) {
-    let extension: InjectedExtension;
     isLoading = true;
 
     $SelectedWalletStore = injectedName;
-
     try {
-      extension = await walletConnector(injectedName, 'Acme App');
-      let accounts = await extension.accounts.get();
-      $SelectedWalletAccountsStore = accounts.map((account) => account.address);
-      formFinished = true;
-      goto(`${base}/signup?${$page.url.searchParams}`);
+      goto(`${base}/signup?${$page.url.searchParams}&selectedWallet=${injectedName}`);
     } catch (error) {
       console.error('Extension not installed - close window and redirect');
     } finally {
