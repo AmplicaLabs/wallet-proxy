@@ -2,20 +2,13 @@
   import { page } from '$app/stores';
   import { DSNPSchemas } from '$lib/dsnpSchemas';
   import type { SchemaData } from '$lib/dsnpSchemas';
-  import { HandleStore, SelectedWalletStore, SelectedSigningKey } from '../lib/store';
+  import { HandleStore, SelectedWalletStore, SelectedSigningKey, SignatureStore } from '../lib/store';
   import { getHandleSignature, getDelegationAndPermissionSignature } from '$lib/signing';
   import { onMount } from 'svelte';
-
-  const dAppName = 'AcmeApp';
-
-  // eslint-disable-next-line @typescript-eslint/no-unused-var
-
-  let polkadotHandleSignature: string;
-  let polkadotDelegationAndPermissionSignature: string;
-  export let formFinished =
-    polkadotDelegationAndPermissionSignature !== '' && polkadotHandleSignature !== '';
-
+  export let formFinished = $SignatureStore.claimHandle !== '' &&
+    $SignatureStore.authorizedDelegationAndSchemas !== ''
   let schemas: [string, SchemaData][] = [];
+  const dAppName = $page.data.dAppName;
 
   onMount(() => {
     let inputSchemas = $page.url.searchParams.get('schemas')?.split(',');
@@ -26,23 +19,31 @@
   });
 
   async function signDelegationAndPermissions() {
-    polkadotDelegationAndPermissionSignature = await getDelegationAndPermissionSignature(
+    const authorizedDelegationAndSchemas = await getDelegationAndPermissionSignature(
       $SelectedWalletStore,
       $SelectedSigningKey,
       $page.data.endpoint,
       '1',
       schemas.map((schema) => schema[1].id.mainnet)
     );
+    $SignatureStore = {
+      authorizedDelegationAndSchemas,
+      claimHandle: $SignatureStore.claimHandle,
+    };
     formFinished = true;
   }
 
-  async function handleHandle(event) {
-    polkadotHandleSignature = await getHandleSignature(
+  async function handleHandle(_event) {
+    const claimHandle = await getHandleSignature(
       $SelectedWalletStore,
       $SelectedSigningKey,
       $page.data.endpoint,
       $HandleStore
     );
+    $SignatureStore = {
+      claimHandle,
+      authorizedDelegationAndSchemas: $SignatureStore.authorizedDelegationAndSchemas
+    };
   }
 
   const buttonSectionClasses = 'flex flex justify-center mt-8';
@@ -60,7 +61,7 @@
       Click to authorize <span class="font-bold text-teal-50">{dAppName}</span> to create your handle
     </label>
     <div>
-      <button id="claimHandle" class={buttonClasses} on:click={handleHandle}>
+      <button id="claimHandle" class={buttonClasses} on:click|preventDefault={handleHandle}>
         I Claim
         <span class="text-aqua font-thin">{$HandleStore}</span> As My Handle
       </button>
@@ -72,7 +73,7 @@
       and to post on your behalf.
     </label>
     <div>
-      <button id="authorizeDelegate" class={buttonClasses} on:click={signDelegationAndPermissions}>
+      <button id="authorizeDelegate" class={buttonClasses} on:click|preventDefault={signDelegationAndPermissions}>
         I Authorize {dAppName}
       </button>
     </div>
@@ -102,10 +103,10 @@
     schemas: {JSON.stringify($page.url.searchParams.get('schemas')?.split(','))}
   </li>
   <li>
-    polkadotHandleSignature: {polkadotHandleSignature}
+    polkadotHandleSignature: {$SignatureStore.claimHandle}
   </li>
 
   <li>
-    polkadotDelgationAndPermissionSignature: {polkadotDelegationAndPermissionSignature}
+    polkadotDelgationAndPermissionSignature: {$SignatureStore.authorizedDelegationAndSchemas}
   </li>
 </ul>
