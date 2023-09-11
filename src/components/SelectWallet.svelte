@@ -5,13 +5,12 @@
   import { onMount } from 'svelte';
   import { extensionsConfig } from '$lib/extensionsConfig';
   import type { Extension } from '$lib/extensionsConfig';
-  import { onReady, isWalletInstalled } from '$lib/wallet';
+  import {onReady, isWalletInstalled, getAccounts } from '$lib/wallet';
   import { goto } from '$app/navigation';
   import { page } from '$app/stores';
   import { base } from '$app/paths';
-  import { SelectedWalletStore } from '$lib/store';
+  import {SelectedWalletAccountsStore, SelectedWalletStore} from '$lib/store';
 
-  export let formFinished = false;
   let isLoading = false;
 
   export let extensions: Array<Extension> = [];
@@ -25,8 +24,14 @@
     isLoading = true;
 
     $SelectedWalletStore = injectedName;
+    // TODO: use wallet.getAccounts
     try {
-      goto(`${base}/signup?${$page.url.searchParams}&selectedWallet=${injectedName}`);
+      // const extension = await walletConnector($SelectedWalletStore, 'Acme App');
+      // let accounts = await extension.accounts.get();
+      // const accountsArray = accounts.map((account) => account.address);
+      // console.log({accountsArray});
+      $SelectedWalletAccountsStore = await getAccounts(injectedName, $page.data.endpoint);
+      goto(`${base}/signup?${$page.url.searchParams}`);
     } catch (error) {
       console.error('Extension not installed - close window and redirect');
     } finally {

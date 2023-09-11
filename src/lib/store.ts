@@ -1,9 +1,10 @@
 import { writable } from 'svelte/store';
 import type { AuthorizationSignatures } from "$lib/storeTypes";
+import type {InjectedAccount} from "@polkadot/extension-inject/types";
 
 export const HandleStore = writable<string>('');
 export const SelectedWalletStore = writable<string>('');
-export const SelectedWalletAccountsStore = writable<string[]>([]);
+export const SelectedWalletAccountsStore = writable<InjectedAccount[]>([]);
 
 export const SelectedSigningKey = writable<string>('');
 

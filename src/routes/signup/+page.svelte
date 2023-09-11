@@ -2,15 +2,13 @@
   import { walletConnector } from '$lib/wallet';
   import { onMount } from 'svelte';
   /** @type {import('./$types').PageData} */
-  import { page } from '$app/stores';
 
   import ProgressBar from '$components/ProgressBar.svelte';
   import RadialStepper from '$components/RadialStepper.svelte';
   import Handle from '$components/Handle.svelte';
   import ReviewSign from '$components/ReviewSign.svelte';
-  import { ExtrinsicHelper } from '$lib/chain/extrinsicHelpers';
   import SelectAddress from '$components/SelectAddress.svelte';
-  import { SelectedWalletAccountsStore, SelectedWalletStore, SignatureStore } from '$lib/store';
+  import { SignatureStore } from '$lib/store';
 
   let currentActive = 0;
   let steps = ['Select Address', 'Choose Handle', 'Register'];
@@ -24,17 +22,6 @@
   $: enableNext = currentActive < steps.length && formFinished;
   $: enablePrevious = currentActive > 0;
 
-  onMount(async () => {
-    try {
-      const extension = await walletConnector($SelectedWalletStore, 'Acme App');
-      let accounts = await extension.accounts.get();
-      $SelectedWalletAccountsStore = accounts.map((account) => account.address);
-      formFinished = true;
-      await ExtrinsicHelper.initialize($page.data.endpoint);
-    } catch (e: any) {
-      console.error(e.toString());
-    }
-  });
   const handleProgress = (stepIncrement) => {
     const newValue = currentActive + stepIncrement;
     if (newValue < 0 || newValue > steps.length - 1) {
@@ -53,7 +40,7 @@
           delegation: $SignatureStore.authorizedDelegationAndSchemas,
         }
       }),
-      'http://localhost:5174'
+      '*'
     );
   }
   const handlePrevious = () => {

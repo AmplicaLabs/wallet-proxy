@@ -3,11 +3,8 @@
   import {onMount} from "svelte";
 
   function handleMessage(event) {
-    if (event.origin !== 'http://localhost:5174') return;
     console.log('message from window', event);
-
     const appDomain = event.origin;
-
     console.log('event.origin', appDomain);
     event.source?.postMessage('respond from open window...', appDomain);
   }
