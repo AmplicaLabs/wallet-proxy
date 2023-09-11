@@ -2,8 +2,6 @@
   import { HandleStore } from '../lib/store';
 
   let debounceTimer;
-  // TODO: set to address name
-  const signingKeyName = '';
   export let formFinished = false;
 
   const debounceCheck = (_evt: Event) => {
@@ -20,6 +18,7 @@
   const handleCharsMin = 3;
 
   const checkHandle = () => {
+    $HandleStore = $HandleStore.trim();
     let utf8Encode = new TextEncoder();
 
     formFinished =
