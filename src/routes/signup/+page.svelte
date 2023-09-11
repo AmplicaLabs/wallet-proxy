@@ -71,27 +71,28 @@
     bind:currentStep={currentActive}
     stepCount={steps.length}
     stepTitle={steps[currentActive]}
+    nextStepTitle={currentActive < steps.length-1 ? "Next: " + steps[currentActive+1] : "" }
   />
   <div
     id="forms-container"
     class="flex flex-col px-8 md:w-720 items-center items-stretch mx-auto my-12px"
   >
     <svelte:component this={components[currentActive]} bind:formFinished />
-  </div>
-  <div class="flex xs:justify-between sm:justify-between md:justify-around">
-    <button
-      class={currentActive === 0 ? 'btn-disabled' : 'btn-primary'}
-      on:click|preventDefault={handlePrevious}
-      disabled={!enablePrevious}
-    >
-      Back
-    </button>
-    <button
-      class={enableNext ? 'btn-primary' : 'btn-disabled'}
-      disabled={!enableNext}
-      on:click|preventDefault={handleNext}
-    >
-      {currentActive < steps.length - 1 ? "Next" : "Finish"}
-    </button>
+    <div class="flex xs:justify-between sm:justify-between md:justify-around">
+      <button
+        class={currentActive === 0 ? 'btn-disabled' : 'btn-primary'}
+        on:click|preventDefault={handlePrevious}
+        disabled={!enablePrevious}
+      >
+        Back
+      </button>
+      <button
+        class={enableNext ? 'btn-primary' : 'btn-disabled'}
+        disabled={!enableNext}
+        on:click|preventDefault={handleNext}
+      >
+        {currentActive < steps.length - 1 ? "Next" : "Finish"}
+      </button>
+    </div>
   </div>
 </main>

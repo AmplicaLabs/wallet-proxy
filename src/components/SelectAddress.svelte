@@ -39,7 +39,7 @@
   <div class="mt-8">
     <fieldset>
       {#each $SelectedWalletAccountsStore as account}
-        <div class="">
+        <div class="px-12">
           <input
             type="radio"
             bind:group={$SelectedSigningKey}
