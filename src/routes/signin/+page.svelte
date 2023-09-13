@@ -1,6 +1,6 @@
 <script lang="ts">
   import SelectWallet from '$components/SelectWallet.svelte';
-  import {onMount} from "svelte";
+  import { onMount } from 'svelte';
 
   function handleMessage(event) {
     console.log('message from window', event);
@@ -12,7 +12,7 @@
   const unsubscribe = () => {
     // do any other clean up here
     window.removeEventListener('message', handleMessage);
-  }
+  };
 
   // I'm not sure this will be retained if we go to signup
   onMount(() => {
@@ -22,7 +22,6 @@
       return unsubscribe;
     }
   });
-
 </script>
 
 <div class="text-center mt-7">

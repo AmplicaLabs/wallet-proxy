@@ -5,11 +5,11 @@
   import { onMount } from 'svelte';
   import { extensionsConfig } from '$lib/extensionsConfig';
   import type { Extension } from '$lib/extensionsConfig';
-  import {onReady, isWalletInstalled, getAccounts } from '$lib/wallet';
+  import { onReady, isWalletInstalled, getAccounts } from '$lib/wallet';
   import { goto } from '$app/navigation';
   import { page } from '$app/stores';
   import { base } from '$app/paths';
-  import {SelectedWalletAccountsStore, SelectedWalletStore} from '$lib/store';
+  import { SelectedWalletAccountsStore, SelectedWalletStore } from '$lib/store';
 
   let isLoading = false;
 

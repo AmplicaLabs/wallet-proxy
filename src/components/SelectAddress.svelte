@@ -4,7 +4,7 @@
   import { SelectedWalletStore, SelectedWalletAccountsStore, SelectedSigningKey } from '$lib/store';
   import { onReady } from '$lib/wallet';
   import { page } from '$app/stores';
-  import {ExtrinsicHelper} from "$lib/chain/extrinsicHelpers";
+  import { ExtrinsicHelper } from '$lib/chain/extrinsicHelpers';
 
   let validAccountsArray: Array<InjectedAccount> = [];
   let errorMessage = '';

@@ -1,6 +1,4 @@
 <script lang="ts">
-  import { walletConnector } from '$lib/wallet';
-  import { onMount } from 'svelte';
   /** @type {import('./$types').PageData} */
 
   import ProgressBar from '$components/ProgressBar.svelte';
@@ -37,12 +35,12 @@
         message: 'PROXY:SIGNATURE',
         signatures: {
           handle: $SignatureStore.claimHandle,
-          delegation: $SignatureStore.authorizedDelegationAndSchemas,
+          delegation: $SignatureStore.authorizedDelegationAndSchemas
         }
       }),
       '*'
     );
-  }
+  };
   const handlePrevious = () => {
     handleProgress(-1);
   };
@@ -51,14 +49,14 @@
     if (formFinished) {
       if (currentActive < steps.length - 1) {
         handleProgress(1);
-
       } else {
-        console.debug('sending signatures')
+        console.debug('sending signatures');
         if (window.opener) {
           {
             sendSignatureToApp();
-            window.close()
-          }        }
+            window.close();
+          }
+        }
       }
     }
   };
@@ -71,14 +69,14 @@
     bind:currentStep={currentActive}
     stepCount={steps.length}
     stepTitle={steps[currentActive]}
-    nextStepTitle={currentActive < steps.length-1 ? "Next: " + steps[currentActive+1] : "" }
+    nextStepTitle={currentActive < steps.length - 1 ? 'Next: ' + steps[currentActive + 1] : ''}
   />
   <div
     id="forms-container"
     class="flex flex-col px-8 md:w-720 items-center items-stretch mx-auto my-12px"
   >
     <svelte:component this={components[currentActive]} bind:formFinished />
-    <div class="flex xs:justify-between sm:justify-between md:justify-around">
+    <div class="flex xs:justify-between sm:justify-between md:justify-around mt-2 mb-8">
       <button
         class={currentActive === 0 ? 'btn-disabled' : 'btn-primary'}
         on:click|preventDefault={handlePrevious}
@@ -91,7 +89,7 @@
         disabled={!enableNext}
         on:click|preventDefault={handleNext}
       >
-        {currentActive < steps.length - 1 ? "Next" : "Finish"}
+        {currentActive < steps.length - 1 ? 'Next' : 'Finish'}
       </button>
     </div>
   </div>

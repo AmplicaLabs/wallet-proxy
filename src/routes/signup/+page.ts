@@ -7,6 +7,6 @@ export function load({ url }: any) {
     ...getRpcEndpointFromURL(url),
     schemas: url.searchParams.schemas,
     selectedWallet: url.searchParams.selectedWallet,
-    dAppName,
+    dAppName
   };
 }
