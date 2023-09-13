@@ -1,10 +1,9 @@
-<script>
+<script lang="ts">
   import {base} from '$app/paths';
-  import SelectWallet from '$components/SelectWallet.svelte';
   import { page } from "$app/stores";
 
-  export let schemas = $page.data.schemas;
-  export let endpoint = $page.data.endpoint;
+  const schemas = $page.data.schemas;
+  const endpoint = $page.data.endpoint;
 
   const testEndpointData = {
     rococo: {
@@ -13,7 +12,7 @@
     },
     localhost: {
       ws: encodeURIComponent('ws://127.0.0.1:9944'),
-      http: encodeURIComponent('http://localhost:9944')
+      http: encodeURIComponent('ht F ktp://localhost:9944')
     },
     schemas: 'tombstone%2Cbroadcast%2Creplay%2Creaction%2Cprofile%2Cupdate%2CpublicKey%2CpublicFollows%2CprivateFollows%2CprivateConnections'
   }

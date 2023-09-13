@@ -26,14 +26,11 @@
     $SelectedWalletStore = injectedName;
     // TODO: use wallet.getAccounts
     try {
-      // const extension = await walletConnector($SelectedWalletStore, 'Acme App');
-      // let accounts = await extension.accounts.get();
-      // const accountsArray = accounts.map((account) => account.address);
-      // console.log({accountsArray});
+      // TODO: use context instead of accessing $page.anything
       $SelectedWalletAccountsStore = await getAccounts(injectedName, $page.data.endpoint);
       goto(`${base}/signup?${$page.url.searchParams}`);
     } catch (error) {
-      console.error('Extension not installed - close window and redirect');
+      console.error('problem getting accounts: ', error.message);
     } finally {
       isLoading = false;
     }
