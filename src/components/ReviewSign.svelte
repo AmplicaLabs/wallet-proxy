@@ -97,7 +97,7 @@
   <p class="text-2xl">
     You are authorizing {dAppName} to post the following message types on your behalf:
   </p>
-  <div class="flex flex-wrap justify-evenly mt-8">
+  <div class="flex flex-wrap justify-start mt-8">
     {#each schemas as schema, index}
       <ul class="p-2 m-2 underline">
         <li class="font-thin text-2xl relative">
@@ -108,7 +108,7 @@
             on:mouseleave|preventDefault={toggleHelp}>?</span
           >
           <p
-            class="hidden text-black bg-white absolute -bottom-80px border-rounded rounded-md text-md leading-6 p-4 z-40"
+            class="hidden text-black bg-white absolute -bottom-80px border-rounded border-aqua rounded-md text-md leading-6 p-4 z-40"
           >
             {schema[1].description}
           </p>

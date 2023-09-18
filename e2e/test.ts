@@ -24,9 +24,9 @@ test('Select wallet then go to Sign up', async ({ page }) => {
   await testEntryPoint.click();
 
   await expect(
-    page.getByRole('button', { name: 'Polkadot Sign in with Polkadot wallet' })
+    page.getByRole('button', { name: 'Polkadot Sign in with Polkadot' })
   ).toBeVisible();
-  const talismanBtn = page.getByRole('button', { name: 'Talisman Sign in with Talisman wallet' });
+  const talismanBtn = page.getByRole('button', { name: 'Talisman Sign in with Talisman' });
   await expect(talismanBtn).toBeVisible();
   // await talismanBtn.click();
   // await expect(page.getByText('Choose an account for your new DSNP identity:')).toBeVisible();

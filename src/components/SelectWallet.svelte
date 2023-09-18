@@ -50,7 +50,7 @@
         </div>
         <div class="ml-8 text-left basis-5/8">
           <div class="text-3xl">{extension.displayName}</div>
-          <span class="text-sm italic antialiased">Sign in with {extension.displayName} wallet</span
+          <span class="text-sm italic antialiased">Sign in with {extension.displayName}</span
           >
         </div>
         <div class="basis-1/12 w-4">
