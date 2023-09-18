@@ -6,14 +6,6 @@
   import { HandleStore, SelectedWalletStore, SelectedWalletAccountsStore } from '../lib/store';
   import { page } from '$app/stores';
 
-  const data = $page.data;
-  console.log('endpoint: ', $page.data.endpoint);
-  console.log('schemas: ', $page.data.schemas);
-  console.log('error: ', $page.data.error);
-  console.log($HandleStore);
-  console.log($SelectedWalletStore);
-  console.log($SelectedWalletAccountsStore);
-
   const logoClasses = 'w-1/5  absolute left-8 left-0 max-w-sm ';
 </script>
 

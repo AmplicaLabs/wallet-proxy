@@ -2,10 +2,11 @@
   export let stepCount = 0;
   export let currentStep = 0;
   export let stepTitle = '';
+  export let nextStepTitle = '';
   $: progressPercent = Math.floor(Math.fround((currentStep * 100) / stepCount));
 </script>
 
-<div class="md:hidden flex items-center">
+<div class="md:hidden flex items-center px-4">
   <div class="set-size charts-container">
     <div class={`pie-wrapper progress-${progressPercent} style-2`}>
       <span class="label">{progressPercent}<span class="smaller">%</span></span>
@@ -16,7 +17,10 @@
       <div class="shadow" />
     </div>
   </div>
-  <p class="pl-8 text-3xl text-blue-400">{stepTitle}</p>
+  <div>
+    <p class="pl-8 text-3xl text-teal-200">{stepTitle}</p>
+    <p class="pl-8 text-xl text-gray-400">{nextStepTitle}</p>
+  </div>
 </div>
 
 <style lang="scss">

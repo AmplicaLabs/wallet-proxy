@@ -23,7 +23,7 @@ export async function getDelegationAndPermissionSignature(
   endpoint: string,
   providerId: string,
   schemasIds: number[]
-) {
+): Promise<U8aLike> {
   const blockNumber = await getBlockNumber(endpoint);
   const expiration = blockNumber + 50;
   const addProviderPayload = payloadAddProvider(expiration, providerId, schemasIds);
@@ -36,7 +36,7 @@ export async function getHandleSignature(
   account: string,
   endpoint: string,
   handleName: string
-): Promise<string> {
+): Promise<U8aLike> {
   const blockNumber = await getBlockNumber(endpoint);
   const expiration = blockNumber + 50;
   const handlePayload = payloadHandle(expiration, handleName);

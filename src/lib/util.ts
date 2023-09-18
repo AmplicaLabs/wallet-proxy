@@ -4,9 +4,8 @@
 // Parses the URL, looks for an rpc searchParam, parses the value as a URL
 // and verifies that it at least uses a WebSocket protocol
 export const getRpcEndpointFromURL = (url: URL): { endpoint?: string; error?: string } => {
-  let rpcEndpoint = '';
   try {
-    rpcEndpoint = url?.searchParams.get('rpc') || '';
+    const rpcEndpoint = url?.searchParams.get('rpc');
     if (!rpcEndpoint) {
       throw new Error('An `rpc` searchParam is required.');
     }

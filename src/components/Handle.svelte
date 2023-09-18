@@ -1,10 +1,13 @@
 <script lang="ts">
-  import { HandleStore } from '../lib/store';
+  import { HandleStore } from '$lib/store';
+  import { onMount } from 'svelte';
 
   let debounceTimer;
-  // TODO: set to address name
-  const signingKeyName = '';
   export let formFinished = false;
+
+  onMount(() => {
+    checkHandle();
+  });
 
   const debounceCheck = (_evt: Event) => {
     if (debounceTimer) {
@@ -20,6 +23,7 @@
   const handleCharsMin = 3;
 
   const checkHandle = () => {
+    $HandleStore = $HandleStore.trim();
     let utf8Encode = new TextEncoder();
 
     formFinished =
@@ -34,7 +38,7 @@
     'placeholder-aqua focus:border-aqua';
 </script>
 
-<div class="pt-4 text-2xl">
+<div class="mt-4 text-2xl">
   Your handle will be linked to your wallet account and your new DSNP Identity.
 </div>
 <form class="pt-4">

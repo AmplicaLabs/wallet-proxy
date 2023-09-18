@@ -1,9 +1,10 @@
 <script lang="ts">
   import { onMount } from 'svelte';
   import type { InjectedAccount } from '@polkadot/extension-inject/types';
-  import { SelectedWalletStore, SelectedSigningKey } from '$lib/store';
-  import { getAccounts, onReady } from '$lib/wallet';
+  import { SelectedWalletStore, SelectedWalletAccountsStore, SelectedSigningKey } from '$lib/store';
+  import { onReady } from '$lib/wallet';
   import { page } from '$app/stores';
+  import { ExtrinsicHelper } from '$lib/chain/extrinsicHelpers';
 
   let validAccountsArray: Array<InjectedAccount> = [];
   let errorMessage = '';
@@ -17,16 +18,14 @@
 
   onMount(async () => {
     await onReady();
+    if ($SelectedWalletAccountsStore.length === 0) {
+      errorMessage =
+        'This wallet has no account keys associated with it. Please create at least one account key in your selected wallet.';
+    }
     try {
-      const accountsArray = await getAccounts($SelectedWalletStore, $page.data.endpoint);
-      if (accountsArray.length === 0) {
-        errorMessage =
-          'This wallet has no account keys associated with it. Please create at least one account key in your selected wallet.';
-      } else {
-        validAccountsArray = accountsArray;
-      }
+      ExtrinsicHelper.initialize($page.data.endpoint);
     } catch (e: Error) {
-      console.error('Error: ', e.message);
+      errorMessage = 'There was a problem: ' + e.message;
     }
   });
 </script>
@@ -39,8 +38,8 @@
   </p>
   <div class="mt-8">
     <fieldset>
-      {#each validAccountsArray as account}
-        <div class="">
+      {#each $SelectedWalletAccountsStore as account}
+        <div class="px-12">
           <input
             type="radio"
             bind:group={$SelectedSigningKey}

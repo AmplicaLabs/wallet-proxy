@@ -2,20 +2,17 @@
   import { page } from '$app/stores';
   import { DSNPSchemas } from '$lib/dsnpSchemas';
   import type { SchemaData } from '$lib/dsnpSchemas';
-  import { HandleStore, SelectedWalletStore, SelectedSigningKey } from '../lib/store';
+  import {
+    HandleStore,
+    SelectedWalletStore,
+    SelectedSigningKey,
+    SignatureStore
+  } from '$lib/store';
   import { getHandleSignature, getDelegationAndPermissionSignature } from '$lib/signing';
   import { onMount } from 'svelte';
-
-  const dAppName = 'AcmeApp';
-
-  // eslint-disable-next-line @typescript-eslint/no-unused-var
-
-  let polkadotHandleSignature: string;
-  let polkadotDelegationAndPermissionSignature: string;
-  export let formFinished =
-    polkadotDelegationAndPermissionSignature !== '' && polkadotHandleSignature !== '';
-
+  export let formFinished = false;
   let schemas: [string, SchemaData][] = [];
+  const dAppName = $page.data.dAppName;
 
   onMount(() => {
     let inputSchemas = $page.url.searchParams.get('schemas')?.split(',');
@@ -26,86 +23,97 @@
   });
 
   async function signDelegationAndPermissions() {
-    polkadotDelegationAndPermissionSignature = await getDelegationAndPermissionSignature(
+    const authorizedDelegationAndSchemas = await getDelegationAndPermissionSignature(
       $SelectedWalletStore,
       $SelectedSigningKey,
       $page.data.endpoint,
       '1',
       schemas.map((schema) => schema[1].id.mainnet)
     );
-    formFinished = true;
+    $SignatureStore = {
+      authorizedDelegationAndSchemas,
+      claimHandle: $SignatureStore.claimHandle
+    };
+    if ($SignatureStore.claimHandle.length > 0) {
+      formFinished = true;
+    }
   }
 
-  async function handleHandle(event) {
-    polkadotHandleSignature = await getHandleSignature(
+  async function handleHandle(_event) {
+    const claimHandle = await getHandleSignature(
       $SelectedWalletStore,
       $SelectedSigningKey,
       $page.data.endpoint,
       $HandleStore
     );
+    $SignatureStore = {
+      claimHandle,
+      authorizedDelegationAndSchemas: $SignatureStore.authorizedDelegationAndSchemas
+    };
+    if ($SignatureStore.authorizedDelegationAndSchemas.length > 0) {
+      formFinished = true;
+    }
   }
 
-  const buttonSectionClasses = 'flex flex justify-center mt-8';
-  const buttonClasses = 'btn-banner md:w-500 sm:text-2xl md:text-3xl mt-0 ml-4 h-full';
+  const toggleHelp = (evt: Event) => {
+    let el = evt.target as HTMLElement;
+    el.nextElementSibling.classList.toggle('hidden');
+  };
+
+  const buttonSectionClasses = 'flex flex justify-center';
+  const buttonClasses = 'btn-banner md:w-500 sm:text-2xl md:text-3xl mt-0 ml-4 h-full text-aqua';
   const labelClasses = 'text-teal-200 basis-1/4 self-center';
 </script>
 
-<div class="xs:text-lg sm:text-xl md:text-2xl lg:text-3xl text-center font-thin">
-  <p class="text-teal-200">Review & Sign with</p>
-  <p>{$SelectedSigningKey}</p>
-</div>
-<div class="mt-12">
+<div class="mt-4">
   <div class={buttonSectionClasses}>
     <label for="claimHandle" class={labelClasses}>
-      Click to authorize <span class="font-bold text-teal-50">{dAppName}</span> to create your handle
+      Click to authorize <span class="font-bold text-white">{dAppName}</span> to create your handle
     </label>
     <div>
-      <button id="claimHandle" class={buttonClasses} on:click={handleHandle}>
+      <button id="claimHandle" class={buttonClasses} on:click|preventDefault={handleHandle}>
         I Claim
-        <span class="text-aqua font-thin">{$HandleStore}</span> As My Handle
+        <span class="text-white font-bold">{$HandleStore}</span> As My Handle
       </button>
     </div>
   </div>
-  <div class={buttonSectionClasses}>
+  <div class={buttonSectionClasses + ' mt-8'}>
     <label for="authorizeDelegate" class={labelClasses}>
-      Click to authorize <span class="font-bold text-teal-50">{dAppName}</span> to create your account,
+      Click to authorize <span class="font-bold text-white">{dAppName}</span> to create your account,
       and to post on your behalf.
     </label>
     <div>
-      <button id="authorizeDelegate" class={buttonClasses} on:click={signDelegationAndPermissions}>
-        I Authorize {dAppName}
+      <button
+        id="authorizeDelegate"
+        class={buttonClasses}
+        on:click|preventDefault={signDelegationAndPermissions}
+      >
+        I Authorize <span class="text-white font-bold">{dAppName}</span>
       </button>
     </div>
   </div>
 </div>
 <div class="mt-16">
-  <div>
-    <p class="text-2xl">Delegation Grant</p>
-    <p>Authorize Acme App with MSA 1 to be your delegate</p>
-  </div>
-  <p class="text-2xl">Schema Grants:</p>
-  <div class="flex flex-wrap">
+  <p class="text-2xl">
+    You are authorizing {dAppName} to post the following message types on your behalf:
+  </p>
+  <div class="flex flex-wrap justify-evenly mt-8">
     {#each schemas as schema, index}
-      <ul class="text-white border-2 border-gray-300 p-3 m-2 basis-1/4">
-        <li class="font-bold">Name: {schema[0]}</li>
-        <li>Schema-id: {schema[1].id.mainnet}</li>
-        <li>
-          description: {schema[1].description}
+      <ul class="p-2 m-2 underline">
+        <li class="font-thin text-2xl relative">
+          {schema[0]}
+          <span
+            class="text-sm text-aqua absolute ml-1 px-2 py-1 -t-2 cursor-pointer hover:bg-white hover:text-black hover:border-rounded hover:rounded-lg"
+            on:mouseenter|preventDefault={toggleHelp}
+            on:mouseleave|preventDefault={toggleHelp}>?</span
+          >
+          <p
+            class="hidden text-black bg-white absolute -bottom-80px border-rounded rounded-md text-md leading-6 p-4 z-40"
+          >
+            {schema[1].description}
+          </p>
         </li>
       </ul>
     {/each}
   </div>
 </div>
-<ul>
-  Debug
-  <li>
-    schemas: {JSON.stringify($page.url.searchParams.get('schemas')?.split(','))}
-  </li>
-  <li>
-    polkadotHandleSignature: {polkadotHandleSignature}
-  </li>
-
-  <li>
-    polkadotDelgationAndPermissionSignature: {polkadotDelegationAndPermissionSignature}
-  </li>
-</ul>
