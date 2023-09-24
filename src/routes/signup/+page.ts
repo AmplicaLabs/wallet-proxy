@@ -4,7 +4,7 @@ import { getRpcEndpointFromURL } from '$lib/util';
 export function load({ url }: any) {
   const dAppName = url.searchParams.dAppName || 'AcmeApp';
   return {
-    ...getRpcEndpointFromURL(url),
+    endpoint: getRpcEndpointFromURL(url),
     schemas: url.searchParams.schemas,
     selectedWallet: url.searchParams.selectedWallet,
     dAppName

@@ -2,7 +2,7 @@ import { getRpcEndpointFromURL } from '$lib/util';
 
 export function load({ url }: any) {
   return {
-    ...getRpcEndpointFromURL(url),
+    endpoint: getRpcEndpointFromURL(url),
     schemas: url.searchParams.get('schemas')
   };
 }
