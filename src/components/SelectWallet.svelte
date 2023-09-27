@@ -9,8 +9,10 @@
   import { goto } from '$app/navigation';
   import { page } from '$app/stores';
   import { base } from '$app/paths';
-  import { SelectedWalletAccountsStore, SelectedWalletStore } from '$lib/store';
+  import { SelectedWalletAccountsStore, SelectedWalletStore, MsaInfoStore } from '$lib/store';
+  import { getMsaInfo } from "$lib/chain/util";
 
+  export let showSelectAddress;
   let isLoading = false;
 
   export let extensions: Array<Extension> = [];
@@ -20,15 +22,23 @@
     extensions = extensionsConfig;
   });
 
+  // 1. load all valid accounts in chosen wallet x
+  // 2. Fetch any MSAs associated with the accounts x
+  // 3. Redirect/goto signin if there are any MSAs
+  // 4. Redirect/goto signup if there are no MSAs
   async function handleSelectedWallet(injectedName: string) {
     isLoading = true;
 
     $SelectedWalletStore = injectedName;
-    // TODO: use wallet.getAccounts
     try {
-      // TODO: use context instead of accessing $page.anything
       $SelectedWalletAccountsStore = await getAccounts(injectedName, $page.data.endpoint);
-      goto(`${base}/signup?${$page.url.searchParams}`);
+      $MsaInfoStore = await getMsaInfo($SelectedWalletAccountsStore, $page.data.endpoint);
+      if ($MsaInfoStore !== {}) {
+        showSelectAddress = true;
+        goto(`${base}/signin?${$page.url.searchParams}&selectAddress=true}`);
+      } else {
+        goto(`${base}/signup?${$page.url.searchParams}`);
+      }
     } catch (error) {
       console.error('problem getting accounts: ', error.message);
     } finally {

@@ -36,7 +36,8 @@
   <div id="error" class="text-red-600 font-xl">{errorMessage}</div>
 {:else}
   <p class="text-2xl">
-    <label for="signing-address">Choose an account for your new DSNP identity:</label>
+
+    <label for="signing-address">Choose an account:</label>
   </p>
   <div class="mt-8">
     <fieldset>
@@ -53,7 +54,14 @@
             for={account.address}
             class="w-full max-w-full cursor-pointer whitespace-nowrap ws-nowrap"
           >
-            <span class="text-2xl ml-4">{account.name}</span>
+            {#if $MsaInfoStore[account.address] }
+              <span class="text-2xl ml-4">
+                Sign in as
+                {$MsaInfoStore[account.address].handle} (MSA Id: {$MsaInfoStore[account.address].msaId})
+              </span>
+            {:else}
+              <span class="text-2xl ml-4">Create a new account with {account.name}</span>
+            {/if}
           </label>
         </div>
       {/each}

@@ -4,3 +4,8 @@ export type AuthorizationSignatures = {
   claimHandle: U8aLike;
   authorizedDelegationAndSchemas: U8aLike;
 };
+
+export type MsaInfo = {
+  msaId: number,
+  handle: string,
+}
