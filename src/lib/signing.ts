@@ -1,8 +1,11 @@
 import { isFunction, u8aWrapBytes, u8aToHex } from '@polkadot/util';
 import type { U8aLike } from '@polkadot/util/types';
-import { TypeRegistry, Bytes } from '@polkadot/types';
+import {TypeRegistry, Bytes, U8aFixed} from '@polkadot/types';
 import { walletConnector } from './wallet';
 import { getBlockNumber } from '$lib/chain/util';
+import type {SignInAuthorization} from "$lib/storeTypes";
+import {DefaultSignInSignatureStore} from "$lib/store";
+import RLP from "rlp";
 
 const Registry = new TypeRegistry();
 Registry.register({
@@ -44,6 +47,16 @@ export async function getHandleSignature(
   return await signPayloadWithExtension(walletName, account, handlePayload.toU8a());
 }
 
+// use EIP-712 standard to create a payload to sign, and signs it using selected extension
+export async function getSignInSignature(wallet: string,  address: string): Promise<SignInAuthorization> {
+  let authorization = DefaultSignInSignatureStore;
+  authorization.eip712Payload.address = address;
+  const payload = JSON.stringify(authorization.eip712Payload);
+  const encoded = RLP.encode(payload);
+  authorization.signature = await signPayloadWithExtension(wallet, address, encoded);
+  return authorization;
+}
+
 export async function signPayloadWithExtension(wallet: string, address: string, payload: U8aLike) {
   const walletAccount = await walletConnector(wallet, 'Acme App');
   const signRaw = walletAccount.signer?.signRaw;
@@ -64,24 +77,20 @@ export async function signPayloadWithExtension(wallet: string, address: string, 
   }
   return 'Unknown error';
 }
-
 export const payloadHandle = (expiration: number, handle: string) => {
   const handleBytes = new Bytes(Registry, handle);
-  const claimHandlePayload = Registry.createType('ClaimHandle', {
+  return Registry.createType('ClaimHandle', {
     baseHandle: handleBytes,
     expiration
   });
-
-  return claimHandlePayload;
 };
 
 export const payloadAddProvider = (expiration: number, providerId: string, schemaIds: number[]) => {
   schemaIds.sort();
-  const claimHandlePayload = Registry.createType('AddProvider', {
+  return Registry.createType('AddProvider', {
     authorizedMsaId: providerId,
     expiration,
     schemaIds
   });
-
-  return claimHandlePayload;
 };
+

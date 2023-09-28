@@ -11,6 +11,7 @@
   import { base } from '$app/paths';
   import { SelectedWalletAccountsStore, SelectedWalletStore, MsaInfoStore } from '$lib/store';
   import { getMsaInfo } from "$lib/chain/util";
+  import  AmplicaAccess  from "$components/icons/AmplicaAccess.svelte";
 
   export let showSelectAddress;
   let isLoading = false;
@@ -22,10 +23,6 @@
     extensions = extensionsConfig;
   });
 
-  // 1. load all valid accounts in chosen wallet x
-  // 2. Fetch any MSAs associated with the accounts x
-  // 3. Redirect/goto signin if there are any MSAs
-  // 4. Redirect/goto signup if there are no MSAs
   async function handleSelectedWallet(injectedName: string) {
     isLoading = true;
 
@@ -33,9 +30,9 @@
     try {
       $SelectedWalletAccountsStore = await getAccounts(injectedName, $page.data.endpoint);
       $MsaInfoStore = await getMsaInfo($SelectedWalletAccountsStore, $page.data.endpoint);
-      if ($MsaInfoStore !== {}) {
+      if (Object.keys($MsaInfoStore).length !== 0) {
         showSelectAddress = true;
-        goto(`${base}/signin?${$page.url.searchParams}&selectAddress=true}`);
+        goto(`${base}/signin?${$page.url.searchParams}`);
       } else {
         goto(`${base}/signup?${$page.url.searchParams}`);
       }
@@ -44,6 +41,10 @@
     } finally {
       isLoading = false;
     }
+  }
+
+  function handleAmplicaAccess() {
+    alert("Signing in with Amplica Access...")
   }
 </script>
 
@@ -74,4 +75,15 @@
       </div>
     </button>
   {/each}
+  <div class="text-4xl mt-8 mx-auto">OR</div>
+  <button
+    type="button"
+    class="font-bold btn-banner"
+    on:click={() => handleAmplicaAccess()}
+  >
+    <div class="flex justify-evenly">
+      <AmplicaAccess />
+      <div class="my-auto text-2xl">Sign in with Amplica Access</div>
+    </div>
+  </button>
 </div>

@@ -5,9 +5,7 @@
 
   let showSelectAddress = false;
   function handleMessage(event) {
-    console.log('message from window', event);
     const appDomain = event.origin;
-    console.log('event.origin', appDomain);
     event.source?.postMessage('respond from open window...', appDomain);
   }
 

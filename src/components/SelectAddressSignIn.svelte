@@ -1,14 +1,19 @@
 <script lang="ts">
   import {onMount} from 'svelte';
-  import type {InjectedAccount} from '@polkadot/extension-inject/types';
-  import {MsaInfoStore, SelectedWalletAccountsStore, SelectedSigningKey} from '$lib/store';
+  import {
+    MsaInfoStore,
+    SelectedWalletAccountsStore,
+    SelectedWalletStore,
+    SelectedSigningKey,
+    SignInSignatureStore, SignatureStore
+  } from '$lib/store';
   import {onReady} from '$lib/wallet';
   import {page} from '$app/stores';
   import {ExtrinsicHelper} from '$lib/chain/extrinsicHelpers';
+  import { getSignInSignature} from "$lib/signing";
 
   let errorMessage = '';
   export let formFinished = false;
-  export let signIn;
 
   SelectedSigningKey.subscribe((key) => {
     if (key !== '') {
@@ -24,24 +29,40 @@
     }
     try {
       if (!ExtrinsicHelper.api) {
-        ExtrinsicHelper.initialize($page.data.endpoint);
+        await ExtrinsicHelper.initialize($page.data.endpoint);
       }
     } catch (e: Error) {
       errorMessage = 'There was a problem: ' + e.message;
     }
   });
+  const sendSignatureToApp = () => {
+    window.opener.postMessage(
+      JSON.stringify({
+        message: 'PROXY:SIGN_IN_SIGNATURE',
+        signInAuthorization: $SignInSignatureStore,
+      }),
+      '*'
+    );
+  };
+
+  const handleSignIn = async (_evt: Event) => {
+    $SignInSignatureStore = await getSignInSignature($SelectedWalletStore, $SelectedSigningKey);
+    console.info("HEREEEEE window.opener: ", window.opener);
+    if (window.opener) {
+      sendSignatureToApp();
+    } else {
+      console.log($SignInSignatureStore);
+    }
+  }
 </script>
 
 {#if errorMessage !== ''}
   <div id="error" class="text-red-600 font-xl">{errorMessage}</div>
 {:else}
-  <p class="text-2xl">
-
-    <label for="signing-address">Choose an account:</label>
-  </p>
   <div class="mt-8">
     <fieldset>
       {#each $SelectedWalletAccountsStore as account}
+        {#if $MsaInfoStore[account.address] }
         <div class="px-12">
           <input
             type="radio"
@@ -54,17 +75,15 @@
             for={account.address}
             class="w-full max-w-full cursor-pointer whitespace-nowrap ws-nowrap"
           >
-            {#if $MsaInfoStore[account.address] }
               <span class="text-2xl ml-4">
                 Sign in as
                 {$MsaInfoStore[account.address].handle} (MSA Id: {$MsaInfoStore[account.address].msaId})
               </span>
-            {:else}
-              <span class="text-2xl ml-4">Create a new account with {account.name}</span>
-            {/if}
           </label>
         </div>
+        {/if}
       {/each}
     </fieldset>
+    <button class="btn-primary" on:click|preventDefault={handleSignIn}>Go</button>
   </div>
 {/if}

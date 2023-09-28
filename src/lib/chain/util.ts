@@ -1,9 +1,8 @@
-import type {KeyringPair} from '@polkadot/keyring/types';
-import {Keyring} from '@polkadot/api';
 import {ExtrinsicHelper} from '$lib/chain/extrinsicHelpers';
 import {isWebSocket} from '$lib/util';
 import type {InjectedAccount} from "@polkadot/extension-inject/types";
 import type {MsaInfo} from "$lib/storeTypes";
+import type {U8aLike} from "@polkadot/util/types";
 
 const fetchQuery = async (url: string, method: string, params: Array<any>) => {
   const response = await fetch(url, {

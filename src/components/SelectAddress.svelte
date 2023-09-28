@@ -8,7 +8,6 @@
 
   let errorMessage = '';
   export let formFinished = false;
-  export let signIn;
 
   SelectedSigningKey.subscribe((key) => {
     if (key !== '') {

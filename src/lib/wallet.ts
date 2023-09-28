@@ -3,10 +3,7 @@ import type {
   InjectedExtension,
   InjectedWindow
 } from '@polkadot/extension-inject/types';
-import { ExtrinsicHelper } from '$lib/chain/extrinsicHelpers';
 import { getGenesisHash } from '$lib/chain/util';
-import type {MsaInfo} from "$lib/storeTypes";
-import {SelectedWalletAccountsStore} from "$lib/store";
 
 const isWalletInstalled = function (injectedName: string): boolean {
   if (window.injectedWeb3) {
@@ -64,5 +61,4 @@ const getAccounts = async (injectedName: string, url: string): Promise<Array<Inj
     (a: InjectedAccount) => !a.genesisHash || chainGenesis === a.genesisHash
   );
 };
-
 export { onReady, walletConnector, isWalletInstalled, getAccounts };
