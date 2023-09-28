@@ -11,6 +11,7 @@
   import {page} from '$app/stores';
   import {ExtrinsicHelper} from '$lib/chain/extrinsicHelpers';
   import { getSignInSignature} from "$lib/signing";
+  import type {InjectedAccount} from "@polkadot/extension-inject/types";
 
   let errorMessage = '';
   export let formFinished = false;
@@ -54,6 +55,13 @@
       console.log($SignInSignatureStore);
     }
   }
+  const signInLabel = (account: InjectedAccount) => {
+    if ($MsaInfoStore[account.address].handle !== '') {
+      return $MsaInfoStore[account.address].handle
+    } else {
+      return `${account.name} (MSA Id: ${$MsaInfoStore[account.address].msaId})`
+    }
+  }
 </script>
 
 {#if errorMessage !== ''}
@@ -76,8 +84,7 @@
             class="w-full max-w-full cursor-pointer whitespace-nowrap ws-nowrap"
           >
               <span class="text-2xl ml-4">
-                Sign in as
-                {$MsaInfoStore[account.address].handle} (MSA Id: {$MsaInfoStore[account.address].msaId})
+                Sign in as {signInLabel(account)}
               </span>
           </label>
         </div>

@@ -55,11 +55,10 @@ export class ExtrinsicHelper {
     const msaId = result
     .unwrapOrDefault()
     .toNumber();
-    let handle = '';
     if (msaId > 0) {
-      handle = (await firstValueFrom(ExtrinsicHelper.api.query.handles.msaIdToDisplayName(msaId)))
-      .unwrapOrDefault()
-      .toHuman();
+      const handleResult = (await firstValueFrom(ExtrinsicHelper.api.query.handles.msaIdToDisplayName(msaId)))
+      .unwrapOrDefault();
+      const handle = handleResult[0].toHuman();
       return {msaId, handle};
     } else {
       return {msaId: 0, handle: ''};
