@@ -1,6 +1,7 @@
 import TalismanIcon from '$components/icons/TalismanRedIcon.svelte';
 import PolkadotIcon from '$components/icons/Polkadot.svelte';
 import SubWallet from '$components/icons/SubWallet.svelte';
+import Fearless  from '$components/icons/Fearless.svelte';
 
 export type Extension = {
   displayName: string;
@@ -39,5 +40,14 @@ export const extensionsConfig: Array<Extension> = [
       firefox: '',
     },
     logo: { component: SubWallet, size: '6em'},
-  }
+  },
+  {
+    displayName: 'MetaMask',
+    injectedName: 'metamask',
+    downloadUrl: {
+      chrome: 'https://chrome.google.com/webstore/detail/subwallet-polkadot-wallet/onhogfjeacnfoofkfgppdlbmlmnplgbn',
+      firefox: '',
+    },
+    logo: { component: SubWallet, size: '6em'},
+  },
 ];

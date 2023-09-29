@@ -21,6 +21,7 @@
   onMount(async () => {
     await onReady();
     extensions = extensionsConfig;
+    console.log({extensions})
   });
 
   async function handleSelectedWallet(injectedName: string) {

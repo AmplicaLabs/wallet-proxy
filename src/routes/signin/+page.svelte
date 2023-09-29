@@ -14,7 +14,6 @@
     window.removeEventListener('message', handleMessage);
   };
 
-  // I'm not sure this will be retained if we go to signup
   onMount(() => {
     if (window.opener) {
       window.addEventListener('message', handleMessage, false);
