@@ -1,12 +1,11 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
-  import type { InjectedAccount } from '@polkadot/extension-inject/types';
-  import { SelectedWalletStore, SelectedWalletAccountsStore, SelectedSigningKey } from '$lib/store';
-  import { onReady } from '$lib/wallet';
-  import { page } from '$app/stores';
-  import { ExtrinsicHelper } from '$lib/chain/extrinsicHelpers';
+  import {onMount} from 'svelte';
+  import type {InjectedAccount} from '@polkadot/extension-inject/types';
+  import {MsaInfoStore, SelectedWalletAccountsStore, SelectedSigningKey} from '$lib/store';
+  import {onReady} from '$lib/wallet';
+  import {page} from '$app/stores';
+  import {ExtrinsicHelper} from '$lib/chain/extrinsicHelpers';
 
-  let validAccountsArray: Array<InjectedAccount> = [];
   let errorMessage = '';
   export let formFinished = false;
 
@@ -23,7 +22,9 @@
         'This wallet has no account keys associated with it. Please create at least one account key in your selected wallet.';
     }
     try {
-      ExtrinsicHelper.initialize($page.data.endpoint);
+      if (!ExtrinsicHelper.api) {
+        ExtrinsicHelper.initialize($page.data.endpoint);
+      }
     } catch (e: Error) {
       errorMessage = 'There was a problem: ' + e.message;
     }

@@ -7,8 +7,11 @@
   import ReviewSign from '$components/ReviewSign.svelte';
   import SelectAddress from '$components/SelectAddress.svelte';
   import { SignatureStore } from '$lib/store';
+  import { base } from '$app/paths';
+  import { goto } from '$app/navigation';
+  import { page } from '$app/stores';
 
-  let currentActive = 0;
+  export let currentActive = 0;
   let steps = ['Select Address', 'Choose Handle', 'Register'];
   let progressBar;
 
@@ -42,6 +45,9 @@
     );
   };
   const handlePrevious = () => {
+    if (currentActive === 0) {
+      goto(`${base}/signin?${$page.url.searchParams}`);
+    }
     handleProgress(-1);
   };
 
@@ -78,9 +84,8 @@
     <svelte:component this={components[currentActive]} bind:formFinished />
     <div class="flex xs:justify-between sm:justify-between md:justify-around mt-2 mb-8">
       <button
-        class={currentActive === 0 ? 'btn-disabled' : 'btn-primary'}
+        class='btn-primary'
         on:click|preventDefault={handlePrevious}
-        disabled={!enablePrevious}
       >
         Back
       </button>

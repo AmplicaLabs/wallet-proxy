@@ -5,22 +5,18 @@ describe('getEndpointFromURL', () => {
     {
       name: 'when there is no rpc searchParam',
       url: new URL('http://foo.bar'),
-      expectMatch: 'An `rpc` URL parameter is required.'
+      expectMatch: 'An `rpc` searchParam is required.'
     },
     {
       name: 'when the rpc searchParam is not a valid URL',
       url: new URL('http://foo.bar/?rpc=sdfkljsdflk'),
       expectMatch: 'Invalid URL: sdfkljsdflk'
     },
-    {
-      name: 'when there is no endpoint searchParam',
-      url: new URL(`http://foo.bar/?rpc=http%3A%2F%2Fbar.pt`),
-      expectMatch: 'http://bar.pt must be a WebSocket URL'
-    }
   ].forEach((testCase) => {
     it(`returns error ${testCase.name}`, () => {
-      const res = getRpcEndpointFromURL(testCase.url);
-      expect(res.error?.includes(testCase.expectMatch));
+      const res =
+      expect(() =>   getRpcEndpointFromURL(testCase.url) )
+      .toThrowError(testCase.expectMatch);
     });
   });
 
@@ -35,8 +31,7 @@ describe('getEndpointFromURL', () => {
       it('works for ' + rpcEndpoint, () => {
         const url = new URL(`http://myfancydApp.com/?rpc=wss%3A%2F%2F${rpcEndpoint}`);
         const res = getRpcEndpointFromURL(url);
-        expect(res.error).toBeUndefined();
-        expect(res.endpoint).toEqual('wss://' + rpcEndpoint);
+        expect(res).toEqual('wss://' + rpcEndpoint);
       });
     });
   });

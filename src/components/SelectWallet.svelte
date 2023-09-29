@@ -9,8 +9,11 @@
   import { goto } from '$app/navigation';
   import { page } from '$app/stores';
   import { base } from '$app/paths';
-  import { SelectedWalletAccountsStore, SelectedWalletStore } from '$lib/store';
+  import { SelectedWalletAccountsStore, SelectedWalletStore, MsaInfoStore } from '$lib/store';
+  import { getMsaInfo } from "$lib/chain/util";
+  import  AmplicaAccess  from "$components/icons/AmplicaAccess.svelte";
 
+  export let showSelectAddress;
   let isLoading = false;
 
   export let extensions: Array<Extension> = [];
@@ -18,22 +21,31 @@
   onMount(async () => {
     await onReady();
     extensions = extensionsConfig;
+    console.log({extensions})
   });
 
   async function handleSelectedWallet(injectedName: string) {
     isLoading = true;
 
     $SelectedWalletStore = injectedName;
-    // TODO: use wallet.getAccounts
     try {
-      // TODO: use context instead of accessing $page.anything
       $SelectedWalletAccountsStore = await getAccounts(injectedName, $page.data.endpoint);
-      goto(`${base}/signup?${$page.url.searchParams}`);
+      $MsaInfoStore = await getMsaInfo($SelectedWalletAccountsStore, $page.data.endpoint);
+      if (Object.keys($MsaInfoStore).length !== 0) {
+        showSelectAddress = true;
+        goto(`${base}/signin?${$page.url.searchParams}`);
+      } else {
+        goto(`${base}/signup?${$page.url.searchParams}`);
+      }
     } catch (error) {
       console.error('problem getting accounts: ', error.message);
     } finally {
       isLoading = false;
     }
+  }
+
+  function handleAmplicaAccess() {
+    alert("Signing in with Amplica Access...")
   }
 </script>
 
@@ -50,7 +62,7 @@
         </div>
         <div class="ml-8 text-left basis-5/8">
           <div class="text-3xl">{extension.displayName}</div>
-          <span class="text-sm italic antialiased">Sign in with {extension.displayName} wallet</span
+          <span class="text-sm italic antialiased">Sign in with {extension.displayName}</span
           >
         </div>
         <div class="basis-1/12 w-4">
@@ -64,4 +76,15 @@
       </div>
     </button>
   {/each}
+  <div class="text-4xl mt-8 mx-auto">OR</div>
+  <button
+    type="button"
+    class="font-bold btn-banner"
+    on:click={() => handleAmplicaAccess()}
+  >
+    <div class="flex justify-evenly">
+      <AmplicaAccess />
+      <div class="my-auto text-2xl">Sign in with Amplica Access</div>
+    </div>
+  </button>
 </div>

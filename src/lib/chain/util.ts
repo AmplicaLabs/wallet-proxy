@@ -1,8 +1,34 @@
-import type { KeyringPair } from '@polkadot/keyring/types';
-import { Keyring } from '@polkadot/api';
-import { ExtrinsicHelper } from '$lib/chain/extrinsicHelpers';
-import { isWebSocket } from '$lib/util';
+import {ExtrinsicHelper} from '$lib/chain/extrinsicHelpers';
+import {isWebSocket} from '$lib/util';
+import type {InjectedAccount} from "@polkadot/extension-inject/types";
+import type {MsaInfo} from "$lib/storeTypes";
+import type {U8aLike} from "@polkadot/util/types";
 
+const fetchQuery = async (url: string, method: string, params: Array<any>) => {
+  const response = await fetch(url, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      jsonrpc: '2.0',
+      id: 1,
+      method,
+      params
+    })
+  });
+
+  if (!response.ok) {
+    throw new Error('Failed to fetch block number');
+  }
+
+  const data = await response.json();
+
+  if (data.error) {
+    throw new Error(data.error.message);
+  }
+  return data.result;
+}
 const fetchBlockNumber = async (url: string): Promise<number> => {
   try {
     const response = await fetch(url, {
@@ -41,7 +67,6 @@ const fetchBlockNumber = async (url: string): Promise<number> => {
 
 const fetchGenesisHash = async (url: string) => {
   // @ts-ignore
-  // @ts-ignore
   try {
     const response = await fetch(url, {
       method: 'POST',
@@ -57,7 +82,7 @@ const fetchGenesisHash = async (url: string) => {
     });
 
     if (!response.ok) {
-      console.error({ response });
+      console.error({response});
       throw new Error('Failed to fetch genesis hash');
     }
 
@@ -76,13 +101,34 @@ const fetchGenesisHash = async (url: string) => {
     console.error(e.message);
   }
 };
+
+const fetchMsaInfo = async(url: string, address: string): Promise<MsaInfo> => {
+  const result = await fetchQuery(url, 'msa_getMsaIdFromPublicKey', [address]);
+  const msaId = Number(result.number);
+  const handle = await fetchQuery(url, 'handles_getDisplayHandleFromMsaId', [msaId]);
+  return { msaId, handle };
+}
 // Basic utilities
 // For use w/ localhost testing
 
-export const getBlockNumber = async (uri: string): Promise<number> => {
-  return isWebSocket(uri) ? await ExtrinsicHelper.getBlockNumber() : await fetchBlockNumber(uri);
+export const getBlockNumber = async (url: string): Promise<number> => {
+  return isWebSocket(url) ? await ExtrinsicHelper.getBlockNumber(url) : await fetchBlockNumber(url);
 };
 
-export const getGenesisHash = async (uri: string): Promise<string> => {
-  return isWebSocket(uri) ? await ExtrinsicHelper.getGenesisHash() : await fetchGenesisHash(uri);
+export const getGenesisHash = async (url: string): Promise<string> => {
+  return isWebSocket(url) ? await ExtrinsicHelper.getGenesisHash(url) : await fetchGenesisHash(url);
 };
+
+
+export const getMsaInfo = async (accounts: Array<InjectedAccount>, url: string): Promise<Record<string, MsaInfo>> => {
+  let msaInfos: Record<string, MsaInfo> = {}
+  for (const injectedAccount of accounts) {
+    let info: MsaInfo = isWebSocket(url) ?
+      await ExtrinsicHelper.getMsaInfo(url, injectedAccount.address) :
+      await fetchMsaInfo(url, injectedAccount.address);
+    if (info.msaId > 0) {
+      msaInfos[injectedAccount.address] = info;
+    }
+  }
+  return msaInfos;
+}

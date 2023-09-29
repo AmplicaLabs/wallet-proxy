@@ -10,7 +10,7 @@
 </script>
 
 <head>
-  <title>Amplica Labs: Wallet Connect</title>
+  <title>Amplica Labs: Connect</title>
 </head>
 <div class="min-h-full flex flex-col box-border">
   <header class="py-2 relative mt-0 grow-0 shrink-0">

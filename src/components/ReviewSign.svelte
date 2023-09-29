@@ -63,6 +63,8 @@
   const buttonSectionClasses = 'flex flex justify-center';
   const buttonClasses = 'btn-banner md:w-500 sm:text-2xl md:text-3xl mt-0 ml-4 h-full text-aqua';
   const labelClasses = 'text-teal-200 basis-1/4 self-center';
+  $: claimHandleSigned = $SignatureStore.claimHandle.length > 0 ? ' bg-cyan-700' : '';
+  $: delegationsSigned = $SignatureStore.authorizedDelegationAndSchemas.length > 0 ? ' bg-cyan-700' : '';
 </script>
 
 <div class="mt-4">
@@ -71,7 +73,11 @@
       Click to authorize <span class="font-bold text-white">{dAppName}</span> to create your handle
     </label>
     <div>
-      <button id="claimHandle" class={buttonClasses} on:click|preventDefault={handleHandle}>
+      <button id="claimHandle"
+              class={buttonClasses + claimHandleSigned}
+              on:click|preventDefault={handleHandle}
+              disabled={$SignatureStore.claimHandle.length > 0}
+      >
         I Claim
         <span class="text-white font-bold">{$HandleStore}</span> As My Handle
       </button>
@@ -85,8 +91,9 @@
     <div>
       <button
         id="authorizeDelegate"
-        class={buttonClasses}
+        class={buttonClasses + ' mt-8' + delegationsSigned}
         on:click|preventDefault={signDelegationAndPermissions}
+        disabled={$SignatureStore.authorizedDelegationAndSchemas.length > 0}
       >
         I Authorize <span class="text-white font-bold">{dAppName}</span>
       </button>
@@ -97,7 +104,7 @@
   <p class="text-2xl">
     You are authorizing {dAppName} to post the following message types on your behalf:
   </p>
-  <div class="flex flex-wrap justify-evenly mt-8">
+  <div class="flex flex-wrap justify-start mt-8">
     {#each schemas as schema, index}
       <ul class="p-2 m-2 underline">
         <li class="font-thin text-2xl relative">
@@ -108,7 +115,7 @@
             on:mouseleave|preventDefault={toggleHelp}>?</span
           >
           <p
-            class="hidden text-black bg-white absolute -bottom-80px border-rounded rounded-md text-md leading-6 p-4 z-40"
+            class="hidden text-black bg-white absolute -bottom-80px border-rounded border-aqua rounded-md text-md leading-6 p-4 z-40"
           >
             {schema[1].description}
           </p>

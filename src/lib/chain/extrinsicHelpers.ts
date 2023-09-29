@@ -1,10 +1,11 @@
 /* eslint-disable no-use-before-define */
 /* eslint-disable max-classes-per-file */
-import type { ApiPromise, ApiRx } from '@polkadot/api';
-import { firstValueFrom } from 'rxjs';
-import type { SignedBlock } from '@polkadot/types/interfaces';
-import { connect, connectPromise } from './apiConnection';
-import { isWebSocket } from '$lib/util';
+import type {ApiRx} from '@polkadot/api';
+import {first, firstValueFrom} from 'rxjs';
+import type {SignedBlock} from '@polkadot/types/interfaces';
+import {connect} from './apiConnection';
+import {isWebSocket} from '$lib/util';
+import type {MsaInfo} from "$lib/storeTypes";
 
 export class ExtrinsicHelper {
   public static api: ApiRx;
@@ -18,28 +19,49 @@ export class ExtrinsicHelper {
         return;
       }
       ExtrinsicHelper.api = await connect(providerUrl);
-      // For single state queries (api.query), ApiPromise is better
-      ExtrinsicHelper.apiPromise = await connectPromise(providerUrl);
     } else {
       console.log('will not initialize: non-WebSocket endpoint');
     }
   }
 
-  public static async getGenesisHash(): Promise<string> {
+  public static async getGenesisHash(url: string): Promise<string> {
     if (!ExtrinsicHelper.api) {
-      console.log('will not get genesisHash: non-WebSocket endpoint');
-      return '';
+      await ExtrinsicHelper.initialize(url);
     }
     const hash = await ExtrinsicHelper.api.runtimeMetadata.hash;
     return hash.toString();
   }
 
   // No guard needed for this since we're checking the endpoint upstream
-  public static async getBlockNumber(): Promise<number> {
+  public static async getBlockNumber(url: string): Promise<number> {
+    if (!ExtrinsicHelper.api) {
+      await ExtrinsicHelper.initialize(url);
+    }
     return (await ExtrinsicHelper.getLastBlock()).block.header.number.toNumber();
   }
 
-  static async getLastBlock(): Promise<SignedBlock> {
+  static async getLastBlock(url: string): Promise<SignedBlock> {
+    if (!ExtrinsicHelper.api) {
+      await ExtrinsicHelper.initialize(url);
+    }
     return firstValueFrom(ExtrinsicHelper.api.rpc.chain.getBlock());
+  }
+
+  public static async getMsaInfo(url: string, address: string): Promise<MsaInfo> {
+    if (!ExtrinsicHelper.api) {
+      await ExtrinsicHelper.initialize(url);
+    }
+    const result =  (await firstValueFrom(ExtrinsicHelper.api.query.msa.publicKeyToMsaId(address)));
+    const msaId = result
+    .unwrapOrDefault()
+    .toNumber();
+    if (msaId > 0) {
+      const handleResult = (await firstValueFrom(ExtrinsicHelper.api.query.handles.msaIdToDisplayName(msaId)))
+      .unwrapOrDefault();
+      const handle = handleResult[0].toHuman();
+      return {msaId, handle};
+    } else {
+      return {msaId: 0, handle: ''};
+    }
   }
 }

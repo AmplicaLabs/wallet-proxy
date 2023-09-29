@@ -1,11 +1,11 @@
 <script lang="ts">
   import SelectWallet from '$components/SelectWallet.svelte';
-  import { onMount } from 'svelte';
+  import {onMount} from 'svelte';
+  import SelectAddressSignIn from "$components/SelectAddressSignIn.svelte";
 
+  let showSelectAddress = false;
   function handleMessage(event) {
-    console.log('message from window', event);
     const appDomain = event.origin;
-    console.log('event.origin', appDomain);
     event.source?.postMessage('respond from open window...', appDomain);
   }
 
@@ -14,7 +14,6 @@
     window.removeEventListener('message', handleMessage);
   };
 
-  // I'm not sure this will be retained if we go to signup
   onMount(() => {
     if (window.opener) {
       window.addEventListener('message', handleMessage, false);
@@ -22,12 +21,17 @@
       return unsubscribe;
     }
   });
-</script>
 
+</script>
 <div class="text-center mt-7">
   <h1 class="mt-4 text-2xl text-aqua text-center">Sign in</h1>
-  <p>Choose a wallet to connect and sign in.</p>
 </div>
 <div class="mt-8">
-  <SelectWallet />
+  {#if  showSelectAddress}
+    <div class="p-8 mx-auto">
+      <SelectAddressSignIn/>
+    </div>
+  {:else}
+    <SelectWallet bind:showSelectAddress/>
+  {/if}
 </div>

@@ -1,9 +1,5 @@
 <script lang="ts">
   import { base } from '$app/paths';
-  import { page } from '$app/stores';
-
-  const schemas = $page.data.schemas;
-  const endpoint = $page.data.endpoint;
 
   const testEndpointData = {
     rococo: {
