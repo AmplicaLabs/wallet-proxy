@@ -1,7 +1,6 @@
 import TalismanIcon from '$components/icons/TalismanRedIcon.svelte';
 import PolkadotIcon from '$components/icons/Polkadot.svelte';
 import SubWallet from '$components/icons/SubWallet.svelte';
-import Fearless  from '$components/icons/Fearless.svelte';
 
 export type Extension = {
   displayName: string;
