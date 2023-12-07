@@ -11,7 +11,7 @@
       http: encodeURIComponent('http://localhost:9944')
     },
     schemas:
-      'tombstone%2Cbroadcast%2Creplay%2Creaction%2Cprofile%2Cupdate%2CpublicKey%2CpublicFollows%2CprivateFollows%2CprivateConnections'
+      'tombstone%2Cbroadcast%2Creply%2Creaction%2Cprofile%2Cupdate%2CpublicKey%2CpublicFollows%2CprivateFollows%2CprivateConnections'
   };
 </script>
 

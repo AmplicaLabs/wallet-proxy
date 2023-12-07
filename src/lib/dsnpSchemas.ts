@@ -21,7 +21,7 @@ export const DSNPSchemas: Schema = {
     },
     description: 'Post a public message'
   },
-  replay: {
+  reply: {
     id: {
       mainnet: 3,
       rococo: 3
