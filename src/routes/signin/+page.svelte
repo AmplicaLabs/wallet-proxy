@@ -5,8 +5,13 @@
 
   let showSelectAddress = false;
   function handleMessage(event) {
-    const appDomain = event.origin;
-    event.source?.postMessage('respond from open window...', appDomain);
+    return
+    // if (event.origin !== 'http://localhost:5173') {
+    //   return;
+    // }
+
+    // const appDomain = event.origin;
+    // event.source?.postMessage('respond from open window...', appDomain);
   }
 
   const unsubscribe = () => {
@@ -17,7 +22,7 @@
   onMount(() => {
     if (window.opener) {
       window.addEventListener('message', handleMessage, false);
-      window.opener.postMessage('PROXY:READY');
+      window.opener.postMessage(JSON.stringify({method: 'PROXY:READY'}), '*');
       return unsubscribe;
     }
   });

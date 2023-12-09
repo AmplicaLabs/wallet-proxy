@@ -35,7 +35,7 @@
   const sendSignatureToApp = () => {
     window.opener.postMessage(
       JSON.stringify({
-        message: 'PROXY:SIGNATURE',
+        method: 'PROXY:SIGNATURE',
         signatures: {
           handle: $SignatureStore.claimHandle,
           delegation: $SignatureStore.authorizedDelegationAndSchemas
